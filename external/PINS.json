@@ -1,0 +1,6 @@
+{
+ "genai_incidents_pip": "2.12.0",
+ "genai_incidents_tag": "v2.12.0",
+ "incidents_json_sha256": "83295199da356b69a0a17a08dc1ef2a02d49d7c5bd87a2bc5e2a94f3ba3f3fcf",
+ "incident_rank_validation_commit": "f7a92a1a5bf21066f49d94a3335c6f66269f3e67"
+}

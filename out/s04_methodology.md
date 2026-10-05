@@ -1,0 +1,115 @@
+# Step 4 — Attack-methodology breakdown (rule-based, pre-coding)
+
+## ON-AI — the AI system is the target or vector
+
+**Entry point** (n = 1,339)
+
+| value | n | % | 95% CI |
+|---|---|---|---|
+| unstated | 634 | 47.3 | 44.7–50.0 |
+| direct prompt by the user | 321 | 24.0 | 21.7–26.4 |
+| indirect carrier (web/email/doc/tool output) | 226 | 16.9 | 14.9–19.0 |
+| stolen or leaked credential | 59 | 4.4 | 3.4–5.6 |
+| exposed / misconfigured service | 46 | 3.4 | 2.5–4.4 |
+| malicious package / model / skill (supply chain) | 32 | 2.4 | 1.6–3.3 |
+| adversarial input to a classifier | 21 | 1.6 | 1.0–2.2 |
+
+**Target component** (n = 1,339)
+
+| value | n | % |
+|---|---|---|
+| agent / copilot / coding assistant / MCP | 640 | 47.8 |
+| unstated | 356 | 26.6 |
+| consumer chatbot / hosted LLM app | 237 | 17.7 |
+| model hub / training pipeline / weights | 40 | 3.0 |
+| detection / classification model | 39 | 2.9 |
+| ML/LLM framework or serving library | 17 | 1.3 |
+| RAG / vector / memory store | 10 | 0.7 |
+
+**Did success need a software vulnerability?** (n = 1,339)
+
+| value | n | % | 95% CI |
+|---|---|---|---|
+| software vulnerability (CVE/CWE present) | 604 | 45.1 | 42.3–47.8 |
+| model behaviour only | 422 | 31.5 | 29.1–33.9 |
+| unstated | 313 | 23.4 | 21.1–25.6 |
+
+**Realization** (n = 1,339)
+
+| value | n | % | 95% CI |
+|---|---|---|---|
+| realized / disclosed | 938 | 70.1 | 67.6–72.6 |
+| demonstrated (research/red-team) | 307 | 22.9 | 20.7–25.2 |
+| threat report | 94 | 7.0 | 5.7–8.4 |
+
+**Top ATLAS technique on record (heuristic corpus label)** (n = 1,339)
+
+| value | n | % |
+|---|---|---|
+| AML.T0010 AI Supply Chain Compromise | 575 | 42.9 |
+| AML.T0051 LLM Prompt Injection | 186 | 13.9 |
+| AML.T0050 Command and Scripting Interpreter | 133 | 9.9 |
+| AML.T0012 Valid Accounts | 116 | 8.7 |
+| AML.T0048.003 User Harm | 75 | 5.6 |
+| AML.T0048 External Harms | 44 | 3.3 |
+| AML.T0015 Evade AI Model | 37 | 2.8 |
+| AML.T0020 Poison Training Data | 28 | 2.1 |
+
+**Entry point by year (% within year)**
+
+| year | n | indirect | direct | supply | credential | exposed | adversarial | unstated |
+|---|---|---|---|---|---|---|---|---|
+| 2022 | 27 | 19 | 4 | 4 | 0 | 0 | 4 | 70 |
+| 2023 | 70 | 7 | 41 | 6 | 3 | 1 | 4 | 37 |
+| 2024 | 139 | 22 | 30 | 1 | 1 | 1 | 3 | 41 |
+| 2025 | 281 | 22 | 26 | 4 | 1 | 1 | 0 | 45 |
+| 2026 | 730 | 16 | 23 | 2 | 6 | 5 | 0 | 47 |
+
+## WITH-AI — the AI is the attacker's instrument
+
+**What the AI produced or did for the attacker** (n = 1,460)
+
+| value | n | % | 95% CI |
+|---|---|---|---|
+| unstated | 702 | 48.1 | 45.8–50.5 |
+| synthetic image | 276 | 18.9 | 16.9–20.9 |
+| synthetic audio/voice | 241 | 16.5 | 14.7–18.4 |
+| generated text (phishing / lures / disinformation) | 114 | 7.8 | 6.5–9.2 |
+| synthetic video | 103 | 7.1 | 5.8–8.4 |
+| generated or assisted code (malware / tooling) | 19 | 1.3 | 0.8–1.9 |
+| reconnaissance / planning / orchestration | 5 | 0.3 | 0.1–0.7 |
+
+**Attacker objective** (n = 1,460)
+
+| value | n | % | 95% CI |
+|---|---|---|---|
+| unstated | 552 | 37.8 | 35.3–40.3 |
+| financial fraud / extortion | 484 | 33.2 | 30.8–35.4 |
+| political / influence | 172 | 11.8 | 10.1–13.5 |
+| non-consensual / abuse imagery | 135 | 9.2 | 7.8–10.8 |
+| defamation / impersonation of a person | 81 | 5.5 | 4.4–6.7 |
+| intrusion / cyber operation | 36 | 2.5 | 1.7–3.3 |
+
+**Realization** (n = 1,460)
+
+| value | n | % |
+|---|---|---|
+| realized / disclosed | 1,456 | 99.7 |
+| threat report | 3 | 0.2 |
+| demonstrated (research/red-team) | 1 | 0.1 |
+
+**AI role by year (% within year)**
+
+| year | n | voice | video | image | text | code | recon | unstated |
+|---|---|---|---|---|---|---|---|---|
+| 2022 | 26 | 4 | 8 | 4 | 19 | 0 | 0 | 65 |
+| 2023 | 131 | 15 | 11 | 19 | 5 | 2 | 0 | 48 |
+| 2024 | 207 | 23 | 4 | 18 | 8 | 1 | 0 | 47 |
+| 2025 | 272 | 49 | 4 | 15 | 9 | 1 | 0 | 21 |
+| 2026 | 686 | 5 | 8 | 23 | 8 | 1 | 1 | 55 |
+
+## Rule-quality flags
+
+- 80 WITH-AI rows come from CVE/GHSA ({'deepfake': 43, 'phishing': 34, 'auth-bypass': 2}): likely false positives, review before coding.
+- 85 ON-AI rows carry vector `malware` (AI-ecosystem malicious packages); any describing AI-*written* malware belong in WITH-AI.
+- 101 ON-AI rows are jailbreaks; those whose documented harm is downstream use against a third party belong in BOTH.

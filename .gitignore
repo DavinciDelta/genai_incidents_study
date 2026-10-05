@@ -1,0 +1,4 @@
+.venv/
+external/incidents.json
+external/incident-rank-validation/
+__pycache__/

@@ -1,0 +1,14 @@
+# genai_incidents attacker-methodology study
+
+Replicable preliminary analysis. Everything in `out/` is produced by the scripts; nothing is hand-edited.
+
+```
+uv venv --python 3.12 .venv && uv pip install --python .venv/bin/python -r requirements.txt
+.venv/bin/python fetch_data.py        # pin + fetch full JSON at the pip version's tag, clone rank-validation
+.venv/bin/python s01_overview.py      # README snippet, corpus profile, rank-validation view  -> out/s01_overview.md
+.venv/bin/python s02_split.py         # ON-AI vs WITH-AI                                     -> out/split.json, out/s02_split.md
+.venv/bin/python s03_figures.py       # Figure 1                                             -> out/fig1_on_with.svg
+.venv/bin/python s04_methodology.py   # rule-based methodology breakdown                      -> out/s04_methodology.md
+```
+`make all` runs the five in order. `draft.md` is the paper skeleton; its numbers come from `out/`.
+Pins: `external/PINS.json`. Stdlib only beyond the `genai-incidents` package.
