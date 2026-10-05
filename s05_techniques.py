@@ -4,7 +4,7 @@
 
   RQ1  What is most common in ON-AI and in WITH-AI, and what do the records behind it look like?
        Two tables per population. Rows are OWASP categories: the corpus's ATLAS labels are mostly computed from
-       them, so the categories are the honest label layer. A human check of the same records sits in the same table.
+       them, so the categories are the honest label layer. The same table carries a person's labels and ranking.
   RQ2  Which MITRE ATLAS mitigations address ON-AI attacks, and which common techniques have none?
        Chain: OWASP category -> corpus lookup -> ATLAS technique -> ATLAS mitigation (the paper's "transitive" strategy).
 
@@ -32,6 +32,7 @@ def tactics(t): return ", ".join(REF["tactics"][x]["name"] for x in (REF["techni
 def mits(t): return A["mitigates"].get(t, set()) | A["mitigates"].get(parent(t), set())    # a sub-technique inherits its parent's mitigations
 def pc(a, b, d=1): return f"{100*a/b:.{d}f}" if b else "—"
 def npc(a, b): return f"{a:,} ({pc(a, b)}%)"
+def ranks(counter): return {k: 1 + sum(w > v for w in counter.values()) for k, v in counter.items() if v}    # ties share a rank
 def lead(counter, n): return " / ".join(f"{k} {100*v/n:.0f}%" for k, v in counter.most_common(1)) or "—"
 
 def crosswalk():
@@ -73,23 +74,29 @@ L += ["", "## RQ1. What is most common, and what do the records behind it look l
 for p in POPS:
     rows, n = P[p], len(P[p]); chan = {c: [r for r in rows if source_class(r) == c] for c in CH}
     cnt = collections.Counter(c for r in rows for c in set(llm(r))); k = [len(set(llm(r))) for r in rows if llm(r)]
-    L += ["", f"**{p}: OWASP LLM Top 10 categories, with a human check** (n = {n:,} records)", "",
-          f"Every OWASP LLM Top 10 (2026) category the corpus assigns to {p} records, most frequent first. *Records* is how many carry the category "
-          f"and their share of the population; {n - len(k):,} records carry none and the rest carry {sum(k)/len(k):.1f} on average, so the shares do not "
-          f"sum to 100. The three channel columns give the share of that channel's {p} records carrying the category (" + ", ".join(f"{c} n = {len(chan[c]):,}" for c in CH) + "), "
-          f"because each disclosure channel observes a different population. The last two columns are a human check. A separate project "
-          f"(incident-rank-validation) had a person label a sample of records by hand, and {len(GOLD[p])} of those are {p} records. Both columns read "
-          "\"a of b\": b is how many of the category's records are in that sample, and a is how many of them the person filed under the same category "
-          "(*human agreed*) or judged to fit no category at all (*human: none fits*). The remainder were filed under a different category. A dash "
-          "means none of the category's records were hand-labelled. Agreement is low partly "
-          "by construction: the person gave each record one label and could choose from twenty categories (these ten plus ten proposed additions), "
-          "while the corpus gives a record several. The samples are small, so read these columns as a check on the label, not as an estimate.", "",
-          "| category | records | 95% CI | % in cve/ghsa | % in harm-db | % in research/other | human agreed | human: none fits |", "|---|---|---|---|---|---|---|---|"]
+    # the person's labels for the same population: one row per category chosen, plus "none fits"
+    G = GOLD[p]; hum = collections.Counter(RV2C.get(e, e) for _, gl in G for e in gl); none = sum(gl == [] for _, gl in G)
+    crank, hrank = ranks(cnt), ranks(hum)
+    L += ["", f"**{p}: OWASP LLM Top 10 categories, corpus labels beside human labels** (n = {n:,} records; {len(G)} of them also labelled by a person)", "",
+          f"Every OWASP LLM Top 10 (2026) category the corpus assigns to {p} records, most frequent first, with the corpus's ranking. *Corpus-labelled "
+          f"records* is how many carry the category and their share of the population; {n - len(k):,} records carry none and the rest carry "
+          f"{sum(k)/len(k):.1f} on average, so those shares do not sum to 100. The three channel columns give the share of that channel's {p} records "
+          "carrying the category (" + ", ".join(f"{c} n = {len(chan[c]):,}" for c in CH) + "), because each disclosure channel observes a different population. "
+          f"The last two columns show what a person decided for the same population. A separate project (incident-rank-validation) had a person label "
+          f"a sample of records by hand, and {len(G)} of those are {p} records. *Human-labelled records* is how many of them the person filed under the "
+          "category, and *human rank* ranks the categories by that count. The person could also choose from ten proposed additions to the Top 10, or "
+          "decide that no category fits; those appear as extra rows at the bottom, with dashes in the corpus columns because the corpus has no such "
+          "label. The human shares sum to 100 up to rounding and the few records given two labels. The sample was drawn a fixed number per category "
+          "to calibrate a classifier, not at random from the corpus, so the human share and rank describe that sample: use them to see where the two "
+          "labellings part ways, not as prevalence.", "",
+          "| category | corpus-labelled records | corpus rank | 95% CI | % in cve/ghsa | % in harm-db | % in research/other | human-labelled records | human rank |", "|---|---|---|---|---|---|---|---|---|"]
     for c, v in cnt.most_common():
-        _, lo, hi = boot_ci(rows, lambda r, c=c: c in llm(r)); g = [gl for r, gl in GOLD[p] if c in llm(r)]; m = len(g)
-        check = (f"{sum(any(RV2C.get(e) == c for e in gl) for gl in g)} of {m} ({pc(sum(any(RV2C.get(e) == c for e in gl) for gl in g), m, 0)}%) | "
-                 f"{sum(gl == [] for gl in g)} of {m} ({pc(sum(gl == [] for gl in g), m, 0)}%)") if m else "— | —"
-        L.append(f"| {code(c)} | {npc(v, n)} | {100*lo:.1f}–{100*hi:.1f} | " + " | ".join(pc(sum(c in llm(r) for r in chan[x]), len(chan[x])) for x in CH) + f" | {check} |")
+        _, lo, hi = boot_ci(rows, lambda r, c=c: c in llm(r))
+        L.append(f"| {code(c)} | {npc(v, n)} | {crank[c]} | {100*lo:.1f}–{100*hi:.1f} | " + " | ".join(pc(sum(c in llm(r) for r in chan[x]), len(chan[x])) for x in CH)
+                 + f" | {npc(hum[c], len(G))} | {hrank.get(c, '—')} |")
+    for e, v in hum.most_common():
+        if e not in NAME: L.append(f"| {rv['taxonomy'][e]['canonical_name']} *(proposed addition)* | — | — | — | — | — | — | {npc(v, len(G))} | {hrank[e]} |")
+    L.append(f"| *No category fits* | — | — | — | — | — | — | {npc(none, len(G))} | — |")
     L += ["", f"**{p}: what the records behind each category look like**", "",
           "The same categories, profiled by corpus fields. This is the data's answer to *why* a category ranks where it does: which kind of record "
           "carries it. Each cell is a share of the category's own records, rounded to a whole percent. *Top attack vector* and *top CWE* show only the "

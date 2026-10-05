@@ -10,22 +10,31 @@ How to read the tables: a record can carry several categories or techniques, so 
 
 ## RQ1. What is most common, and what do the records behind it look like?
 
-**ON-AI: OWASP LLM Top 10 categories, with a human check** (n = 1,339 records)
+**ON-AI: OWASP LLM Top 10 categories, corpus labels beside human labels** (n = 1,339 records; 158 of them also labelled by a person)
 
-Every OWASP LLM Top 10 (2026) category the corpus assigns to ON-AI records, most frequent first. *Records* is how many carry the category and their share of the population; 64 records carry none and the rest carry 1.7 on average, so the shares do not sum to 100. The three channel columns give the share of that channel's ON-AI records carrying the category (cve/ghsa n = 604, harm-db n = 370, research/other n = 365), because each disclosure channel observes a different population. The last two columns are a human check. A separate project (incident-rank-validation) had a person label a sample of records by hand, and 158 of those are ON-AI records. Both columns read "a of b": b is how many of the category's records are in that sample, and a is how many of them the person filed under the same category (*human agreed*) or judged to fit no category at all (*human: none fits*). The remainder were filed under a different category. A dash means none of the category's records were hand-labelled. Agreement is low partly by construction: the person gave each record one label and could choose from twenty categories (these ten plus ten proposed additions), while the corpus gives a record several. The samples are small, so read these columns as a check on the label, not as an estimate.
+Every OWASP LLM Top 10 (2026) category the corpus assigns to ON-AI records, most frequent first, with the corpus's ranking. *Corpus-labelled records* is how many carry the category and their share of the population; 64 records carry none and the rest carry 1.7 on average, so those shares do not sum to 100. The three channel columns give the share of that channel's ON-AI records carrying the category (cve/ghsa n = 604, harm-db n = 370, research/other n = 365), because each disclosure channel observes a different population. The last two columns show what a person decided for the same population. A separate project (incident-rank-validation) had a person label a sample of records by hand, and 158 of those are ON-AI records. *Human-labelled records* is how many of them the person filed under the category, and *human rank* ranks the categories by that count. The person could also choose from ten proposed additions to the Top 10, or decide that no category fits; those appear as extra rows at the bottom, with dashes in the corpus columns because the corpus has no such label. The human shares sum to 100 up to rounding and the few records given two labels. The sample was drawn a fixed number per category to calibrate a classifier, not at random from the corpus, so the human share and rank describe that sample: use them to see where the two labellings part ways, not as prevalence.
 
-| category | records | 95% CI | % in cve/ghsa | % in harm-db | % in research/other | human agreed | human: none fits |
-|---|---|---|---|---|---|---|---|
-| LLM04 Supply Chain | 560 (41.8%) | 39.1–44.4 | 77.2 | 10.3 | 15.3 | 19 of 61 (31%) | 3 of 61 (5%) |
-| LLM10 Improper Output Handling | 548 (40.9%) | 38.3–43.7 | 56.8 | 40.5 | 15.1 | 10 of 39 (26%) | 7 of 39 (18%) |
-| LLM01 Prompt Injection | 500 (37.3%) | 34.7–39.9 | 25.3 | 40.5 | 54.0 | 14 of 45 (31%) | 4 of 45 (9%) |
-| LLM02 Sensitive Information Disclosure | 190 (14.2%) | 12.5–16.1 | 4.1 | 30.0 | 14.8 | 2 of 22 (9%) | 5 of 22 (23%) |
-| LLM03 Excessive Agency | 118 (8.8%) | 7.4–10.5 | 3.8 | 7.8 | 18.1 | 3 of 21 (14%) | 5 of 21 (24%) |
-| LLM07 Misinformation | 91 (6.8%) | 5.5–8.2 | 0.2 | 22.7 | 1.6 | 1 of 16 (6%) | 8 of 16 (50%) |
-| LLM05 Data and Model Poisoning | 85 (6.3%) | 5.1–7.8 | 1.7 | 6.5 | 14.0 | 13 of 20 (65%) | 0 of 20 (0%) |
-| LLM08 Hidden Context Exposure | 34 (2.5%) | 1.7–3.4 | 0.3 | 2.7 | 6.0 | 2 of 7 (29%) | 2 of 7 (29%) |
-| LLM06 Unbounded Consumption | 20 (1.5%) | 0.9–2.2 | 0.2 | 0.3 | 4.9 | 4 of 5 (80%) | 0 of 5 (0%) |
-| LLM09 Vector and Embedding Weaknesses | 17 (1.3%) | 0.7–1.9 | 0.7 | 0.0 | 3.6 | 0 of 5 (0%) | 0 of 5 (0%) |
+| category | corpus-labelled records | corpus rank | 95% CI | % in cve/ghsa | % in harm-db | % in research/other | human-labelled records | human rank |
+|---|---|---|---|---|---|---|---|---|
+| LLM04 Supply Chain | 560 (41.8%) | 1 | 39.1–44.4 | 77.2 | 10.3 | 15.3 | 20 (12.7%) | 2 |
+| LLM10 Improper Output Handling | 548 (40.9%) | 2 | 38.3–43.7 | 56.8 | 40.5 | 15.1 | 12 (7.6%) | 5 |
+| LLM01 Prompt Injection | 500 (37.3%) | 3 | 34.7–39.9 | 25.3 | 40.5 | 54.0 | 15 (9.5%) | 4 |
+| LLM02 Sensitive Information Disclosure | 190 (14.2%) | 4 | 12.5–16.1 | 4.1 | 30.0 | 14.8 | 3 (1.9%) | 11 |
+| LLM03 Excessive Agency | 118 (8.8%) | 5 | 7.4–10.5 | 3.8 | 7.8 | 18.1 | 9 (5.7%) | 7 |
+| LLM07 Misinformation | 91 (6.8%) | 6 | 5.5–8.2 | 0.2 | 22.7 | 1.6 | 1 (0.6%) | 14 |
+| LLM05 Data and Model Poisoning | 85 (6.3%) | 7 | 5.1–7.8 | 1.7 | 6.5 | 14.0 | 22 (13.9%) | 1 |
+| LLM08 Hidden Context Exposure | 34 (2.5%) | 8 | 1.7–3.4 | 0.3 | 2.7 | 6.0 | 3 (1.9%) | 11 |
+| LLM06 Unbounded Consumption | 20 (1.5%) | 9 | 0.9–2.2 | 0.2 | 0.3 | 4.9 | 7 (4.4%) | 8 |
+| LLM09 Vector and Embedding Weaknesses | 17 (1.3%) | 10 | 0.7–1.9 | 0.7 | 0.0 | 3.6 | 0 (0.0%) | — |
+| MCP Tool Interface Exploitation *(proposed addition)* | — | — | — | — | — | — | 17 (10.8%) | 3 |
+| Cross-Modal Safety Bypass *(proposed addition)* | — | — | — | — | — | — | 10 (6.3%) | 6 |
+| Persistent Memory Poisoning *(proposed addition)* | — | — | — | — | — | — | 5 (3.2%) | 9 |
+| Weaponized LLM Abuse *(proposed addition)* | — | — | — | — | — | — | 5 (3.2%) | 9 |
+| Model Scheming and Deceptive Alignment *(proposed addition)* | — | — | — | — | — | — | 3 (1.9%) | 11 |
+| LLM Artifact Promotion Trust Failure *(proposed addition)* | — | — | — | — | — | — | 1 (0.6%) | 14 |
+| Systemic Insecure Code Generation *(proposed addition)* | — | — | — | — | — | — | 1 (0.6%) | 14 |
+| Model Misalignment *(proposed addition)* | — | — | — | — | — | — | 1 (0.6%) | 14 |
+| *No category fits* | — | — | — | — | — | — | 23 (14.6%) | — |
 
 **ON-AI: what the records behind each category look like**
 
@@ -41,24 +50,28 @@ The same categories, profiled by corpus fields. This is the data's answer to *wh
 | LLM07 Misinformation | 91 | rce 32% | 1 | CWE-502 1% | 15 | LLM10 Improper Output Handling 54% |
 | LLM05 Data and Model Poisoning | 85 | model-poisoning 31% | 12 | CWE-94 4% | 52 | LLM04 Supply Chain 39% |
 | LLM08 Hidden Context Exposure | 34 | prompt-injection 38% | 6 | CWE-502 3% | 56 | LLM01 Prompt Injection 56% |
-| LLM06 Unbounded Consumption | 20 | adversarial-input 25% | 5 | CWE-1333 5% | 60 | LLM02 Sensitive Information Disclosure 20% |
+| LLM06 Unbounded Consumption | 20 | adversarial-input 25% | 5 | CWE-749 5% | 60 | LLM02 Sensitive Information Disclosure 20% |
 | LLM09 Vector and Embedding Weaknesses | 17 | prompt-injection 18% | 24 | CWE-94 18% | 47 | LLM01 Prompt Injection 71% |
 
-**WITH-AI: OWASP LLM Top 10 categories, with a human check** (n = 1,460 records)
+**WITH-AI: OWASP LLM Top 10 categories, corpus labels beside human labels** (n = 1,460 records; 174 of them also labelled by a person)
 
-Every OWASP LLM Top 10 (2026) category the corpus assigns to WITH-AI records, most frequent first. *Records* is how many carry the category and their share of the population; 58 records carry none and the rest carry 1.4 on average, so the shares do not sum to 100. The three channel columns give the share of that channel's WITH-AI records carrying the category (cve/ghsa n = 80, harm-db n = 1,370, research/other n = 10), because each disclosure channel observes a different population. The last two columns are a human check. A separate project (incident-rank-validation) had a person label a sample of records by hand, and 174 of those are WITH-AI records. Both columns read "a of b": b is how many of the category's records are in that sample, and a is how many of them the person filed under the same category (*human agreed*) or judged to fit no category at all (*human: none fits*). The remainder were filed under a different category. A dash means none of the category's records were hand-labelled. Agreement is low partly by construction: the person gave each record one label and could choose from twenty categories (these ten plus ten proposed additions), while the corpus gives a record several. The samples are small, so read these columns as a check on the label, not as an estimate.
+Every OWASP LLM Top 10 (2026) category the corpus assigns to WITH-AI records, most frequent first, with the corpus's ranking. *Corpus-labelled records* is how many carry the category and their share of the population; 58 records carry none and the rest carry 1.4 on average, so those shares do not sum to 100. The three channel columns give the share of that channel's WITH-AI records carrying the category (cve/ghsa n = 80, harm-db n = 1,370, research/other n = 10), because each disclosure channel observes a different population. The last two columns show what a person decided for the same population. A separate project (incident-rank-validation) had a person label a sample of records by hand, and 174 of those are WITH-AI records. *Human-labelled records* is how many of them the person filed under the category, and *human rank* ranks the categories by that count. The person could also choose from ten proposed additions to the Top 10, or decide that no category fits; those appear as extra rows at the bottom, with dashes in the corpus columns because the corpus has no such label. The human shares sum to 100 up to rounding and the few records given two labels. The sample was drawn a fixed number per category to calibrate a classifier, not at random from the corpus, so the human share and rank describe that sample: use them to see where the two labellings part ways, not as prevalence.
 
-| category | records | 95% CI | % in cve/ghsa | % in harm-db | % in research/other | human agreed | human: none fits |
-|---|---|---|---|---|---|---|---|
-| LLM07 Misinformation | 1,223 (83.8%) | 81.9–85.7 | 0.0 | 88.9 | 50.0 | 46 of 154 (30%) | 61 of 154 (40%) |
-| LLM10 Improper Output Handling | 365 (25.0%) | 22.9–27.3 | 5.0 | 26.1 | 30.0 | 0 of 46 (0%) | 25 of 46 (54%) |
-| LLM04 Supply Chain | 144 (9.9%) | 8.3–11.5 | 100.0 | 4.6 | 10.0 | 0 of 14 (0%) | 3 of 14 (21%) |
-| LLM02 Sensitive Information Disclosure | 109 (7.5%) | 6.2–8.8 | 1.2 | 7.9 | 0.0 | 2 of 14 (14%) | 5 of 14 (36%) |
-| LLM08 Hidden Context Exposure | 78 (5.3%) | 4.2–6.5 | 0.0 | 5.7 | 0.0 | 0 of 16 (0%) | 8 of 16 (50%) |
-| LLM03 Excessive Agency | 45 (3.1%) | 2.2–4.0 | 0.0 | 3.0 | 40.0 | 0 of 8 (0%) | 3 of 8 (38%) |
-| LLM05 Data and Model Poisoning | 6 (0.4%) | 0.1–0.8 | 0.0 | 0.4 | 0.0 | 0 of 1 (0%) | 0 of 1 (0%) |
-| LLM06 Unbounded Consumption | 5 (0.3%) | 0.1–0.7 | 0.0 | 0.1 | 40.0 | — | — |
-| LLM01 Prompt Injection | 3 (0.2%) | 0.0–0.5 | 0.0 | 0.1 | 10.0 | — | — |
+| category | corpus-labelled records | corpus rank | 95% CI | % in cve/ghsa | % in harm-db | % in research/other | human-labelled records | human rank |
+|---|---|---|---|---|---|---|---|---|
+| LLM07 Misinformation | 1,223 (83.8%) | 1 | 81.9–85.7 | 0.0 | 88.9 | 50.0 | 47 (27.0%) | 1 |
+| LLM10 Improper Output Handling | 365 (25.0%) | 2 | 22.9–27.3 | 5.0 | 26.1 | 30.0 | 2 (1.1%) | 3 |
+| LLM04 Supply Chain | 144 (9.9%) | 3 | 8.3–11.5 | 100.0 | 4.6 | 10.0 | 1 (0.6%) | 7 |
+| LLM02 Sensitive Information Disclosure | 109 (7.5%) | 4 | 6.2–8.8 | 1.2 | 7.9 | 0.0 | 2 (1.1%) | 3 |
+| LLM08 Hidden Context Exposure | 78 (5.3%) | 5 | 4.2–6.5 | 0.0 | 5.7 | 0.0 | 0 (0.0%) | — |
+| LLM03 Excessive Agency | 45 (3.1%) | 6 | 2.2–4.0 | 0.0 | 3.0 | 40.0 | 0 (0.0%) | — |
+| LLM05 Data and Model Poisoning | 6 (0.4%) | 7 | 0.1–0.8 | 0.0 | 0.4 | 0.0 | 2 (1.1%) | 3 |
+| LLM06 Unbounded Consumption | 5 (0.3%) | 8 | 0.1–0.7 | 0.0 | 0.1 | 40.0 | 0 (0.0%) | — |
+| LLM01 Prompt Injection | 3 (0.2%) | 9 | 0.0–0.5 | 0.0 | 0.1 | 10.0 | 0 (0.0%) | — |
+| Weaponized LLM Abuse *(proposed addition)* | — | — | — | — | — | — | 43 (24.7%) | 2 |
+| Cross-Modal Safety Bypass *(proposed addition)* | — | — | — | — | — | — | 2 (1.1%) | 3 |
+| Model Misalignment *(proposed addition)* | — | — | — | — | — | — | 1 (0.6%) | 7 |
+| *No category fits* | — | — | — | — | — | — | 74 (42.5%) | — |
 
 **WITH-AI: what the records behind each category look like**
 
@@ -69,7 +82,7 @@ The same categories, profiled by corpus fields. This is the data's answer to *wh
 | LLM07 Misinformation | 1,223 | deepfake 89% | 0 | — | 0 | LLM10 Improper Output Handling 26% |
 | LLM10 Improper Output Handling | 365 | deepfake 71% | 1 | CWE-79 1% | 0 | LLM07 Misinformation 86% |
 | LLM04 Supply Chain | 144 | deepfake 68% | 55 | CWE-601 10% | 0 | LLM02 Sensitive Information Disclosure 38% |
-| LLM02 Sensitive Information Disclosure | 109 | deepfake 74% | 1 | CWE-79 1% | 0 | LLM07 Misinformation 65% |
+| LLM02 Sensitive Information Disclosure | 109 | deepfake 74% | 1 | CWE-384 1% | 0 | LLM07 Misinformation 65% |
 | LLM08 Hidden Context Exposure | 78 | deepfake 94% | 0 | — | 0 | LLM07 Misinformation 65% |
 | LLM03 Excessive Agency | 45 | deepfake 82% | 0 | — | 2 | LLM08 Hidden Context Exposure 60% |
 | LLM05 Data and Model Poisoning | 6 | deepfake 50% | 0 | — | 0 | LLM07 Misinformation 100% |
