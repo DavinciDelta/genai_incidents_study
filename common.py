@@ -68,16 +68,30 @@ def boot_ci(items, pred, B=2000, seed=20261005):
     bs = sorted(sum(rng.choices(f, k=n)) / n for _ in range(B))
     return p, bs[int(0.025 * B)], bs[int(0.975 * B)]
 
-def table(title, items, key, top=12, ci=False, note=None):
-    """Markdown frequency table of key(item) over items, optional bootstrap CI per row."""
+def sum_note(pcts, what="The % column"):
+    """Sentence for a complete % column whose one-decimal rows do not sum to 100.0; None if they do."""
+    t = f"{sum(float(f'{p:.1f}') for p in pcts):.1f}"
+    return None if t == "100.0" else f"*{what} sums to {t}, not 100.0, because each row is rounded to one decimal place.*"
+
+def table(title, items, key, top=12, ci=False, note=None, desc=None, rest=False, by_value=False):
+    """Markdown frequency table of key(item) over items, optional bootstrap CI per row.
+    desc: description printed under the title. rest: pool the values beyond `top` into a last row and,
+    if the % column still misses 100.0, say why. by_value: order rows by value instead of by count."""
     c = collections.Counter(key(x) for x in items); n = len(items)
-    L = [f"\n**{title}** (n = {n:,})" + (f" — {note}" if note else ""), "",
-         "| value | n | % |" + (" 95% CI |" if ci else ""), "|---|---|---|" + ("---|" if ci else "")]
-    for k, v in c.most_common(top):
+    rows = c.most_common(top)
+    if by_value: rows.sort()
+    L = [f"\n**{title}** (n = {n:,})" + (f" — {note}" if note else ""), ""] + ([desc, ""] if desc else [])
+    L += ["| value | n | % |" + (" 95% CI |" if ci else ""), "|---|---|---|" + ("---|" if ci else "")]
+    for k, v in rows:
         row = f"| {k} | {v:,} | {100*v/n:.1f} |"
         if ci:
             p, lo, hi = boot_ci(items, lambda x, k=k: key(x) == k); row += f" {100*lo:.1f}–{100*hi:.1f} |"
         L.append(row)
+    if rest:
+        hidden, m = len(c) - len(rows), n - sum(v for _, v in rows)
+        if hidden: L.append(f"| *{hidden:,} more values (pooled)* | {m:,} | {100*m/n:.1f} |" + (" |" if ci else ""))
+        s = sum_note([100*v/n for _, v in rows] + ([100*m/n] if hidden else []))
+        if s: L += ["", s]
     return L
 
 def write(name, lines):
