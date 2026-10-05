@@ -11,7 +11,7 @@
    mitigation relationships), and the corpus's own build script at the same tag (read, never run: it
    holds the OWASP -> ATLAS back-fill table the corpus labels come from).
 
-Writes external/incidents.json, external/mitre_atlas.json, external/ATLAS.yaml,
+Writes external/incidents.json, external/mitre_atlas.json, the two OWASP name files, external/ATLAS.yaml,
 external/corpus_merge_and_dedupe.py, external/incident-rank-validation/ and external/PINS.json with
 sha256 of what was fetched. Re-run is idempotent.
 """
@@ -35,6 +35,7 @@ def get(url, dst):
 
 get(f"{RAW}/data/incidents.json", EXT / "incidents.json")
 get(f"{RAW}/mappings/mitre_atlas.json", EXT / "mitre_atlas.json")
+for f in ("owasp_llm_top10_2026.json", "owasp_asi_top10.json"): get(f"{RAW}/mappings/{f}", EXT / f)   # code names, corpus numbering
 get(f"{RAW}/scripts/merge_and_dedupe.py", EXT / "corpus_merge_and_dedupe.py")
 get(f"https://raw.githubusercontent.com/mitre-atlas/atlas-data/{ATLAS_COMMIT}/dist/v6/ATLAS-{ATLAS_RELEASE}.yaml", EXT / "ATLAS.yaml")
 rv = EXT / "incident-rank-validation"

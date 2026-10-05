@@ -1,28 +1,36 @@
 #!/usr/bin/env python3
 """s05_techniques.py — Step 5. Draft tables for two questions, following the design of Hamer et al.,
-"Closing the Chain" (arXiv:2503.12192): techniques used -> mitigations that address them -> gaps.
+"Closing the Chain" (arXiv:2503.12192): what attackers did -> mitigations that address it -> gaps.
 
-  RQ1  Which attack techniques are most common in ON-AI and in WITH-AI, and what do the records behind them look like?
-  RQ2  Which MITRE ATLAS mitigations address those techniques, and which common techniques have none?
+  RQ1  What is most common in ON-AI and in WITH-AI, and what do the records behind it look like?
+       Rows are OWASP codes: the corpus's ATLAS labels are mostly computed from them, so the codes are the honest label layer.
+  RQ2  Which MITRE ATLAS mitigations address ON-AI attacks, and which common techniques have none?
+       Chain: OWASP code -> corpus crosswalk -> ATLAS technique -> ATLAS mitigation (the paper's "transitive" strategy).
 
-Technique labels are the corpus's heuristic `mitre_atlas` field, so this is a pre-coding draft: techs() is the
-one place to swap in hand-coded techniques once the manual phase has produced them. The technique -> mitigation
-mapping is MITRE's own (ATLAS release pinned in external/PINS.json); nothing here is mapped by hand or by a model.
+Every label here is a heuristic corpus label, so this is a pre-coding draft: llm(), asi() and techs() are the
+places to swap in hand codes once the manual phase has produced them. The technique -> mitigation mapping is
+MITRE's own (ATLAS release pinned in external/PINS.json); nothing is mapped by a model.
 Output: out/s05_techniques.md
 """
 import ast, collections, json
-from common import load_full, load_atlas, source_class, boot_ci, write, OUT, EXT
+from common import load_full, load_atlas, load_rv, join_rv, source_class, boot_ci, write, OUT, EXT
 
 S = json.load(open(OUT / "split.json")); C = load_full(); A = load_atlas(); REF = json.load(open(EXT / "mitre_atlas.json"))
-POPS, CH, TOP = ("ON-AI", "WITH-AI"), ("cve/ghsa", "harm-db", "research/other"), 12
+NAME = {k: v["name"] for f in ("owasp_llm_top10_2026.json", "owasp_asi_top10.json") for k, v in json.load(open(EXT / f))["entries"].items()}
+POPS, CH = ("ON-AI", "WITH-AI"), ("cve/ghsa", "harm-db", "research/other")
 P = {p: [C[i] for i, s in S.items() if s["population"] == p] for p in POPS}
+DEMO = ("research", "research-demonstrated", "red-team")
 
-def techs(r): return r.get("mitre_atlas") or []          # <- replace with hand-coded techniques after the manual phase
+def llm(r): return r.get("owasp_llm") or []              # <- hand codes replace these three after the manual phase
+def asi(r): return r.get("owasp_asi") or []
+def techs(r): return r.get("mitre_atlas") or []
+def code(c): return f"{c} {NAME[c]}"
 def parent(t): return t.rsplit(".", 1)[0] if t.count(".") == 2 else t
 def label(t): return f"{t} {(A['techniques'].get(t) or REF['techniques'].get(t) or {}).get('name', '?')}"
 def tactics(t): return ", ".join(REF["tactics"][x]["name"] for x in (REF["techniques"].get(t) or {}).get("tactics") or (REF["techniques"].get(parent(t)) or {}).get("tactics") or []) or "—"
 def mits(t): return A["mitigates"].get(t, set()) | A["mitigates"].get(parent(t), set())    # a sub-technique inherits its parent's mitigations
 def pc(a, b, d=1): return f"{100*a/b:.{d}f}" if b else "—"
+def npc(a, b): return f"{a:,} ({pc(a, b)}%)"
 def lead(counter, n): return " / ".join(f"{k} {100*v/n:.0f}%" for k, v in counter.most_common(1)) or "—"
 
 def crosswalk():
@@ -32,107 +40,159 @@ def crosswalk():
         if isinstance(node, ast.Assign) and getattr(node.targets[0], "id", "") in ("LLM_TO_ATLAS", "ASI_TO_ATLAS"): out.update(ast.literal_eval(node.value))
     return out
 XW = crosswalk()
-def backfill(r): return {t for c in (r.get("owasp_llm") or []) + (r.get("owasp_asi") or []) for t in XW.get(c, [])}
+# Crosswalk links this study judges wrong (a judgement, not a measurement; edit here). RQ2 drops the techniques they produce.
+SUSPECT = {"LLM07": "misinformation is not model poisoning"}
+def backfill(r, skip=()): return {t for c in llm(r) + asi(r) if c not in skip for t in XW.get(c, [])}
+def sound(r): return set(techs(r)) - (backfill(r) - backfill(r, SUSPECT))      # technique labels minus those that only a suspect link produces
+def via(t): return ", ".join(c for c in sorted(XW) if t in XW[c]) or "—"
 
-CNT = {p: collections.Counter(t for r in P[p] for t in set(techs(r))) for p in POPS}
-L = ["# Step 5 — Attack techniques and the mitigations that address them (draft, pre-coding)", "",
+# rank-validation gold labels use their own numbering for the same ten OWASP entries: match by name, never by number
+rv = load_rv(); J = join_rv(C, rv)["rows"]
+norm = lambda s: s.lower().replace("vulnerabilities", "").replace("weaknesses", "").replace(" and ", " ").strip()
+RV2C = {e: next(k for k in NAME if k.startswith("LLM") and norm(NAME[k]) == norm(t["canonical_name"])) for e, t in rv["taxonomy"].items() if e.startswith("LLM")}
+GOLD = {p: [(C[i], J[i]["gold_labels"]) for i, s in S.items() if s["population"] == p and i in J and J[i]["gold_labels"] is not None] for p in POPS}
+
+L = ["# Step 5 — What attackers did, and the mitigations that address it (draft, pre-coding)", "",
      "Generated by `s05_techniques.py` (`make s05`); do not edit by hand. The design follows Hamer et al., *Closing the Chain* (arXiv:2503.12192): "
-     "collect the techniques attackers used, map each technique to the framework tasks that mitigate it, rank the tasks, and list what the "
-     "framework leaves uncovered. Two things differ from that paper and limit what these tables can claim:", "",
-     "- **Technique labels are not coded from reports.** They are the corpus's `mitre_atlas` field, which its build script fills by keyword rules "
-     "and by a fixed OWASP-code → ATLAS-technique crosswalk. The tables say what those rules matched. The *reproducible from OWASP codes* column "
-     "shows, per technique, how much of the count the crosswalk alone would produce.",
-     f"- **One mapping strategy, not four.** Technique → mitigation links are MITRE's own `mitigates` relationships in ATLAS {json.load(open(EXT / 'PINS.json'))['atlas_release']} "
-     "(the paper's \"framework\" strategy). There is no transitive, LLM or report-derived mapping to triangulate against.", "",
-     "How to read the tables: a record can carry several techniques, so technique percentages are shares of records that carry the technique and "
-     "do not sum to 100. Percentages are rounded to one decimal unless a column says otherwise. ON-AI and WITH-AI are separate populations and are "
-     "never pooled; 95% CIs are percentile bootstrap intervals over records (2,000 resamples)."]
+     "collect what attackers did, map it to the framework tasks that mitigate it, rank the tasks, and list what the framework leaves uncovered. "
+     "Three things differ from that paper and limit what these tables can claim:", "",
+     "- **Labels are not coded from reports.** The corpus assigns OWASP codes by keyword rules, then computes most ATLAS techniques from those codes "
+     "with a fixed crosswalk. RQ1 therefore reports OWASP codes, the layer the rest is derived from, and checks them against hand-adjudicated labels.",
+     "- **OWASP codes are risk categories, not techniques.** They say what kind of weakness or harm a record was filed under, not how the attacker "
+     "operated. Technique-level claims wait for the hand-coding phase.",
+     f"- **One mapping chain, not four independent strategies.** RQ2 runs OWASP code → corpus crosswalk → ATLAS technique → ATLAS mitigation, using "
+     f"MITRE's own `mitigates` relationships in ATLAS {json.load(open(EXT / 'PINS.json'))['atlas_release']}. There is no LLM or report-derived mapping to triangulate against.", "",
+     "How to read the tables: a record can carry several codes or techniques, so their percentages are shares of records carrying the label and do "
+     "not sum to 100. Percentages are rounded to one decimal unless a column says otherwise. ON-AI and WITH-AI are separate populations and are never "
+     "pooled; 95% CIs are percentile bootstrap intervals over records (2,000 resamples). Code numbers are the corpus's; incident-rank-validation "
+     "numbers the same ten OWASP LLM entries differently, so its labels are matched here by entry name."]
 
-# ---------------- RQ1
-L += ["", "## RQ1. Which techniques are most common, and what do the records behind them look like?"]
+# ---------------- RQ1: OWASP codes
+def prevalence(p, get, title, desc):
+    rows, n = P[p], len(P[p]); chan = {c: [r for r in rows if source_class(r) == c] for c in CH}
+    cnt = collections.Counter(c for r in rows for c in set(get(r))); k = [len(set(get(r))) for r in rows if get(r)]
+    out = ["", f"**{p}: {title}** (n = {n:,} records)", "",
+           f"{desc} {n - len(k):,} records carry no code and the rest carry {sum(k)/len(k):.1f} on average, so the % column does not sum to 100. The "
+           f"three channel columns give the share of that channel's {p} records carrying the code (" + ", ".join(f"{c} n = {len(chan[c]):,}" for c in CH) + "), "
+           "because each disclosure channel observes a different population.", "",
+           "| code | n | % of records | 95% CI | % in cve/ghsa | % in harm-db | % in research/other |", "|---|---|---|---|---|---|---|"]
+    for c, v in cnt.most_common():
+        _, lo, hi = boot_ci(rows, lambda r, c=c: c in get(r))
+        out.append(f"| {code(c)} | {v:,} | {pc(v, n)} | {100*lo:.1f}–{100*hi:.1f} | " + " | ".join(pc(sum(c in get(r) for r in chan[x]), len(chan[x])) for x in CH) + " |")
+    return out, cnt
+
+def verdict(c, gl):
+    """How the adjudicator's labels for one record relate to corpus code c."""
+    if not gl: return "out of scope"
+    if any(RV2C.get(e) == c for e in gl): return "same entry"
+    return "other Top 10 entry" if any(e in RV2C for e in gl) else "candidate entry outside the Top 10"
+VERDICTS = ("same entry", "other Top 10 entry", "candidate entry outside the Top 10", "out of scope")
+
+L += ["", "## RQ1. What is most common, and what do the records behind it look like?"]
 for p in POPS:
-    rows, n, cnt = P[p], len(P[p]), CNT[p]; chan = {c: [r for r in rows if source_class(r) == c] for c in CH}
-    top = [t for t, _ in cnt.most_common(TOP)]; has = {t: [r for r in rows if t in techs(r)] for t in top}
-    none, k = sum(not techs(r) for r in rows), [len(set(techs(r))) for r in rows if techs(r)]
-    L += ["", f"**{p}: technique prevalence** (n = {n:,} records)", "",
-          f"The {TOP} most frequent of the {len(cnt)} ATLAS techniques labelled on {p} records. {none:,} records carry no technique and the rest carry "
-          f"{sum(k)/len(k):.1f} on average, which is why the % column sums to more than 100. *Tactic* and *ATLAS maturity* come from ATLAS, not from the "
-          "records (maturity is ATLAS's own rating of whether the technique is feasible, demonstrated or realized in the wild). The three channel columns "
-          f"give the share of that channel's {p} records carrying the technique (" + ", ".join(f"{c} n = {len(chan[c]):,}" for c in CH) + "), because each "
-          "disclosure channel observes a different population. *Reproducible from OWASP codes* is the share of the technique's records where the corpus's "
-          "crosswalk would assign it from the record's OWASP codes; near 100 means the row restates an OWASP code and is not independent technique "
-          "evidence. *Curated* counts the technique's records in the corpus's hand-curated quality tier.", "",
-          "| technique | tactic | ATLAS maturity | n | % of records | 95% CI | % in cve/ghsa | % in harm-db | % in research/other | reproducible from OWASP codes (%) | curated (n) |", "|---|---|---|---|---|---|---|---|---|---|---|"]
-    xw = {t: sum(t in backfill(r) for r in has[t]) / len(has[t]) for t in top}
-    for t in top:
-        _, lo, hi = boot_ci(rows, lambda r, t=t: t in techs(r))
-        L.append(f"| {label(t)} | {tactics(t)} | {(A['techniques'].get(t) or {}).get('maturity') or '—'} | {len(has[t]):,} | {pc(len(has[t]), n)} | {100*lo:.1f}–{100*hi:.1f} | "
-                 + " | ".join(pc(sum(t in techs(r) for r in chan[c]), len(chan[c])) for c in CH)
-                 + f" | {100*xw[t]:.1f} | {sum(r['quality_tier'] == 'curated' for r in has[t])} |")
-    L += ["", f"*{sum(v >= 0.9 for v in xw.values())} of these {len(top)} rows are at least 90% reproducible from the record's OWASP codes: for those rows the technique "
-              "count is the OWASP-code count under another name.*"]
-    L += ["", f"**{p}: what the records behind each technique look like**", "",
-          "The same techniques, profiled by corpus fields. This is the data's answer to *why* a technique ranks where it does: which kind of record "
-          "carries the label. Each cell is a share of the technique's own records, rounded to a whole percent. *Top attack vector* and *top CWE* show only "
-          "the single most frequent value, so they do not sum to 100. *CVE or CWE* is the share with a CVE or CWE id. *Demonstrated* is the share whose "
-          "`category` is research, research-demonstrated or red-team, as opposed to realized or disclosed. *Most co-labelled technique* is the other "
-          "technique most often on the same record.", "",
-          "| technique | n | top attack vector | CVE or CWE (%) | top CWE | demonstrated (%) | most co-labelled technique |", "|---|---|---|---|---|---|---|"]
-    for t in top:
-        h = has[t]; m = len(h)
-        L.append(f"| {label(t)} | {m:,} | {lead(collections.Counter(r.get('attack_vector') or 'other' for r in h), m)} | {pc(sum(bool(r.get('cve_ids') or r.get('cwe_ids')) for r in h), m, 0)} | "
-                 f"{lead(collections.Counter(c for r in h for c in set(r.get('cwe_ids') or [])), m)} | {pc(sum(r['category'] in ('research', 'research-demonstrated', 'red-team') for r in h), m, 0)} | "
-                 f"{lead(collections.Counter(label(u) for r in h for u in set(techs(r)) if u != t), m)} |")
+    t, cnt = prevalence(p, llm, "OWASP LLM Top 10 codes", "Every OWASP LLM Top 10 (2026) code assigned to the population's records, most frequent first."); L += t
+    L += ["", f"**{p}: LLM codes checked against hand-adjudicated labels** ({len(GOLD[p])} {p} records have one)", "",
+          "For the records of each code that incident-rank-validation's adjudicator also labelled by hand, what the human chose: the *same entry*, "
+          "another of the ten OWASP entries, one of the ten *candidate entries* that cycle proposed outside the Top 10, or *out of scope* (no entry "
+          "applies). Each row sums to 100 up to whole-percent rounding. Two things keep *same entry* low by construction: the adjudicator gave almost "
+          "every record one label while the corpus gives several, and the adjudicator had twenty entries to choose from, not ten. Small n, so read "
+          "this as a check on the label, not as an estimate.", "",
+          "| code | gold rows (n) | " + " | ".join(f"{v} (%)" for v in VERDICTS) + " |", "|---|---|---|---|---|---|"]
+    for c, _ in cnt.most_common():
+        v = collections.Counter(verdict(c, gl) for r, gl in GOLD[p] if c in llm(r)); m = sum(v.values())
+        L.append(f"| {code(c)} | {m} | " + " | ".join(pc(v[x], m, 0) for x in VERDICTS) + " |")
+    L += ["", f"**{p}: what the records behind each LLM code look like**", "",
+          "The same codes, profiled by corpus fields. This is the data's answer to *why* a code ranks where it does: which kind of record carries it. "
+          "Each cell is a share of the code's own records, rounded to a whole percent. *Top attack vector* and *top CWE* show only the single most "
+          "frequent value, so they do not sum to 100. *CVE or CWE* is the share with a CVE or CWE id. *Demonstrated* is the share whose `category` is "
+          "research, research-demonstrated or red-team, as opposed to realized or disclosed. *Most co-assigned code* is the other LLM code most often "
+          "on the same record.", "",
+          "| code | n | top attack vector | CVE or CWE (%) | top CWE | demonstrated (%) | most co-assigned code |", "|---|---|---|---|---|---|---|"]
+    for c, m in cnt.most_common():
+        h = [r for r in P[p] if c in llm(r)]
+        L.append(f"| {code(c)} | {m:,} | {lead(collections.Counter(r.get('attack_vector') or 'other' for r in h), m)} | {pc(sum(bool(r.get('cve_ids') or r.get('cwe_ids')) for r in h), m, 0)} | "
+                 f"{lead(collections.Counter(x for r in h for x in set(r.get('cwe_ids') or [])), m)} | {pc(sum(r['category'] in DEMO for r in h), m, 0)} | "
+                 f"{lead(collections.Counter(code(u) for r in h for u in set(llm(r)) if u != c), m)} |")
+    L += prevalence(p, asi, "OWASP Agentic (ASI) codes", "Every OWASP Agentic Security Initiative code assigned to the population's records. There is no "
+                    "hand-adjudicated set for these codes, so they carry no agreement columns.")[0]
+
+# ---------------- bridge: ATLAS technique labels
+L += ["", "## Bridge. The ATLAS technique labels RQ2 runs on", "",
+      "RQ2 needs ATLAS techniques because ATLAS is the only framework here that publishes a machine-readable link from what attackers do to what "
+      "mitigates it. These tables show where the corpus's technique labels come from. *OWASP codes that lead to it* lists the codes the corpus's "
+      "crosswalk turns into the technique. *Reproducible from OWASP codes* is the share of the technique's records where that crosswalk would "
+      "assign it from the record's own codes: near 100 means the technique count is an OWASP-code count under another name, near 0 means the label "
+      "came from somewhere else (the source, a curator or another rule)."]
+for p in POPS:
+    rows, n = P[p], len(P[p]); cnt = collections.Counter(t for r in rows for t in set(techs(r))); top = cnt.most_common(8)
+    xw = {t: sum(t in backfill(r) for r in rows if t in techs(r)) / v for t, v in top}
+    L += ["", f"**{p}: most frequent ATLAS technique labels** (top {len(top)} of {len(cnt)}; n = {n:,} records)", "",
+          "| technique | tactic | n | % of records | OWASP codes that lead to it | reproducible from OWASP codes (%) |", "|---|---|---|---|---|---|"]
+    L += [f"| {label(t)} | {tactics(t)} | {v:,} | {pc(v, n)} | {via(t)} | {100*xw[t]:.1f} |" for t, v in top]
+    L += ["", f"*{sum(x >= 0.9 for x in xw.values())} of these {len(top)} rows are at least 90% reproducible from the record's OWASP codes.*"]
 
 # ---------------- RQ2
-OBS = set(CNT["ON-AI"]) | set(CNT["WITH-AI"]); M = A["mitigations"]
-cov = {m: {p: sum(any(m in mits(t) for t in techs(r)) for r in P[p]) for p in POPS} for m in M}
-hit = {m: sorted(t for t in OBS if m in mits(t)) for m in M}
-score = {m: sum(cov[m][p] > 0 for p in POPS) * len(hit[m]) for m in M}
-ranked = sorted((m for m in M if score[m]), key=lambda m: (-score[m], -sum(cov[m].values()), m))
-L += ["", "## RQ2. Which mitigations address these techniques, and what is left uncovered?", "",
-      f"**ATLAS mitigations ranked by the techniques they address** ({len(ranked)} of {len(M)} ATLAS mitigations address at least one observed technique)", "",
-      "The counterpart of the paper's starter kit. A mitigation *addresses* a labelled technique if ATLAS lists a `mitigates` relationship to that "
-      "technique or to its parent technique. *Score* is the paper's formula with populations in place of attacks: the number of populations in which "
-      "the mitigation addresses at least one record (0–2) times the number of observed techniques it addresses. *Records addressed* is the share of each "
-      "population's records carrying at least one technique the mitigation addresses; a record can be addressed by several mitigations, so these "
-      "columns do not sum to 100. Reach inherits the labelling: a mitigation that addresses a crosswalk-assigned technique is credited with every record "
-      "carrying the corresponding OWASP code. *Category* and *lifecycle phases* are ATLAS's own fields and say who would have to implement the mitigation and "
-      f"when. Rows are sorted by score; the {len(M) - len(ranked)} mitigations that address no observed technique are not shown.", "",
-      "| mitigation | category | lifecycle phases | observed techniques addressed (n) | ON-AI records addressed (%) | WITH-AI records addressed (%) | score |", "|---|---|---|---|---|---|---|"]
-for m in ranked:
-    L.append(f"| {m} {M[m]['name']} | {', '.join(M[m]['categories'])} | {', '.join(M[m]['lifecycle'])} | {len(hit[m])} | "
-             + " | ".join(f"{cov[m][p]:,} ({pc(cov[m][p], len(P[p]))})" for p in POPS) + f" | {score[m]} |")
+ON, n_on = P["ON-AI"], len(P["ON-AI"]); M = A["mitigations"]
+CNT = {p: collections.Counter(t for r in P[p] for t in sound(r)) for p in POPS}
+L += ["", "## RQ2. Which mitigations address ON-AI attacks, and what is left uncovered?", "",
+      "**The chain from OWASP code to ATLAS mitigation**", "",
+      "Each link the corpus's build script uses to turn an OWASP code into an ATLAS technique, with both names so the link can be judged, and the "
+      "number of mitigations ATLAS lists for that technique. *Judged unsound* marks links this study rejects; that is a judgement recorded in the "
+      "script, not a measurement, and the techniques such a link produces are left out of everything below. *ON-AI records* is the number of ON-AI "
+      "records carrying the code.", "",
+      "| OWASP code | ATLAS technique it becomes | judged unsound | ATLAS mitigations (n) | ON-AI records with the code |", "|---|---|---|---|---|"]
+for c in sorted(XW, key=lambda c: (c[:3] != "LLM", c)):
+    for t in XW[c]:
+        L.append(f"| {code(c)} | {label(t)} | {SUSPECT.get(c, '')} | {len(mits(t))} | {npc(sum(c in llm(r) + asi(r) for r in ON), n_on)} |")
 
+g = GOLD["WITH-AI"]; g_oos = sum(gl == [] for _, gl in g); g_cand = sum(bool(gl) and not any(e in RV2C for e in gl) for _, gl in g)
 L += ["", "**How much of each population ATLAS mitigations reach**", "",
-      "The counterpart of the paper's framework measures, for the one framework with a machine-readable technique → mitigation mapping. *Techniques "
-      "with a mitigation* and *technique labels with a mitigation* differ because techniques are not equally frequent: the first counts each "
-      "distinct technique once, the second counts every (record, technique) label. *Mitigations in use* is the paper's coverage: ATLAS mitigations "
-      "that address at least one technique observed in the population, out of all ATLAS mitigations.", "",
+      "The counterpart of the paper's framework measures, after dropping techniques produced only by a link judged unsound. *Techniques with a "
+      "mitigation* counts each distinct technique once; *technique labels with a mitigation* counts every (record, technique) label, so frequent "
+      "techniques weigh more. *Mitigations in use* is the paper's coverage: ATLAS mitigations that address at least one technique observed in the "
+      "population, out of all ATLAS mitigations.", "",
       "| measure | " + " | ".join(POPS) + " |", "|---|---|---|"]
 def measure(name, f): L.append(f"| {name} | " + " | ".join(f(p) for p in POPS) + " |")
 measure("records", lambda p: f"{len(P[p]):,}")
-measure("records with at least one technique label", lambda p: (lambda a: f"{a:,} ({pc(a, len(P[p]))}%)")(sum(bool(techs(r)) for r in P[p])))
-measure("records with at least one mitigated technique", lambda p: (lambda a: f"{a:,} ({pc(a, len(P[p]))}%)")(sum(any(mits(t) for t in techs(r)) for r in P[p])))
+measure("records with at least one technique label", lambda p: npc(sum(bool(sound(r)) for r in P[p]), len(P[p])))
+measure("records with at least one mitigated technique", lambda p: npc(sum(any(mits(t) for t in sound(r)) for r in P[p]), len(P[p])))
 measure("distinct techniques observed", lambda p: f"{len(CNT[p])}")
-measure("techniques with a mitigation", lambda p: (lambda a: f"{a} ({pc(a, len(CNT[p]))}%)")(sum(bool(mits(t)) for t in CNT[p])))
-measure("technique labels with a mitigation", lambda p: (lambda a, b: f"{a:,} of {b:,} ({pc(a, b)}%)")(sum(v for t, v in CNT[p].items() if mits(t)), sum(CNT[p].values())))
-measure("mitigations in use (coverage)", lambda p: (lambda a: f"{a} of {len(M)} ({pc(a, len(M))}%)")(sum(cov[m][p] > 0 for m in M)))
+measure("techniques with a mitigation", lambda p: npc(sum(bool(mits(t)) for t in CNT[p]), len(CNT[p])))
+measure("technique labels with a mitigation", lambda p: npc(sum(v for t, v in CNT[p].items() if mits(t)), sum(CNT[p].values())))
+measure("mitigations in use (coverage)", lambda p: npc(sum(any(m in mits(t) for t in CNT[p]) for m in M), len(M)))
+L += ["", f"The rest of RQ2 is ON-AI only. Both frameworks are written for whoever defends an AI system, and in WITH-AI the AI is the attacker's tool: of "
+          f"the {len(g)} WITH-AI records with a hand-adjudicated label, the adjudicator ruled {npc(g_oos, len(g))} out of scope for the OWASP entries and "
+          f"filed {npc(g_cand, len(g))} under candidate entries outside the Top 10. The measures above show the same thing from the ATLAS side."]
 
-gaps = sorted((t for t in OBS if not mits(t)), key=lambda t: -(CNT["ON-AI"][t] + CNT["WITH-AI"][t]))
-L += ["", f"**Common techniques with no ATLAS mitigation** (top {min(10, len(gaps))} of {len(gaps)})", "",
-      "The counterpart of the paper's gap analysis: observed techniques for which ATLAS lists no mitigation, most frequent first. Counts are records "
-      "carrying the technique, with the share of the population. *ATT&CK technique* is the Enterprise ATT&CK technique ATLAS says the entry is adapted "
-      "from; where one is given, mitigations exist in ATT&CK but are not carried into ATLAS, so the gap is in the framework's coverage and not in "
-      "security knowledge. Where none is given, no mapped framework in this study offers a mitigation.", "",
-      "| technique | tactic | ON-AI records | WITH-AI records | ATT&CK technique |", "|---|---|---|---|---|"]
+cov = {m: sum(any(m in mits(t) for t in sound(r)) for r in ON) for m in M}
+hit = {m: sorted(t for t in CNT["ON-AI"] if m in mits(t)) for m in M}
+ranked = sorted((m for m in M if cov[m]), key=lambda m: (-cov[m], -len(hit[m]), m))
+L += ["", f"**ON-AI: ATLAS mitigations ranked by the records they address** ({len(ranked)} of {len(M)} ATLAS mitigations address at least one ON-AI record)", "",
+      "The counterpart of the paper's starter kit. A mitigation *addresses* a technique if ATLAS lists a `mitigates` relationship to it or to its "
+      "parent technique. *Records addressed* is the share of ON-AI records carrying at least one technique the mitigation addresses; a record can be "
+      "addressed by several mitigations, so the column does not sum to 100. The paper ranks by attacks mitigated × techniques mitigated; with one "
+      "population there is no attack count to multiply by, so rows are ranked by records addressed and the technique count is shown beside it. "
+      "*OWASP codes reached* lists the codes whose crosswalk technique the mitigation addresses, which is how the ranking ties back to RQ1. "
+      "*Category* and *lifecycle phases* are ATLAS's own fields and say who would have to implement the mitigation and when.", "",
+      "| mitigation | category | lifecycle phases | records addressed | techniques addressed (n) | OWASP codes reached |", "|---|---|---|---|---|---|"]
+for m in ranked:
+    reach = sorted({c for c in XW if c not in SUSPECT and any(t in hit[m] for t in XW[c])}, key=lambda c: (c[:3] != "LLM", c))
+    L.append(f"| {m} {M[m]['name']} | {', '.join(M[m]['categories'])} | {', '.join(M[m]['lifecycle'])} | {npc(cov[m], n_on)} | {len(hit[m])} | {', '.join(reach) or '—'} |")
+
+gaps = sorted((t for t in CNT["ON-AI"] if not mits(t)), key=lambda t: -CNT["ON-AI"][t])
+L += ["", f"**ON-AI: common techniques with no ATLAS mitigation** (top {min(10, len(gaps))} of {len(gaps)})", "",
+      "The counterpart of the paper's gap analysis: techniques labelled on ON-AI records for which ATLAS lists no mitigation, most frequent first. "
+      "*ATT&CK technique* is the Enterprise ATT&CK technique ATLAS says the entry is adapted from; where one is given, mitigations exist in ATT&CK "
+      "but are not carried into ATLAS, so the gap is in the framework's coverage and not in security knowledge. Where none is given, no framework "
+      "mapped in this study offers a mitigation.", "",
+      "| technique | tactic | ON-AI records | OWASP codes that lead to it | ATT&CK technique |", "|---|---|---|---|---|"]
 for t in gaps[:10]:
-    L.append(f"| {label(t)} | {tactics(t)} | " + " | ".join(f"{CNT[p][t]:,} ({pc(CNT[p][t], len(P[p]))}%)" for p in POPS) + f" | {(A['techniques'].get(t) or A['techniques'].get(parent(t)) or {}).get('attack_ref') or '—'} |")
+    L.append(f"| {label(t)} | {tactics(t)} | {npc(CNT['ON-AI'][t], n_on)} | {via(t)} | {(A['techniques'].get(t) or A['techniques'].get(parent(t)) or {}).get('attack_ref') or '—'} |")
 
 L += ["", "## What these tables cannot say", "",
       "- **Whether a mitigation is implemented.** Nothing in the corpus records which controls a victim had in place. The category and lifecycle "
       "columns describe who would have to act and when; adoption needs evidence from outside the corpus.",
-      "- **Technique prevalence in the world.** Counts follow the corpus's labelling rules and its disclosure channels. The channel columns and the "
-      "*reproducible from OWASP codes* column are there so each row can be discounted accordingly.",
-      "- **Chains.** A record's techniques are an unordered set, so nothing here orders them into an attack sequence."]
+      "- **How attackers operated.** OWASP codes are risk categories and the ATLAS labels are mostly computed from them. Prevalence follows the "
+      "corpus's rules and its disclosure channels; the channel and agreement columns are there so each row can be discounted accordingly.",
+      "- **Chains.** A record's labels are an unordered set, so nothing here orders them into an attack sequence."]
 write("s05_techniques.md", L)
