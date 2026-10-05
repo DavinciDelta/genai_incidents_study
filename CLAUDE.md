@@ -6,8 +6,9 @@ the reasoning behind every decision: `docs/CONVERSATION_LOG.md` — read it befo
 categorisation scheme; one has already been tried and discarded.
 
 Pipeline (run in order; `make all`): `fetch_data.py` → `s01_overview.py` → `s02_split.py` →
-`s03_figures.py` → `s04_methodology.py`. Shared code in `common.py`. Outputs in `out/`. Inputs pinned in
-`external/PINS.json` (pip `genai-incidents` version, full-JSON tag + sha256, rank-validation commit).
+`s03_figures.py` → `s04_methodology.py` → `s05_techniques.py`. Shared code in `common.py`. Outputs in `out/`. Inputs pinned in
+`external/PINS.json` (pip `genai-incidents` version, full-JSON tag + sha256, rank-validation commit,
+ATLAS release commit + sha256, corpus build-script sha256).
 
 Rules of the house
 - Stdlib + `genai-incidents` only. No plotting libraries, no model calls, no hand-edited numbers.

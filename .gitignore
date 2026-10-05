@@ -2,3 +2,5 @@
 external/incidents.json
 external/incident-rank-validation/
 __pycache__/
+external/ATLAS.yaml
+external/corpus_merge_and_dedupe.py

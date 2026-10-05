@@ -59,6 +59,26 @@ def join_rv(corpus: dict, rv: dict) -> dict:
                      "gold_labels": g["labels"] if g else None, "snapshot_id": inc_id}
     return {"rows": rows, "unresolved": unresolved}
 
+# ---------------------------------------------------------------- MITRE ATLAS release
+def load_atlas() -> dict:
+    """The pinned MITRE ATLAS release (external/ATLAS.yaml), read with regexes because stdlib has no YAML parser.
+    Returns techniques {id: {name, attack_ref, maturity}}, mitigations {id: {name, categories, lifecycle}}
+    and mitigates {technique id: {mitigation ids}} from MITRE's own `mitigates` relationships."""
+    txt = (EXT / "ATLAS.yaml").read_text()
+    def entries(section, prefix):
+        parts = re.split(rf"^  ({prefix}[\d.]+):\n", re.search(rf"^{section}:\n(.*?)(?=^\S|\Z)", txt, re.S | re.M).group(1), flags=re.M)
+        return dict(zip(parts[1::2], parts[2::2]))
+    one = lambda body, key: (m.group(1).strip("'\"") if (m := re.search(rf"^    {key}: (.*)$", body, re.M)) else None)
+    many = lambda body, key: (re.findall(r"^    - (.*)$", m.group(1), re.M) if (m := re.search(rf"^    {key}:\n((?:    - .*\n)+)", body, re.M)) else [])
+    tech = {t: {"name": one(b, "name"), "maturity": one(b, "maturity"),
+                "attack_ref": (m.group(1) if (m := re.search(r"^    attack-reference:\n      id: (\S+)", b, re.M)) else None)}
+            for t, b in entries("techniques", r"AML\.T").items()}
+    mit = {m: {"name": one(b, "name"), "categories": many(b, "categories"), "lifecycle": many(b, "lifecycle-phases")}
+           for m, b in entries("mitigations", r"AML\.M").items()}
+    rel = collections.defaultdict(set)
+    for m, t in re.findall(r"- source: (AML\.M\d+)\n\s+target: (AML\.T[\d.]+)\n\s+relationship-type: mitigates", txt): rel[t].add(m)
+    return {"techniques": tech, "mitigations": mit, "mitigates": rel}
+
 # ---------------------------------------------------------------- stats + output helpers
 def boot_ci(items, pred, B=2000, seed=20261005):
     """Percentile bootstrap 95% CI for a proportion. Returns (p, lo, hi)."""

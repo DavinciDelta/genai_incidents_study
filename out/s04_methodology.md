@@ -54,9 +54,9 @@ Read off the corpus `category`: `demonstrated` for research, research-demonstrat
 | demonstrated (research/red-team) | 307 | 22.9 | 20.7–25.2 |
 | threat report | 94 | 7.0 | 5.7–8.4 |
 
-**Top ATLAS technique on record (heuristic corpus label)** (n = 1,339)
+**First-listed ATLAS technique (heuristic corpus label)** (n = 1,339)
 
-The first MITRE ATLAS technique listed on each record (`mitre_atlas`), or `none` where the record has no ATLAS label. A record can list further techniques; only the first is counted. These are heuristic corpus labels, shown to describe the stratum only.
+The first MITRE ATLAS technique listed on each record (`mitre_atlas`), or `none` where the record has no ATLAS label. The corpus stores the list sorted by id, so this is the lowest-numbered technique on the record, not its main one; step 5 counts every technique. These are heuristic corpus labels, shown to describe the stratum only.
 
 | value | n | % |
 |---|---|---|

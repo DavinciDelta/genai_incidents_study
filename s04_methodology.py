@@ -69,9 +69,10 @@ L += table("Did success need a software vulnerability?", ON, dep, ci=True,
                 "vector (prompt injection, jailbreak, adversarial input, evasion, model extraction or inversion, membership inference); otherwise `unstated`. This reads corpus "
                 "fields, so it describes the stratum; it is not a coded answer.")
 L += table("Realization", ON, realization, ci=True, desc=REAL)
-L += table("Top ATLAS technique on record (heuristic corpus label)", ON, lambda r: " ".join([(r.get("mitre_atlas") or ["none"])[0], atlas.get((r.get("mitre_atlas") or [""])[0], {}).get("name", "")]), top=8,
-           desc="The first MITRE ATLAS technique listed on each record (`mitre_atlas`), or `none` where the record has no ATLAS label. A record can list "
-                "further techniques; only the first is counted. These are heuristic corpus labels, shown to describe the stratum only.")
+L += table("First-listed ATLAS technique (heuristic corpus label)", ON, lambda r: " ".join([(r.get("mitre_atlas") or ["none"])[0], atlas.get((r.get("mitre_atlas") or [""])[0], {}).get("name", "")]), top=8,
+           desc="The first MITRE ATLAS technique listed on each record (`mitre_atlas`), or `none` where the record has no ATLAS label. The corpus stores "
+                "the list sorted by id, so this is the lowest-numbered technique on the record, not its main one; step 5 counts every technique. "
+                "These are heuristic corpus labels, shown to describe the stratum only.")
 L += ["", "**Entry point by year (% within year)**", "", year_desc(ON, "ON-AI", "entry point")] + year_table(ON, ENTRY, ["indirect", "direct", "supply", "credential", "exposed", "adversarial"])
 L += ["", "## WITH-AI — the AI is the attacker's instrument"]
 L += table("What the AI produced or did for the attacker", WI, lambda r: first(AIROLE, text(r)), ci=True,

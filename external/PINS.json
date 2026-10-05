@@ -2,5 +2,9 @@
  "genai_incidents_pip": "2.12.0",
  "genai_incidents_tag": "v2.12.0",
  "incidents_json_sha256": "83295199da356b69a0a17a08dc1ef2a02d49d7c5bd87a2bc5e2a94f3ba3f3fcf",
- "incident_rank_validation_commit": "f7a92a1a5bf21066f49d94a3335c6f66269f3e67"
+ "incident_rank_validation_commit": "f7a92a1a5bf21066f49d94a3335c6f66269f3e67",
+ "atlas_data_commit": "3259f388d19cbcca11bacf12a0ef97f4198f711b",
+ "atlas_release": "2026.06",
+ "atlas_yaml_sha256": "b771de8b1489564b2838a709c7429849a9575dbd94073928817fe1a21661e70a",
+ "corpus_merge_script_sha256": "69492bf6cb7a3f960c21d17d94db72c40ce27bb958d70a0108f8631c52bd76b6"
 }
