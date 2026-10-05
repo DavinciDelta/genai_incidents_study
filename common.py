@@ -73,7 +73,11 @@ def sum_note(pcts, what="The % column"):
     t = f"{sum(float(f'{p:.1f}') for p in pcts):.1f}"
     return None if t == "100.0" else f"*{what} sums to {t}, not 100.0, because each row is rounded to one decimal place.*"
 
-def table(title, items, key, top=12, ci=False, note=None, desc=None, rest=False, by_value=False):
+READ = ("How to read the tables: n is the denominator of the % column. It counts records unless the description says otherwise. "
+        "% is rounded to one decimal. Where a table lists only the most frequent values, the remaining values are pooled in a last row, "
+        "so each % column covers all of n. Where a column still does not sum to 100.0, a line under the table says why.")
+
+def table(title, items, key, top=12, ci=False, note=None, desc=None, rest=True, by_value=False):
     """Markdown frequency table of key(item) over items, optional bootstrap CI per row.
     desc: description printed under the title. rest: pool the values beyond `top` into a last row and,
     if the % column still misses 100.0, say why. by_value: order rows by value instead of by count."""
