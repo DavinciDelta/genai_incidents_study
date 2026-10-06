@@ -82,6 +82,15 @@ def load_prelabels() -> dict:
         d = json.loads(line); out[d["incident_id"]] = {k: d.get(k) for k in ("consensus", "agreement", "triage_tier")}
     return out
 
+def load_lookup() -> dict:
+    """The corpus build script's OWASP code -> ATLAS technique tables (LLM_TO_ATLAS, ASI_TO_ATLAS), read with ast from the
+    pinned copy at external/corpus_merge_and_dedupe.py; the script is never run."""
+    import ast
+    out = {}
+    for node in ast.parse((EXT / "corpus_merge_and_dedupe.py").read_text()).body:
+        if isinstance(node, ast.Assign) and getattr(node.targets[0], "id", "") in ("LLM_TO_ATLAS", "ASI_TO_ATLAS"): out.update(ast.literal_eval(node.value))
+    return out
+
 def owasp_names(rv: dict) -> dict:
     """The ten OWASP LLM Top 10 entries under both numberings, matched by name (never by number), plus the ten proposed
     additions. Returns {'corpus': {corpus code: name}, 'rv': {rv id: name}, 'rv2corpus': {rv id: corpus code},
@@ -94,26 +103,6 @@ def owasp_names(rv: dict) -> dict:
     rv2c = {e: c for e, c in rv2c.items() if c}
     assert len(rv2c) == 10 and set(rv2c.values()) == set(corp), "the ten OWASP LLM entries must match by name"
     return {"corpus": corp, "rv": rvn, "rv2corpus": rv2c, "corpus2rv": {c: e for e, c in rv2c.items()}, "asi": asi}
-
-# ---------------------------------------------------------------- MITRE ATLAS release
-def load_atlas() -> dict:
-    """The pinned MITRE ATLAS release (external/ATLAS.yaml), read with regexes because stdlib has no YAML parser.
-    Returns techniques {id: {name, attack_ref, maturity}}, mitigations {id: {name, categories, lifecycle}}
-    and mitigates {technique id: {mitigation ids}} from MITRE's own `mitigates` relationships."""
-    txt = (EXT / "ATLAS.yaml").read_text()
-    def entries(section, prefix):
-        parts = re.split(rf"^  ({prefix}[\d.]+):\n", re.search(rf"^{section}:\n(.*?)(?=^\S|\Z)", txt, re.S | re.M).group(1), flags=re.M)
-        return dict(zip(parts[1::2], parts[2::2]))
-    one = lambda body, key: (m.group(1).strip("'\"") if (m := re.search(rf"^    {key}: (.*)$", body, re.M)) else None)
-    many = lambda body, key: (re.findall(r"^    - (.*)$", m.group(1), re.M) if (m := re.search(rf"^    {key}:\n((?:    - .*\n)+)", body, re.M)) else [])
-    tech = {t: {"name": one(b, "name"), "maturity": one(b, "maturity"),
-                "attack_ref": (m.group(1) if (m := re.search(r"^    attack-reference:\n      id: (\S+)", b, re.M)) else None)}
-            for t, b in entries("techniques", r"AML\.T").items()}
-    mit = {m: {"name": one(b, "name"), "categories": many(b, "categories"), "lifecycle": many(b, "lifecycle-phases")}
-           for m, b in entries("mitigations", r"AML\.M").items()}
-    rel = collections.defaultdict(set)
-    for m, t in re.findall(r"- source: (AML\.M\d+)\n\s+target: (AML\.T[\d.]+)\n\s+relationship-type: mitigates", txt): rel[t].add(m)
-    return {"techniques": tech, "mitigations": mit, "mitigates": rel}
 
 # ---------------------------------------------------------------- stats + output helpers
 def boot_ci(items, pred, B=2000, seed=20261005):
@@ -151,7 +140,6 @@ GLOSSARY = [
     ("frame-blind", "an entry rank-validation declared unobservable in this corpus and left out of its ranking: Data and Model Poisoning, Vector and Embedding Weaknesses, Unbounded Consumption."),
     ("the two numberings", "the corpus and rank-validation number the same ten OWASP entries differently (corpus LLM04 = Supply Chain, rank-validation LLM04 = Data and Model Poisoning); every join is by name; see Table 1.0."),
     ("corpus lookup", "the fixed OWASP-code → ATLAS-technique table in the corpus's build script, which produces most of its ATLAS labels."),
-    ("ATLAS / ATT&CK", "MITRE ATLAS, the adversary-technique catalogue for AI systems, and its parent Enterprise ATT&CK catalogue; ATLAS publishes technique → mitigation links."),
     ("record type", "the corpus `category` field: vulnerability disclosure, real-world incident, research, research-demonstrated, red-team or threat report. 'Demonstrated' below means research, research-demonstrated or red-team."),
     ("unstated", "no keyword rule matched: the record does not say. These rows are the hand-coding workload."),
     ("snapshot", "the 7,714-record copy of this corpus that rank-validation labelled in May 2026; its ids are followed to the current corpus through the package's redirects."),
@@ -159,17 +147,18 @@ GLOSSARY = [
     ("posterior mean", "rank-validation's recall and precision estimates: (hits + 1) / (rows + 2), a Beta(1,1) prior over the hand-labelled rows behind each entry."),
     ("90% interval vs 95% CI", "rank-validation reports 90% intervals on its ranks; this study's own proportions carry 95% bootstrap CIs. The two are never mixed in one column."),
     ("realized", "a real-world incident or a vulnerability disclosure (corpus record type), as opposed to a demonstration or a threat report."),
-    ("ATLAS category, lifecycle phase, tactic", "ATLAS's own tags: the kind of control a mitigation is (Policy, Technical - AI, Technical - Cyber), the model-lifecycle stages it belongs to, and the adversary goal a technique serves (Initial Access, Execution, Impact, …)."),
 ]
 READ = "Conventions, 95% CI, pooled rows and the glossary: `out/s01_overview.md` section 0."
 
 CHANNELS = ("cve/ghsa", "harm-db", "research/other")
 
-def table(title, items, key, top=12, ci=False, note=None, desc=None, rest=True, by_value=False, num=None, channels=False, floor=0, col="value", rounding_note=False):
+def table(title, items, key, top=12, ci=False, note=None, desc=None, rest=True, by_value=False, num=None, channels=False, floor=0, col="value", rounding_note=False, breakdown=None):
     """Markdown frequency table of key(item) over items.
     num: table number, printed as 'Table <num>'. ci: bootstrap 95% CI per row. channels: add the share of each disclosure channel's
     items carrying the value (items must be corpus records). floor: rows with fewer items than this show counts but no % or CI.
-    rest: pool the values beyond `top` into a last row. by_value: order rows by value. rounding_note: add the old per-table rounding line."""
+    rest: pool the values beyond `top` into a last row. by_value: order rows by value. rounding_note: add the old per-table rounding line.
+    breakdown: (value, key2) — under the row for `value`, add indented '↳' sub-rows splitting its items by key2(item); % and channel
+    shares stay on the table's own denominators, so the sub-rows sum to the row above."""
     c = collections.Counter(key(x) for x in items); n = len(items)
     rows = c.most_common(top)
     if by_value: rows.sort()
@@ -187,6 +176,12 @@ def table(title, items, key, top=12, ci=False, note=None, desc=None, rest=True, 
             else: p, lo, hi = boot_ci(items, lambda x, k=k: key(x) == k); row += f" {100*lo:.1f}–{100*hi:.1f} |"
         if channels: row += "".join(f" {'—' if small else pct(sum(key(r) == k for r in ch[x]), len(ch[x]))} |" for x in CHANNELS)
         L.append(row)
+        if breakdown and k == breakdown[0]:
+            sub = collections.Counter(breakdown[1](x) for x in items if key(x) == k)
+            for sk, sv in sub.most_common():
+                srow = f"| ↳ {sk} | {sv:,} | {pct(sv, n)} |" + (" — |" if ci else "")
+                if channels: srow += "".join(f" {pct(sum(key(r) == k and breakdown[1](r) == sk for r in ch[x]), len(ch[x]))} |" for x in CHANNELS)
+                L.append(srow)
     if rest:
         hidden, m = len(c) - len(rows), n - sum(v for _, v in rows)
         if hidden: L.append(f"| *{hidden:,} more values (pooled)* | {m:,} | {pct(m, n)} |" + (" |" if ci else "") + ("".join(f" {pct(sum(key(r) not in dict(rows) for r in ch[x]), len(ch[x]))} |" for x in CHANNELS) if channels else ""))
