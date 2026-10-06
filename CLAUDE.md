@@ -5,8 +5,8 @@ AI incidents (attacker-centred, modelled on Li et al. AIES 2025 which is harm-ce
 the reasoning behind every decision: `docs/CONVERSATION_LOG.md` — read it before proposing a new
 categorisation scheme; one has already been tried and discarded.
 
-Pipeline (run in order; `make all`): `fetch_data.py` → `s01_overview.py` → `s02_split.py` →
-`s03_figures.py` → `s04_methodology.py` → `s05_techniques.py`. Shared code in `common.py`. Outputs in `out/`. Inputs pinned in
+Pipeline (run in order; `make all`): `fetch_data.py` → `s02_split.py` → `s01_overview.py` (reads `out/split.json`) →
+`s03_figures.py` → `s04_methodology.py` (writes `out/methodology.json`) → `s05_techniques.py`. Shared code in `common.py`. Outputs in `out/`. Inputs pinned in
 `external/PINS.json` (pip `genai-incidents` version, full-JSON tag + sha256, rank-validation commit,
 ATLAS release commit + sha256, corpus build-script sha256).
 

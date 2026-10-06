@@ -1,5 +1,5 @@
 PY=.venv/bin/python
-all: fetch s01 s02 s03 s04 s05
+all: fetch s02 s01 s03 s04 s05
 fetch:
 	$(PY) fetch_data.py
 s01:

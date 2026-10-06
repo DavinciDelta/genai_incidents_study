@@ -5,11 +5,11 @@ Replicable preliminary analysis. Everything in `out/` is produced by the scripts
 ```
 uv venv --python 3.12 .venv && uv pip install --python .venv/bin/python -r requirements.txt
 .venv/bin/python fetch_data.py        # pin + fetch full JSON at the pip version's tag, ATLAS release, clone rank-validation
-.venv/bin/python s01_overview.py      # README snippet, corpus profile, rank-validation view  -> out/s01_overview.md
 .venv/bin/python s02_split.py         # ON-AI vs WITH-AI                                     -> out/split.json, out/s02_split.md
+.venv/bin/python s01_overview.py      # conventions, corpus profile, rank-validation view     -> out/s01_overview.md (reads out/split.json)
 .venv/bin/python s03_figures.py       # Figure 1                                             -> out/fig1_on_with.svg
 .venv/bin/python s04_methodology.py   # rule-based methodology breakdown                      -> out/s04_methodology.md
 .venv/bin/python s05_techniques.py    # ATLAS techniques -> ATLAS mitigations -> gaps (draft) -> out/s05_techniques.md
 ```
-`make all` runs the six in order. `draft.md` is the paper skeleton; its numbers come from `out/`.
+`make all` runs the six in order (step 2 before step 1, because step 1's section C reads `out/split.json`). `draft.md` is the paper skeleton; its numbers come from `out/`.
 Pins: `external/PINS.json`. Stdlib only beyond the `genai-incidents` package.
