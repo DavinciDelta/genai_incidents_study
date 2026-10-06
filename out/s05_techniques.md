@@ -56,46 +56,33 @@ What stands out:
 
 Rank-validation's adjudicator hand-labelled 161 ON-AI and 174 WITH-AI records, drawn by quota (every pre-labeller disagreement, then 30 unanimous + 30 majority rows per entry), so counts are not prevalence. Data and Model Poisoning, the top ON-AI hand label (22), is the corpus's 7th; MCP Tool Interface Exploitation (17), Cross-Modal Safety Bypass (10) and Weaponized LLM Abuse (43) have no corpus code; no entry fits 23 ON-AI (14.3%) and 74 WITH-AI (42.5%) rows, 62 of them disagreement rows (no-entry share 59% there, 22% where two pre-labellers agreed, 10% where three did).
 
-**Table 5.3. Hand labels vs corpus labels, both populations** (n = 161 ON-AI and 174 WITH-AI hand-labelled records of 1,123 joined; the rest NONE 759, BOTH 4, UNRESOLVED 25)
+**Table 5.3. Where the corpus and the hand labels disagree: the corpus's top two ON-AI categories hold 34 of 161 hand labels, 3 labels with no corpus code hold 70** (n = 161 ON-AI and 174 WITH-AI hand-labelled records)
 
-Per population: categories in corpus-rank order (under 2 hand labels: pooled); proposed additions (rank-validation's candidates) with 2+ hand labels, note = corpus codes on their records (several per record possible); *No entry fits* by kind (↳ ON-AI by corpus attack vector, WITH-AI by step 4's objective rule; kinds under 4 records pooled; lowest-id example). *Hand-label rank*: by count within the sample, ties shared; *a of b*: of b records the person filed under the entry, a also carry its corpus code; tracker stub: description is only a tracker pointer (step 4); ‡ as in Table 5.1.
+One row per category, the ten in vote order then the proposed additions with 10+ hand labels in either population. *Corpus rank* orders the ten by records carrying the code; *hand-label rank (n)* orders every label the person used by count within the sample (a quota sample, so a rank, not a prevalence); *corpus also carries it* = of the records the person filed under the entry, how many the corpus also codes with it, or, for an entry with no corpus code, the codes the corpus put on them. ‡ = channel marker (Table 5.1).
 
-| population | category | corpus rank | corpus records n | hand labels n | hand-label rank (sample) | corpus also carries it (a of b) | note |
-|---|---|---|---|---|---|---|---|
-| ON-AI | Supply Chain Vulnerabilities‡ | 1 | 560 | 21 | 2 | 20 of 21 | ‡ channel marker |
-| ON-AI | Improper Output Handling | 2 | 548 | 13 | 5 | 11 of 13 |  |
-| ON-AI | Prompt Injection | 3 | 500 | 15 | 4 | 14 of 15 |  |
-| ON-AI | Sensitive Information Disclosure | 4 | 190 | 3 | 11 | 2 of 3 |  |
-| ON-AI | Excessive Agency | 5 | 118 | 9 | 7 | 3 of 9 |  |
-| ON-AI | Data and Model Poisoning | 7 | 85 | 22 | 1 | 13 of 22 |  |
-| ON-AI | Hidden Context Exposure‡ | 8 | 34 | 3 | 11 | 2 of 3 | ‡ channel marker |
-| ON-AI | Unbounded Consumption | 9 | 20 | 8 | 8 | 4 of 8 |  |
-| ON-AI | *2 categories with under 2 hand labels* | — | 108 | 1 | — | — | Misinformation‡ (rank 6) 1, 1 of 1; none on Vector and Embedding Weaknesses |
-| ON-AI | MCP Tool Interface Exploitation [proposed] | — | — | 17 | 3 | — | carry Supply Chain Vulnerabilities 14, Improper Output Handling 5 |
-| ON-AI | Cross-Modal Safety Bypass [proposed] | — | — | 10 | 6 | — | carry Prompt Injection 6, Misinformation 1 |
-| ON-AI | Persistent Memory Poisoning [proposed] | — | — | 5 | 9 | — | carry Prompt Injection 4, Sensitive Information Disclosure 2 |
-| ON-AI | Weaponized LLM Abuse [proposed] | — | — | 5 | 9 | — | carry Sensitive Information Disclosure 2, Supply Chain Vulnerabilities 2 |
-| ON-AI | Model Scheming and Deceptive Alignment [proposed] | — | — | 3 | 11 | — | carry Excessive Agency 2 |
-| ON-AI | *5 other proposed additions* | — | — | 3 | — | — | Model Misalignment 1, LLM Artifact Promotion Trust Failure 1, Systemic Insecure Code Generation 1; 2 with none |
-| ON-AI | *No entry fits* | — | — | 23 (14.3% of 161) | — | — | 8 of 23 tracker stubs; 15 of 23 ON-AI by vector alone (step 2's on-vector rule); 2 kinds below |
-| ON-AI | ↳ adversarial-input | — | — | 8 | — | — | e.g. INC-04165: Robust CLIP: Unsupervised… |
-| ON-AI | ↳ 9 vectors with 1–3 records: jailbreak 3, tool-abuse 3, other 2, rce 2, 5 with 1 | — | — | 15 | — | — | e.g. INC-00663: Autonomous AI agent… |
-| WITH-AI | Misinformation‡ | 1 | 1,223 | 47 | 1 | 46 of 47 | ‡ channel marker |
-| WITH-AI | Improper Output Handling | 2 | 365 | 2 | 3 | 0 of 2 |  |
-| WITH-AI | Sensitive Information Disclosure | 4 | 109 | 2 | 3 | 2 of 2 |  |
-| WITH-AI | Data and Model Poisoning | 7 | 6 | 2 | 3 | 0 of 2 |  |
-| WITH-AI | *6 categories with under 2 hand labels* | — | 275 | 1 | — | — | Supply Chain Vulnerabilities‡ (rank 3) 1, 0 of 1; none on Hidden Context Exposure‡, Excessive Agency, Unbounded Consumption, Prompt Injection, Vector and Embedding Weaknesses |
-| WITH-AI | Weaponized LLM Abuse [proposed] | — | — | 43 | 2 | — | carry Misinformation 41, Sensitive Information Disclosure 7 |
-| WITH-AI | Cross-Modal Safety Bypass [proposed] | — | — | 2 | 3 | — | carry Misinformation 2, Improper Output Handling 1 |
-| WITH-AI | *8 other proposed additions* | — | — | 1 | — | — | Model Misalignment 1; 7 with none |
-| WITH-AI | *No entry fits* | — | — | 74 (42.5% of 174) | — | — | 67 of 74 tracker stubs; 5 kinds below |
-| WITH-AI | ↳ non-consensual / abuse imagery | — | — | 28 | — | — | e.g. INC-00381: AI-Generated Deepfake Nudes… |
-| WITH-AI | ↳ no objective stated | — | — | 27 | — | — | 26 of 27 tracker stubs; e.g. INC-00731: Canva AI Tool Replaces… |
-| WITH-AI | ↳ financial fraud / extortion | — | — | 8 | — | — | e.g. INC-00097: AI Chatbot Generates… |
-| WITH-AI | ↳ political / influence | — | — | 8 | — | — | e.g. INC-03065: Purported AI-Generated… |
-| WITH-AI | ↳ defamation / impersonation of a person | — | — | 3 | — | — | e.g. INC-01968: UN AI Advisor Warns of… |
+| category | ON-AI corpus rank | ON-AI hand-label rank (n) | ON-AI corpus also carries it | WITH-AI corpus rank | WITH-AI hand-label rank (n) | WITH-AI corpus also carries it |
+|---|---|---|---|---|---|---|
+| Prompt Injection | 3 | 4 (15) | 14 of 15 | 9 | — (0) | — |
+| Sensitive Information Disclosure | 4 | 11 (3) | 2 of 3 | 4 | 3 (2) | 2 of 2 |
+| Excessive Agency | 5 | 7 (9) | 3 of 9 | 6 | — (0) | — |
+| Supply Chain Vulnerabilities‡ | 1 | 2 (21) | 20 of 21 | 3 | 7 (1) | 0 of 1 |
+| Data and Model Poisoning | 7 | 1 (22) | 13 of 22 | 7 | 3 (2) | 0 of 2 |
+| Unbounded Consumption | 9 | 8 (8) | 4 of 8 | 8 | — (0) | — |
+| Vector and Embedding Weaknesses | 10 | — (0) | — | — | — (0) | — |
+| Hidden Context Exposure‡ | 8 | 11 (3) | 2 of 3 | 5 | — (0) | — |
+| Improper Output Handling | 2 | 5 (13) | 11 of 13 | 2 | 3 (2) | 0 of 2 |
+| Misinformation‡ | 6 | 14 (1) | 1 of 1 | 1 | 1 (47) | 46 of 47 |
+| Weaponized LLM Abuse [proposed, no corpus code] | — | 9 (5) | carry Sensitive Information Disclosure 2, Supply Chain Vulnerabilities 2 | — | 2 (43) | carry Misinformation 41, Sensitive Information Disclosure 7 |
+| MCP Tool Interface Exploitation [proposed, no corpus code] | — | 3 (17) | carry Supply Chain Vulnerabilities 14, Improper Output Handling 5 | — | — (0) | — |
+| Cross-Modal Safety Bypass [proposed, no corpus code] | — | 6 (10) | carry Prompt Injection 6, Misinformation 1 | — | 3 (2) | carry Misinformation 2, Improper Output Handling 1 |
+| *No entry fits* | — | — (23, 14% of hand-labelled) | — | — | — (74, 43% of hand-labelled) | — |
 
-*Why the person placed these nowhere.* Rubric: an LLM mechanism, input that "alters the model's behavior in ways the operator did not intend", output "trusted and acted upon", or "cyberattacks against third-party targets". Notes are boilerplate or empty on 19/23 ON-AI and 72/74 WITH-AI rows, else "No concrete LLM vulnerability mechanism in incident text." This study's reading: ON-AI, classifier evaluations and misused decision tools; WITH-AI, deepfake fraud and abuse imagery.
+Why this is a limitation:
+
+- *The ranks do not match.* Data and Model Poisoning, the person's most-used ON-AI label (22), is the corpus's 7th; the corpus's first two, Supply Chain Vulnerabilities and Improper Output Handling, hold 34 of the 161 hand labels between them.
+- *The list lacks codes for what the person saw most.* MCP Tool Interface Exploitation (17 ON-AI hand labels; the corpus filed them as Supply Chain Vulnerabilities 14, Improper Output Handling 5), Cross-Modal Safety Bypass (10 ON-AI hand labels; the corpus filed them as Prompt Injection 6, Misinformation 1) and Weaponized LLM Abuse (43 WITH-AI hand labels; the corpus filed them as Misinformation 41, Sensitive Information Disclosure 7) have no corpus code.
+- *A large share fits nothing.* No entry fits 23 ON-AI (14%) and 74 WITH-AI (43%) rows: ON-AI mostly adversarial-input 8 (classifier evaluations), WITH-AI mostly non-consensual / abuse imagery 35 and political / influence 13 (deepfake fraud and abuse imagery; 67 of 74 are tracker stubs). The rubric wants an LLM mechanism: input that "alters the model's behavior in ways the operator did not intend", output "trusted and acted upon", or "cyberattacks against third-party targets"; the person's notes are boilerplate on 91 of 97 rows. 62 of the 74 WITH-AI rows are ones the three LLM pre-labellers disagreed on, a tier the quota took in full.
+- *Where the person did use a corpus category, the corpus usually has it too* (Supply Chain Vulnerabilities 20 of 21; lowest Data and Model Poisoning 13 of 22), so the disagreement is in what the corpus adds in bulk and what it cannot name, not in the person rejecting its codes.
 
 ## Use cases
 

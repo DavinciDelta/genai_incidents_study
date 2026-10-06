@@ -12,6 +12,9 @@ corpus build-script sha256).
 
 Rules of the house
 - Stdlib + `genai-incidents` only. No plotting libraries, no model calls, no hand-edited numbers.
+- `coded/relabels.json` holds labels for the records step 4's rules left `unstated`, made in-session by two
+  independent Claude coders plus an adjudicator (2026-10-06), not by the pipeline. Scripts read it; `make`
+  cannot regenerate it; a human review is still owed before any of its values is cited as a finding.
 - Every figure in `draft.md` must trace to a file in `out/`; regenerate before quoting.
 - The corpus is a sampling frame, not coding material. Corpus labels (OWASP, ATLAS, attack_vector)
   stratify samples; they never populate a hand-coded field. Step 4's rule dimensions read the text first

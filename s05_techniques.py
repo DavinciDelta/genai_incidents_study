@@ -177,47 +177,40 @@ def carries(p, e, c=None):
     if c: return sum(c in llm(r) for r in filed), len(filed)
     cc = collections.Counter(x for r in filed for x in llm(r)).most_common(2)
     return "carry " + (", ".join(f"{ename(x)} {v}" for x, v in cc) or "no corpus code")
-L += head("5.3", "Hand labels vs corpus labels, both populations",
-          f"n = {NG['ON-AI']} ON-AI and {NG['WITH-AI']} WITH-AI hand-labelled records of {g_rec:,} joined; the rest NONE {g_pop['NONE']}, BOTH {g_pop['BOTH']}, UNRESOLVED {g_pop['UNRESOLVED']}",
-          f"Per population: categories in corpus-rank order (under {MIN_HAND} hand labels: pooled); proposed additions (rank-validation's candidates) with {MIN_HAND}+ hand "
-          f"labels, note = corpus codes on their records (several per record possible); *No entry fits* by kind (↳ ON-AI by corpus "
-          f"attack vector, WITH-AI by step 4's objective rule; kinds under {MIN_KIND} records pooled; lowest-id example). *Hand-label rank*: by count within the sample, "
-          f"ties shared; *a of b*: of b records the person filed under the entry, a also carry its corpus code; tracker stub: description is only a tracker "
-          f"pointer (step 4); ‡ as in Table 5.1.",
-          ["population", "category", "corpus rank", "corpus records n", "hand labels n", "hand-label rank (sample)", "corpus also carries it (a of b)", "note"])
-rows_53 = 0
-for p in POPS:
-    hum, crank, cnt, hr = HUM[p], CRANK[p], CNT[p], HRANK[p]
-    order = sorted(TEN, key=lambda e: (crank.get(RV2C[e], 99), VR[e])); few = [e for e in order if hum[e] < MIN_HAND]
-    for e in order:
-        c = RV2C[e]; a, b = carries(p, e, c)
-        if hum[e] >= MIN_HAND:
-            L.append(f"| {p} | {ename(c)}{'‡' if c in MARKER else ''} | {crank.get(c, '—')} | {cnt[c]:,} | {hum[e]} | {hr.get(e, '—')} | {a} of {b} | {'‡ channel marker' if c in MARKER else ''} |")
-    def few_note(e):
-        c = RV2C[e]; a, b = carries(p, e, c)
-        return f"{ename(c)}{'‡' if c in MARKER else ''} (rank {crank.get(c, '—')}) {hum[e]}, {a} of {b}"
-    zero = [e for e in few if not hum[e]]; some = "; ".join(few_note(e) for e in few if hum[e])
-    none_ = ("none on " + ", ".join(f"{ename(RV2C[e])}{'‡' if RV2C[e] in MARKER else ''}" for e in zero)) if zero else ""
-    L.append(f"| {p} | *{len(few)} categories with under {MIN_HAND} hand labels* | — | {sum(cnt[RV2C[e]] for e in few):,} | {sum(hum[e] for e in few)} | — | — | {'; '.join(x for x in (some, none_) if x)} |")
-    adds = [e for e in ADDS if hum[e] >= MIN_HAND]; pooled = [e for e in ADDS if e not in adds]
-    for e in sorted(adds, key=lambda e: -hum[e]):
-        L.append(f"| {p} | {RVN[e]} [proposed] | — | — | {hum[e]} | {hr[e]} | — | {carries(p, e)} |")
-    L.append(f"| {p} | *{len(pooled)} other proposed additions* | — | — | {sum(hum[e] for e in pooled)} | — | — | "
-             f"{', '.join(f'{RVN[e]} {hum[e]}' for e in pooled if hum[e]) or 'none'}; {sum(not hum[e] for e in pooled)} with none |")
-    st_all = sum(stub(r) for _, r in NONE[p]); kinds = kinds_of(p)
-    onv = sum(S[i]["rule"] == "on-vector" for i, _ in NONE[p])
-    how = f"{onv} of {NN[p]} ON-AI by vector alone (step 2's on-vector rule); " if p == "ON-AI" else ""
-    L.append(f"| {p} | *No entry fits* | — | — | {NN[p]} ({pc(NN[p], NG[p])}% of {NG[p]}) | — | — | {st_all} of {NN[p]} tracker stubs; {how}{len(kinds)} kinds below |")
-    for kd, rs in kinds.items():
-        i, r = min(rs, key=lambda x: x[0]); st = sum(stub(x) for _, x in rs)
-        flag = f"{st} of {len(rs)} tracker stubs; " if kd == "no objective stated" else ""
-        L.append(f"| {p} | ↳ {kd} | — | — | {len(rs)} | — | — | {flag}e.g. {i}: {cut(r['title'])} |")
-    rows_53 += len(TEN) - len(few) + 1 + len(adds) + 2 + len(kinds)
+C2RV = {c: e for e, c in RV2C.items()}
+top2 = [c for c, _ in sorted(CRANK["ON-AI"].items(), key=lambda x: x[1])[:2]]; h_top2 = sum(HUM["ON-AI"][C2RV[c]] for c in top2)
+nocode = [(p, e) for p in POPS for e in ADDS if HUM[p][e] >= MIN_HEAD]; h_nocode = sum(HUM[p][e] for p, e in nocode)
+def cell(p, e):
+    c = RV2C.get(e); h = HUM[p][e]
+    cr = str(CRANK[p][c]) if c and c in CRANK[p] else "—"
+    hr = f"{HRANK[p][e]} ({h})" if h else "— (0)"
+    car = (lambda a, b: f"{a} of {b}")(*carries(p, e, c)) if c and h else (carries(p, e) if h else "—")
+    return f"{cr} | {hr} | {car}"
+L += head("5.3", f"Where the corpus and the hand labels disagree: the corpus's top two ON-AI categories hold {h_top2} of {NG['ON-AI']} hand labels, {len(nocode)} labels with no corpus code hold {h_nocode}",
+          f"n = {NG['ON-AI']} ON-AI and {NG['WITH-AI']} WITH-AI hand-labelled records",
+          f"One row per category, the ten in vote order then the proposed additions with {MIN_HEAD}+ hand labels in either population. *Corpus rank* orders the ten by records carrying the code; "
+          f"*hand-label rank (n)* orders every label the person used by count within the sample (a quota sample, so a rank, not a prevalence); *corpus also carries it* = of the records the person "
+          f"filed under the entry, how many the corpus also codes with it, or, for an entry with no corpus code, the codes the corpus put on them. ‡ = channel marker (Table 5.1).",
+          ["category", "ON-AI corpus rank", "ON-AI hand-label rank (n)", "ON-AI corpus also carries it", "WITH-AI corpus rank", "WITH-AI hand-label rank (n)", "WITH-AI corpus also carries it"])
+for e in sorted(TEN, key=lambda e: VR[e]):
+    c = RV2C[e]; L.append(f"| {ename(c)}{'‡' if c in MARKER else ''} | {cell('ON-AI', e)} | {cell('WITH-AI', e)} |")
+for e in sorted((e for e in ADDS if max(HUM[p][e] for p in POPS) >= MIN_HEAD), key=lambda e: -max(HUM[p][e] for p in POPS)):
+    L.append(f"| {RVN[e]} [proposed, no corpus code] | {cell('ON-AI', e)} | {cell('WITH-AI', e)} |")
+L.append(f"| *No entry fits* | — | — ({NN['ON-AI']}, {pc(NN['ON-AI'], NG['ON-AI'], 0)}% of hand-labelled) | — | — | — ({NN['WITH-AI']}, {pc(NN['WITH-AI'], NG['WITH-AI'], 0)}% of hand-labelled) | — |")
+rows_53 = len(TEN) + sum(1 for e in ADDS if max(HUM[p][e] for p in POPS) >= MIN_HEAD) + 1
 boiler = {p: sum(note(i) != SUBSTANTIVE for i, _ in NONE[p]) for p in POPS}
-WHY = (f"*Why the person placed these nowhere.* Rubric: an LLM mechanism, input that \"{RUB['pi']}\", output \"{RUB['mis']}\", or \"{RUB['wla']}\". Notes are boilerplate or "
-       f"empty on {boiler['ON-AI']}/{NN['ON-AI']} ON-AI and {boiler['WITH-AI']}/{NN['WITH-AI']} WITH-AI rows, else \"{SUBSTANTIVE}\" This study's reading: ON-AI, "
-       f"{READING['ON-AI']}; WITH-AI, {READING['WITH-AI']}.")
-L += ["", WHY]
+def main_kinds(p, k=2): return andlist(f"{kd} {len(rs)}" for kd, rs in list(kinds_of(p).items())[:k])
+kept = [(RVN[e], *carries("ON-AI", e, RV2C[e])) for e in TEN if HUM["ON-AI"][e] >= MIN_HEAD]
+hi_k = max(kept, key=lambda x: x[1] / x[2]); lo_k = min(kept, key=lambda x: x[1] / x[2])
+L += ["", "Why this is a limitation:", "",
+      f"- *The ranks do not match.* {RVN[top_hand]}, the person's most-used ON-AI label ({HUM['ON-AI'][top_hand]}), is the corpus's {ord_(CRANK['ON-AI'][RV2C[top_hand]])}; "
+      f"the corpus's first two, {andlist(ename(c) for c in top2)}, hold {h_top2} of the {NG['ON-AI']} hand labels between them.",
+      f"- *The list lacks codes for what the person saw most.* {andlist(f'{RVN[e]} ({HUM[p][e]} {p} hand labels; the corpus filed them as {carries(p, e).removeprefix(chr(99)+chr(97)+chr(114)+chr(114)+chr(121)+chr(32))})' for p, e in nocode)} have no corpus code.",
+      f"- *A large share fits nothing.* No entry fits {NN['ON-AI']} ON-AI ({pc(NN['ON-AI'], NG['ON-AI'], 0)}%) and {NN['WITH-AI']} WITH-AI ({pc(NN['WITH-AI'], NG['WITH-AI'], 0)}%) rows: "
+      f"ON-AI mostly {main_kinds('ON-AI', 1)} (classifier evaluations), WITH-AI mostly {main_kinds('WITH-AI')} (deepfake fraud and abuse imagery; {sum(stub(r) for _, r in NONE['WITH-AI'])} of {NN['WITH-AI']} are tracker stubs). "
+      f"The rubric wants an LLM mechanism: input that \"{RUB['pi']}\", output \"{RUB['mis']}\", or \"{RUB['wla']}\"; the person's notes are boilerplate on {boiler['ON-AI'] + boiler['WITH-AI']} of {NN['ON-AI'] + NN['WITH-AI']} rows. "
+      f"{none_t['disagree'][0]} of the {NN['WITH-AI']} WITH-AI rows are ones the three LLM pre-labellers disagreed on, a tier the quota took in full.",
+      f"- *Where the person did use a corpus category, the corpus usually has it too* ({hi_k[0]} {hi_k[1]} of {hi_k[2]}; lowest {lo_k[0]} {lo_k[1]} of {lo_k[2]}), so the disagreement is in what the corpus adds in bulk and what it cannot name, not in the person rejecting its codes."]
 
 # ---------------------------------------------------------------- Use cases
 ioh, mcp = "LLM10", next(e for e, n in RVN.items() if n.startswith("MCP"))
@@ -247,4 +240,4 @@ LIMS = [f"- Labels are rule outputs: {pc(*seed_share(R))}% of OWASP codes come f
         "- Record year, date precision, stubs and empty fields: steps 1, 2 and 4."]
 L += ["", "## Limitations of the data", "", *LIMS]
 write("s05_techniques.md", L)
-print(f"Table 5.3 rows: {rows_53}; words: limitation {words(LIM)}, why {words(WHY)}, use cases {words(' '.join(USE))}, limitations {words(' '.join(LIMS))}")
+print(f"Table 5.3 rows: {rows_53}; words: limitation {words(LIM)}, use cases {words(' '.join(USE))}, limitations {words(' '.join(LIMS))}")
