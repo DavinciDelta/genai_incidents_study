@@ -99,6 +99,31 @@ itself kept — it is the user's foreman board checkout; `rm -rf` offered). New 
 `s02_split.py`, `s03_figures.py`, `s04_methodology.py`, `common.py`, `draft.md`. Corpus moved to
 v2.12.0 (15,666 rows; frame 2,832; ON 1,339 / WITH 1,460); all findings reproduce.
 
+## 2026-10-05 → 2026-10-06 (second session)
+
+**Ask: clean up the generated outputs; describe every table; explain every % column that misses 100.**
+Done: shared reading note and glossary printed once (s01 section 0); numbered tables with titles that
+state the finding; pooled remainder rows; descriptions of at most two sentences. Found and fixed: the
+Source table scattered AIAAIC ids (no hyphen) into singletons; `join_rv` let a duplicate snapshot id
+overwrite a hand label (1,123 hand-labelled records join, ON-AI 161); the hand-labelled set is a quota
+over three LLM pre-labellers' agreement (all 431 disagreement rows, up to 60 per consensus entry), not
+the 40/100 sampler; nine step-4 keyword rules matched substrings ('invest' in 'investigation', …; 99
+records moved); the corpus and rank-validation number the OWASP entries differently (Table 1.0).
+
+**Ask: tables after Hamer et al. (attack techniques → mitigations → gaps).** Built as step 5 on the
+corpus's ATLAS labels, then found that 90.7% of those labels are produced from the OWASP codes by a
+fixed lookup in the corpus build script (Misinformation → Publish Poisoned Models among them).
+**Scrapped on 2026-10-06 at the user's request**: the mitigation half, the ATLAS fetch and pins. Step 5
+now compares the corpus's OWASP categories with the community vote per population and carries the hand
+labels as one limitation table (hand-label rank only within the sample).
+
+**Ask: step 4 should classify from the corpus label when no keyword matches, and show its source.**
+Done 2026-10-06: text rules first, attack-vector label second where it maps to exactly one value
+(Table 4.0), `unstated` otherwise; '↳ from the text / from the corpus label' under every value; two
+label-only values ('prompt injection, carrier not stated', 'deepfake, medium not stated'). Unstated
+fell from 48.8% to 31.2% (entry point) and from 48.8% to 7.2% (AI medium). `out/methodology.json`
+carries a `_source` per dimension. Pipeline order is now s02 before s01 (section C reads split.json).
+
 ## Standing decisions
 
 1. The corpus is a sampling frame and pointer to primary sources; **no corpus label enters a coded field.**

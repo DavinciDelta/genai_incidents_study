@@ -157,11 +157,12 @@ def table(title, items, key, top=12, ci=False, note=None, desc=None, rest=True, 
     num: table number, printed as 'Table <num>'. ci: bootstrap 95% CI per row. channels: add the share of each disclosure channel's
     items carrying the value (items must be corpus records). floor: rows with fewer items than this show counts but no % or CI.
     rest: pool the values beyond `top` into a last row. by_value: order rows by value. rounding_note: add the old per-table rounding line.
-    breakdown: (value, key2) — under the row for `value`, add indented '↳' sub-rows splitting its items by key2(item); % and channel
-    shares stay on the table's own denominators, so the sub-rows sum to the row above."""
+    breakdown: (value, key2) or {value: key2, ...} — under the row for each such value, add indented '↳' sub-rows splitting its
+    items by key2(item); % and channel shares stay on the table's own denominators, so the sub-rows sum to the row above."""
     c = collections.Counter(key(x) for x in items); n = len(items)
     rows = c.most_common(top)
     if by_value: rows.sort()
+    bd = dict([breakdown]) if isinstance(breakdown, tuple) else (breakdown or {})
     ch = {x: [r for r in items if source_class(r) == x] for x in CHANNELS} if channels else {}
     head = (f"**Table {num}. " if num else "**") + f"{title}** (n = {n:,})"
     L = ["", head, ""] + ([desc, ""] if desc else []) + ([f"*{note}*", ""] if note else [])
@@ -176,11 +177,11 @@ def table(title, items, key, top=12, ci=False, note=None, desc=None, rest=True, 
             else: p, lo, hi = boot_ci(items, lambda x, k=k: key(x) == k); row += f" {100*lo:.1f}–{100*hi:.1f} |"
         if channels: row += "".join(f" {'—' if small else pct(sum(key(r) == k for r in ch[x]), len(ch[x]))} |" for x in CHANNELS)
         L.append(row)
-        if breakdown and k == breakdown[0]:
-            sub = collections.Counter(breakdown[1](x) for x in items if key(x) == k)
+        if k in bd:
+            key2 = bd[k]; sub = collections.Counter(key2(x) for x in items if key(x) == k)
             for sk, sv in sub.most_common():
                 srow = f"| ↳ {sk} | {sv:,} | {pct(sv, n)} |" + (" — |" if ci else "")
-                if channels: srow += "".join(f" {pct(sum(key(r) == k and breakdown[1](r) == sk for r in ch[x]), len(ch[x]))} |" for x in CHANNELS)
+                if channels: srow += "".join(f" {pct(sum(key(r) == k and key2(r) == sk for r in ch[x]), len(ch[x]))} |" for x in CHANNELS)
                 L.append(srow)
     if rest:
         hidden, m = len(c) - len(rows), n - sum(v for _, v in rows)
@@ -190,5 +191,11 @@ def table(title, items, key, top=12, ci=False, note=None, desc=None, rest=True, 
             if s: L += ["", s]
     return L
 
+def safe(line: str) -> str:
+    """Markdown that previewers render: '<' before a non-space becomes &lt; (a literal '<title>' or '(?<!' is read as HTML
+    otherwise), and a '|' inside a code span on a table row is escaped so it does not split the cell."""
+    parts = re.split(r"(`[^`]*`)", line)    # code spans keep their '<' (previewers do not parse HTML inside them); only a pipe is escaped there
+    return "".join(p.replace("|", "\\|") if p.startswith("`") and line.startswith("|") else (p if p.startswith("`") else re.sub(r"<(?=\S)", "&lt;", p)) for p in parts)
+
 def write(name, lines):
-    p = OUT / name; p.write_text("\n".join(lines) + "\n"); print(f"wrote {p.relative_to(ROOT)}"); return p
+    p = OUT / name; p.write_text("\n".join(safe(l) for l in lines) + "\n"); print(f"wrote {p.relative_to(ROOT)}"); return p

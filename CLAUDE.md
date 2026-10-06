@@ -14,7 +14,9 @@ Rules of the house
 - Stdlib + `genai-incidents` only. No plotting libraries, no model calls, no hand-edited numbers.
 - Every figure in `draft.md` must trace to a file in `out/`; regenerate before quoting.
 - The corpus is a sampling frame, not coding material. Corpus labels (OWASP, ATLAS, attack_vector)
-  stratify samples; they never populate a coded field.
+  stratify samples; they never populate a hand-coded field. Step 4's rule dimensions read the text first
+  and fall back on the attack-vector label only where it maps to exactly one value (Table 4.0), with the
+  source shown under every value (decision of 2026-10-06).
 - ON-AI vs WITH-AI are separate populations. Report within disclosure channel as well as pooled.
 - incident-rank-validation artifacts are read, never run. Use: out-of-scope exclusion, seed rows,
   expectation-setting. Never a cross-entry prevalence claim.
