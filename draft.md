@@ -153,7 +153,8 @@ records agree on whether any adversary is described (`coded/review.json`). 67.0%
 4.0c). Kept as assigned: 69.1% of text-rule labels, 53.6% of corpus-label fallbacks, 39.4% of label-group
 rules and 91.3% of the earlier coded labels. Tables 4.1–4.5 and the post dataset carry the reviewed
 values; Table 4.0d follows each value from its rule count through the review to its final count, and the post dataset records
-every label's review status. Table 4.0 gives the source counts; the pre- and post-reclassification
+every label's review status; `out/s06_compare.md` compares pre and post for all years and 2026 alone (the
+review replaced 34.0% of rule values, 33.9% in 2026, with worked examples). Table 4.0 gives the source counts; the pre- and post-reclassification
 datasets are released, with a 2026-only cut of the post dataset. "Other" and "no attacker" stay visible
 as values.
 

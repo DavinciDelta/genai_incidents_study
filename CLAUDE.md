@@ -6,7 +6,7 @@ the reasoning behind every decision: `docs/CONVERSATION_LOG.md` — read it befo
 categorisation scheme; one has already been tried and discarded.
 
 Pipeline (run in order; `make all`): `fetch_data.py` → `s02_split.py` → `s01_overview.py` (reads `out/split.json`) →
-`s03_figures.py` → `s04_methodology.py` (writes `out/methodology.json`) → `s05_techniques.py`. Shared code in `common.py`. Outputs in `out/`. Inputs pinned in
+`s03_figures.py` → `s04_methodology.py` (writes `out/methodology.json`) → `s05_techniques.py` → `s06_compare.py` (pre vs post, all years and 2026). Shared code in `common.py`. Outputs in `out/`. Inputs pinned in
 `external/PINS.json` (pip `genai-incidents` version, full-JSON tag + sha256, rank-validation commit,
 corpus build-script sha256).
 

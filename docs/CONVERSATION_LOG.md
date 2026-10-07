@@ -173,6 +173,17 @@ outside-knowledge note (art installation, awareness PSA); benchmark-run records 
 with dissent). The population split leaks: no-attacker, WITH-AI-in-ON-AI ("other") and CVE-in-WITH-AI
 values are kept visible, not removed.
 
+**Ask: an s06 comparing pre vs post, with examples of changed incidents and why, overall and 2026 only.**
+Done 2026-10-07: `s06_compare.py` → `out/s06_compare.md`. Reads the pre and post datasets, the words each
+text rule matched (s04 now stores `<dim>_match` in `out/methodology.json`) and the coder and reviewer notes;
+no model calls. Tables 6.1 (unchanged / filled / replaced per dimension, all years vs 2026), 6.2 (by
+channel), 6.3–6.6 (value shares pre vs post, both cuts), 6.7 (largest replacements and what fired the
+rule), 6.8 (values that moved 3+ points the same way in both cuts), and 12 worked examples. The examples are
+a fixed id list chosen to span dimensions, channels and years; each was checked by two further independent
+reviewers (one told to refute the change), and all 12 held. Result: the review replaced 34.0% of rule
+values (2026: 33.9%); 51.1% of labels changed with the filled ones (2026: 53.1%); within channel the 2026
+rate is within 5.4 points of all years, so the recent intake is not cleaner.
+
 ## Standing decisions
 
 1. The corpus is a sampling frame and pointer to primary sources; **no corpus label enters a coded field.**

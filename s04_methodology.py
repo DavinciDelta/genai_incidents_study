@@ -4,7 +4,7 @@ Per record and dimension the value is assigned in a fixed order, first hit wins:
 over title+description+affected) → corpus-label fallback (FALLBACK, attack-vector label → value where unambiguous) → label-group rule
 (RECLASS, a group of attack-vector labels or a tracker-stub description → value) → coded label (coded/relabels.json: two independent coders,
 a third adjudicating) → 'other' (a safety net, asserted never to fire). The 'pre' value is the one after the first two steps, 'unstated' kept.
-Outputs: out/methodology.json (id → post values, _pre, _how, dependency; s05 reads 'objective'), out/dataset_pre.csv, out/dataset_post.csv,
+Outputs: out/methodology.json (id → post values, _pre, _how, _match (words a text rule matched), dependency; s05 reads 'objective'), out/dataset_pre.csv, out/dataset_post.csv,
 out/s04_methodology.md
 """
 import collections, csv, json, re
@@ -89,6 +89,7 @@ for pop, rows in POPS:
         for d in ASK[pop]:
             v, how, c = assign(r, d)
             m[d], m[d + "_how"], m[d + "_pre"] = v, how, (v if how in HOW[:2] else "unstated")
+            if how == HOW[0]: m[d + "_match"] = next(h.group(0) for _, rx in DIMS[d] if (h := rx.search(text(r))))   # the words the winning text rule matched (step 6 quotes them)
             if c: used[d].add(r["id"]); notes += [f"{d}: {c['note']}"] if c["note"] else []
         M[r["id"]] = m; NOTE[r["id"]] = "; ".join(notes)
 STRATUM_N = collections.Counter((d, M[r["id"]][d], M[r["id"]][d + "_how"]) for d in DIM4 for r in POP[d])   # rule-assigned population per (dim, value, how), before any correction
