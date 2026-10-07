@@ -42,11 +42,29 @@ hand-coded study.
 <!-- TODO: motivation paragraph in your words. Anchors: -->
 - The harm view is well served: AIID and its taxonomies; MIT AI Risk Repository and tracker; Li et al.
   AIES 2025 (499 GenAI incidents, who/what/how). The attacker view is not: ATLAS case studies are few;
-  Grosse et al. AAAI 2024 code 32 incidents; the only OWASP-vs-incident test (Lambros 2026) found weighted
-  κ 0.20 with an interval crossing zero and three unobservable entries (Table 1.15).
+  Grosse et al. AAAI 2024 code 32 incidents; Kumar et al. 2026 (Agent Incident Registry) code 487 agent
+  incidents with one curator and no agreement statistic; the only OWASP-vs-incident test (Lambros &
+  Wilson 2026) found weighted κ 0.20 with an interval crossing zero and three unobservable entries
+  (Table 1.15), pooled over sources.
+- The vocabulary is older than the data: criminology distinguished crimes *with*, *against* and *by* AI
+  before any incident corpus existed (Hayward & Maas 2021; Caldwell et al. 2020); single-database codings
+  reproduce it (Huwyler 2025 on AIID; Maugeri et al. AISec 2025 on CVE). What nobody has shown is that the
+  two populations come from different channels, so that the mix in any pooled index is a property of the
+  index.
+- Reporting bias is acknowledged in words but not measured: AIID counts "conflate media reporting
+  propensity, system deployment and harm frequency" (Mengesha et al. 2026); surveillance has no
+  denominators (Abraham et al. 2026); the Agent Incident Registry's realized-harm share "reflects the
+  balance of disclosure pathways" (Kumar et al. 2026). Tables 2.2 and 5.1–5.3 put numbers on this.
 - Why now: agentic incidents of 2025–26 (MCP servers, coding agents); vendor threat-intel reports now
   describe attributed campaigns; the OWASP LLM Top 10 (2026) and Agentic Top 10 are being adopted as
   priorities without an incident check.
+<!-- Novelty, per the literature check of 2026-10-07: new = the population × channel cross-tab and its
+     consequence; the label-derivation audit of an aggregated index (keyword OWASP codes; 90.7% of ATLAS
+     labels from a lookup); per-population entry point / target / medium / objective with provenance and
+     unstated shares. Partly done = the category-vs-vote comparison (Lambros & Wilson, pooled;
+     Parthasarathy 2026 does the "fits no entry" test on 131 agentic AIID incidents). The method a
+     reviewer will contest: LLM coders (Camporese, Massacci & Gong 2026 find them insufficient on
+     security codes); answer with the agreement figures, the adjudicator and the planned human review. -->
 - Contributions (<!-- TODO: in your words -->): (i) the on/with split and the channel finding; (ii) a
   classified, released dataset of the 2,799 on-AI and with-AI records with every value's provenance;
   (iii) the category-vs-vote comparison with its human check; (iv) a limitations audit of aggregated
@@ -205,10 +223,45 @@ Full list with numbers: `out/s05_techniques.md`, section "Limitations of the dat
 
 ## References
 
-<!-- TODO: full citations. Verified list to draw on (see conversation log, 2026-10-05): -->
-Li et al. 2025 AIES · Grosse et al. 2024 AAAI · Marchal et al. 2024 arXiv · Bieringer et al. 2026 SaTML ·
-Paeth et al. 2025 AAAI · Hadan et al. 2025 IJHCI · Lambros 2026 (incident-rank-validation) · Shifat et al.
-2026 FSE-LLMSC · Harzevili et al. 2023 MSR · Hasan et al. 2026 TOSEM · Li & Gao 2026 DSN · Segal et al.
-2026 MSR · Dong et al. 2019 USENIX Security · Anwar et al. 2022 TDSC · Croft et al. 2023 ICSE · Mu et al.
-2018 USENIX Security · Allodi & Massacci 2014 TISSEC · Apruzzese et al. 2023 SaTML · Pittaras & McGregor
-2023 SafeAI · Lee et al. 2024 CHI · Lin et al. 2024 USENIX Security (Malla).
+<!-- Verified by opening each page (2026-10-05 and 2026-10-07 literature checks); full citations TODO.
+     Closest prior work, cite first: -->
+- Lambros, R. & Wilson, S. (2026). Incident-data robustness analysis of the OWASP Top 10 for LLM
+  Applications (2026). arXiv:2608.19266. — pooled corpus-vs-vote test; the hand labels used here.
+- Kumar, HN, Birur, Agarwal & Harshangi (2026). The Agent Incident Registry. arXiv:2609.11030. — 487 agent
+  incidents, causal role / vector family / attack surface; single curator.
+- Mengesha, Owen, Collins, Wong, Mylius, Slattery & McGregor (2026). A pragmatic classification framework
+  for AI incident monitoring. arXiv:2604.21412. — AIID + OECD AIM; reporting-propensity biases.
+- Abraham et al. (2026). AI incident monitoring through a public health lens. arXiv:2604.19914. — no
+  denominators; 296 AIID deepfake incidents.
+- Maugeri, Castiglione, Raciti & Bella (2025). AI-related vulnerabilities within CVEs: are we ready yet?
+  AISec@CCS 2025, doi:10.1145/3733799.3762969. — 1.57% of CVEs AI-relevant, two thirds conventional bugs.
+- Parthasarathy (2026). Coverage and complementarity of three agentic AI risk taxonomies across 131
+  real-world incidents. Research Square, doi:10.21203/rs.3.rs-10425736/v1. — 27 of 131 fit no OWASP-ASI entry.
+- Grosse, Bieringer, Besold, Biggio & Alahi (2024). When your AI becomes a target. AAAI 38(21),
+  doi:10.1609/aaai.v38i21.30347. — 32 incidents, attacker target and goal.
+- Li et al. (2025). AIES 2025. — 499 GenAI incidents, harm-centred who/what/how.
+<!-- Context and method: -->
+- Hayward & Maas (2021). Artificial intelligence and crime: a primer for criminologists. Crime, Media,
+  Culture 17(2), doi:10.1177/1741659020917434. · Caldwell, Andrews, Tanay & Griffin (2020). AI-enabled
+  future crime. Crime Science 9:14, doi:10.1186/s40163-020-00123-8. — crimes with / against / by AI.
+- Schröer, Apruzzese et al. (2025). SoK: On the offensive potential of AI. SaTML 2025, arXiv:2412.18442.
+- OECD (2026). Trends in AI incidents and hazards reported by the media. OECD AI Papers,
+  doi:10.1787/4f5ff43c-en. — what the media channel sees: synthetic media 14%, scams ~10%.
+- Nong, Du, Behravan & Cai (2026). How reliable are NVD CWE labels? arXiv:2608.21977. · Zhang, Massacci &
+  Zhang (2026). The cathedral and the bazaar of software vulnerabilities. arXiv:2607.05670. — the
+  vulnerability record depends on who labelled it.
+- Camporese, Massacci & Gong (2026). LLMs for qualitative data analysis fail on security-specific comments.
+  arXiv:2604.10834. — the case against LLM coders; answer it in §7.
+- MIT AI Risk Initiative (2026). AI Incident Tracker June 2026 update. — 8 models vs 2 humans on 10
+  incidents, κ per taxonomy.
+- Walker, Schiff & Schiff (2024). Political Deepfakes Incidents Database. AAAI 38(21),
+  doi:10.1609/aaai.v38i21.30349. · Raza (2026). The deepfakes we missed. arXiv:2605.12075.
+- Brodt, Feldman, Schneier & Nassi (2026). The promptware kill chain. arXiv:2601.09625. — 21 ON-AI
+  incidents staged on a kill chain.
+<!-- Already verified on 2026-10-05: -->
+Marchal et al. 2024 arXiv · Bieringer et al. 2026 SaTML (arXiv:2412.14855 v5 is the full taxonomy) ·
+Paeth et al. 2025 AAAI · Hadan et al. 2025 IJHCI · Shifat et al. 2026 FSE-LLMSC · Harzevili et al. 2023
+MSR · Hasan et al. 2026 TOSEM · Li & Gao 2026 DSN · Segal et al. 2026 MSR · Dong et al. 2019 USENIX
+Security · Anwar et al. 2022 TDSC · Croft et al. 2023 ICSE · Mu et al. 2018 USENIX Security · Allodi &
+Massacci 2014 TISSEC · Apruzzese et al. 2023 SaTML · Pittaras & McGregor 2023 SafeAI · Lee et al. 2024 CHI
+· Lin et al. 2024 USENIX Security (Malla) · Shen et al. 2024 CCS · Hamer et al. 2025 arXiv.
