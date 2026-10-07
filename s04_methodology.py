@@ -92,6 +92,7 @@ for pop, rows in POPS:
             if c: used[d].add(r["id"]); notes += [f"{d}: {c['note']}"] if c["note"] else []
         M[r["id"]] = m; NOTE[r["id"]] = "; ".join(notes)
 STRATUM_N = collections.Counter((d, M[r["id"]][d], M[r["id"]][d + "_how"]) for d in DIM4 for r in POP[d])   # rule-assigned population per (dim, value, how), before any correction
+STRATUM_N_HOW = collections.Counter((d, M[r["id"]][d + "_how"]) for d in DIM4 for r in POP[d])
 if REVIEW:   # corrections from the two-reviewer sample audit override the rule value; the pre value and the audit trail stay
     for c in REVIEW["corrections"]:
         m = M[c["id"]]; assert m[c["dim"]] == c["from"], c
@@ -118,8 +119,10 @@ def dataset(name, header, row, keep=lambda r: True):
     print(f"wrote out/{name} ({n:,} rows)")
 dataset("dataset_pre.csv", IDENT + [x for d in DIM4[:2] for x in (d, d + "_source")] + ["dependency"] + [x for d in DIM4[2:] for x in (d, d + "_source")],
         lambda r: [x for d in DIM4[:2] for x in (g(r, d + "_pre"), pre_src(r, d))] + [g(r, "dependency")] + [x for d in DIM4[2:] for x in (g(r, d + "_pre"), pre_src(r, d))])
-post3 = lambda r, d: [g(r, d + "_pre"), g(r, d), g(r, d + "_how")]
-POST_H = IDENT + [f"{d}_{x}" for d in DIM4[:2] for x in ("pre", "post", "how")] + ["dependency"] + [f"{d}_{x}" for d in DIM4[2:] for x in ("pre", "post", "how")] + ["coded_note"]
+RSTAT = REVIEW.get("verdicts", {}) if REVIEW else {}   # review status per label: confirmed / corrected / kept with dissent
+rstat = lambda r, d: (RSTAT.get(f"{d}|{r['id']}", "not reviewed") if d in M[r["id"]] else "")
+post3 = lambda r, d: [g(r, d + "_pre"), g(r, d), g(r, d + "_how"), rstat(r, d)]
+POST_H = IDENT + [f"{d}_{x}" for d in DIM4[:2] for x in ("pre", "post", "how", "review")] + ["dependency"] + [f"{d}_{x}" for d in DIM4[2:] for x in ("pre", "post", "how", "review")] + ["coded_note"]
 POST_R = lambda r: [x for d in DIM4[:2] for x in post3(r, d)] + [g(r, "dependency")] + [x for d in DIM4[2:] for x in post3(r, d)] + [NOTE[r["id"]]]
 dataset("dataset_post.csv", POST_H, POST_R)
 dataset("dataset_post_2026.csv", POST_H, POST_R, keep=lambda r: r["year"] == 2026)   # the 2026-only cut read by step 5's Table 5.4
@@ -157,7 +160,7 @@ L = ["# Step 4 — Entry point, target, AI medium and objective, after reclassif
      "every such record keeps its population and value into step 5 (which reads `objective` from `out/methodology.json`); none is moved or dropped. "
      "`out/dataset_pre.csv` holds every ON-AI and WITH-AI record with the values after the first two steps ('unstated' kept) and `out/dataset_post.csv` the pre and post values: "
      "the dimension columns are `entry_point`, `target`, `ai_role` (= AI medium) and `objective`, empty when the dimension is not asked of the record's population, "
-     "in pre as `<dim>` and `<dim>_source` (text rule / corpus label / unstated), in post as `<dim>_pre`, `<dim>_post` and `<dim>_how` plus `coded_note` ('dimension: reason' from the coders, filled only where how is 'coded from text'), "
+     "in pre as `<dim>` and `<dim>_source` (text rule / corpus label / unstated), in post as `<dim>_pre`, `<dim>_post`, `<dim>_how` and `<dim>_review` (confirmed / corrected / kept with dissent / not reviewed) plus `coded_note` ('dimension: reason' from the coders or the reviewers), "
      "and `dependency` holds Table 4.3's value for every record of both populations; both files and `out/methodology.json` are written by `s04_methodology.py` (`make s04`), never by hand; "
      f"records entered the populations by step 2's rules (Table 2.4), and by channel ON-AI has {chan_n(ON)} records and WITH-AI {chan_n(WI)} "
      f"(channel columns are % of that channel, so each {100/ch(WI)['research/other']:.1f} in WITH-AI's research/other column is one record).", "", READ, "",
@@ -171,27 +174,48 @@ for d in DIM4:
     T0[d] = (len(P), hc[HOW[0]], hc[HOW[1]], hc[HOW[2]], len(cs), len(cs) - adj, adj, oth)
     L.append(f"| {'ON-AI' if P is ON else 'WITH-AI'} {NAME[d]} ({NUM[d]}) | {len(P):,} | {cell(hc[HOW[0]])} | {cell(hc[HOW[1]])} | {cell(hc[HOW[2]])} | {cell(len(cs))} ({len(cs) - adj} / {adj}) |" + (f" {cell(hc[HOW[5]])} |" if REVIEW else "") + f" {cell(oth)} |")
 if REVIEW:
-    st = REVIEW["strata"]; tot = {k: sum(x[k] for x in st) for k in ("reviewed", "correct", "corrected", "disputed")}
-    L += ["", f"**Table 4.0b. Label review: two independent reviewers read {tot['reviewed']} rule-assigned labels ({len(st)} values); both judged {tot['correct']} correct ({pct(tot['correct'], tot['reviewed'])}%), "
-              f"{tot['corrected']} were corrected, {tot['disputed']} stayed as assigned with a dissent** (n = {tot['reviewed']} labels)", "",
+    st = REVIEW["strata"]; tot = {k: sum(x[k] for x in st) for k in ("reviewed", "correct", "corrected", "disputed")}; n_labels = sum(len(POP[d]) for d in DIM4)
+    FULL = all(STRATUM_N[(x["dim"], x["value"], x["how"])] <= x["reviewed"] for x in st) and tot["reviewed"] >= n_labels
+    L += ["", f"**Table 4.0b. Label review: two independent reviewers read {tot['reviewed']:,} of {n_labels:,} labels ({len(st)} value-by-step strata); both judged {tot['correct']:,} correct ({pct(tot['correct'], tot['reviewed'])}%), "
+              f"{tot['corrected']:,} were corrected, {tot['disputed']} stayed as assigned with a dissent** (n = {tot['reviewed']:,} labels)", "",
           f"{REVIEW['meta']['design']} A label was corrected when both reviewers rejected it and agreed on the replacement, or when an adjudicator settled a split; "
-          f"'disputed' = one reviewer rejected it and the adjudicator kept it. Corrections are applied in Tables 4.1–4.5 and `out/dataset_post.csv` (how = 'corrected by review'); the per-value share judged "
-          f"correct is the precision estimate for that rule on a sample of at most {REVIEW['meta']['per_value']} records.", "",
+          f"'disputed' = one reviewer rejected it and the adjudicator kept it. Corrections are applied in Tables 4.1–4.5 and `out/dataset_post.csv` (how = 'corrected by review'; `<dim>_review` holds every label's status). "
+          + ("Every label was read, so the per-value counts are exact: the share judged correct is the precision of that assignment step for that value." if FULL else
+             f"The per-value share judged correct is the precision estimate for that rule on a sample of at most {REVIEW['meta']['per_value']} records."), "",
           "| dimension | value | how assigned | records with this label | reviewed | both reviewers: correct | corrected (to) | disputed |", "|---|---|---|---|---|---|---|---|"]
     for x in st:
         to = ", ".join(f"{v} {n}" for v, n in x["corrected_to"].items()) if x["corrected_to"] else "—"
         L.append(f"| {NAME[x['dim']]} | {x['value']} | {x['how']} | {STRATUM_N[(x['dim'], x['value'], x['how'])]:,} | {x['reviewed']} | {x['correct']} ({pct(x['correct'], x['reviewed'])}%) | {x['corrected']}{' (' + to + ')' if x['corrected'] else ''} | {x['disputed']} |")
-    # population-weighted view: each stratum's observed error rate (corrected / reviewed) applied to the records of that stratum the sample did not reach
-    L += ["", f"**Table 4.0c. What the review implies for the labels it did not read** (rule-assigned labels per dimension)", "",
+    if FULL:   # every label read: the remaining error is reviewer error, bounded by how often the two reviewers disagreed
+        ag = REVIEW["agreement"]; tl = sum(a["labels"] for a in ag.values()); sp = sum(a.get("split_corrected", 0) + a.get("split_kept", 0) for a in ag.values()); cons = sum(a.get("consistency_changed", 0) for a in ag.values())
+        L += ["", f"**Table 4.0c. Reviewer agreement: the two reviewers settled {pct(tl - sp - cons, tl)}% of labels between them; the adjudicator decided {sp:,}; {cons} more were changed to make a record's two labels agree** (n = {tl:,} labels)", "",
+              "Per dimension: labels both reviewers accepted as assigned, labels both rejected with the same replacement, splits (one accepted, or two different replacements) by how the adjudicator settled them, and labels changed afterwards "
+              "because the record's other dimension said 'no attacker' and this one did not (or the reverse). The last column counts labels whose final value differs from the assigned one, by the step that had assigned it; "
+              "the remaining error in Tables 4.1–4.5 is reviewer error, for which the split rate is the only measure here.", "",
+              "| dimension | labels | both accepted | both rejected, same replacement | split, adjudicator corrected | split, adjudicator kept | changed for consistency | changed, by the step that assigned it |", "|---|---|---|---|---|---|---|---|"]
+        for d in DIM4:
+            a = ag[d]; cell = lambda k: f"{a.get(k, 0):,} ({pct(a.get(k, 0), a['labels'])}%)"
+            ch = ", ".join(f"{h} {a.get('changed_from_' + h, 0):,} of {STRATUM_N_HOW[(d, h)]:,}" for h in HOW[:4] if STRATUM_N_HOW[(d, h)])
+            L.append(f"| {NAME[d]} | {a['labels']:,} | {cell('both_accepted')} | {cell('both_rejected_same')} | {cell('split_corrected')} | {cell('split_kept')} | {cell('consistency_changed')} | {ch} |")
+    else:
+      # population-weighted view: each stratum's observed error rate (corrected / reviewed) applied to the records of that stratum the sample did not reach
+      L += ["", f"**Table 4.0c. What the review implies for the labels it did not read** (rule-assigned labels per dimension)", "",
           "The sample took at most 20 records per value, so small values were read in full and large ones were not. 'estimated wrong before review' applies each value's observed error rate to all of its records; "
           "'still wrong after correction' is the same estimate for the records the sample did not reach, i.e. the error that remains in Tables 4.1–4.5 and `out/dataset_post.csv`. Values read in full contribute no remaining error.", "",
           "| dimension | rule-assigned labels | read in full (values) | reviewed | corrected | estimated wrong before review | still wrong after correction |", "|---|---|---|---|---|---|---|"]
-    for d in DIM4:
+      for d in DIM4:
         rows = [x for x in st if x["dim"] == d]; n_all = sum(n for (dd, v, h), n in STRATUM_N.items() if dd == d and h in HOW[:3])
         full = sum(STRATUM_N[(d, x["value"], x["how"])] <= x["reviewed"] for x in rows)
         est = sum(STRATUM_N[(d, x["value"], x["how"])] * x["corrected"] / x["reviewed"] for x in rows)
         rem = sum(max(STRATUM_N[(d, x["value"], x["how"])] - x["reviewed"], 0) * x["corrected"] / x["reviewed"] for x in rows)
         L.append(f"| {NAME[d]} | {n_all:,} | {full} of {len(rows)} | {sum(x['reviewed'] for x in rows)} | {sum(x['corrected'] for x in rows)} | {est:,.0f} ({pct(est, n_all)}%) | {rem:,.0f} ({pct(rem, n_all)}%) |")
+    # what changed between the rule values and the final values, per value
+    L += ["", "**Table 4.0d. Rule value against final value, per value** (pre = the value a text rule or corpus label set, else unstated; post = the final value after every later step)", "",
+          "| dimension | value | pre n (%) | post n (%) | post − pre |", "|---|---|---|---|---|"]
+    for d in DIM4:
+        P = POP[d]; c0 = collections.Counter(M[r["id"]][d + "_pre"] for r in P); c1 = collections.Counter(M[r["id"]][d] for r in P)
+        for v in sorted(set(c0) | set(c1), key=lambda v: (-c1[v], v)):
+            L.append(f"| {NAME[d]} | {v} | {c0[v]:,} ({pct(c0[v], len(P))}%) | {c1[v]:,} ({pct(c1[v], len(P))}%) | {f'{c1[v] - c0[v]:+,}'.replace('-', '−')} |")
 SHORT = {HOW[2]: "rule", HOW[3]: "coded", HOW[5]: "review"}
 def post_table(d, question):
     P = POP[d]; c = collections.Counter(M[r["id"]][d] for r in P); top, tn = c.most_common(1)[0]; oth = sum(bool(res_kind(v)) for v in c.elements())
@@ -207,8 +231,10 @@ def post_table(d, question):
         for x in REVIEW["strata"]:
             if x["dim"] == d: prec[x["value"]][0] += x["correct"] + x["disputed"]; prec[x["value"]][1] += x["reviewed"]
         low = sorted(((v, a, b) for v, (a, b) in prec.items() if a < b / 2), key=lambda t: t[1] / t[2])
-        if low: desc += (" Audit (Table 4.0b): fewer than half of the sampled rule-assigned labels were correct for "
-                         + ", ".join(f"{v} ({a} of {b})" for v, a, b in low) + "; the unreviewed records under these values carry that error rate.")
+        if low and FULL: desc += (" Review (Table 4.0b): the assigned label was correct for fewer than half of the records first given "
+                                  + ", ".join(f"{v} ({a} of {b})" for v, a, b in low) + "; every label was read and the wrong ones corrected.")
+        elif low: desc += (" Audit (Table 4.0b): fewer than half of the sampled rule-assigned labels were correct for "
+                           + ", ".join(f"{v} ({a} of {b})" for v, a, b in low) + "; the unreviewed records under these values carry that error rate.")
     return table(f"{'ON-AI' if P is ON else 'WITH-AI'}: {question} {top} {pct(tn, len(P))}%; {pct(oth, len(P))}% {res_phrase(c)}",
                  P, val(d), ci=True, channels=True, num=NUM[d], top=len(c), rest=False, desc=desc)
 L += post_table("entry_point", "how did the adversary first reach the AI system?")

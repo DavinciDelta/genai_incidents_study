@@ -152,6 +152,27 @@ the index pools trackers with different units. 2026-only cut (`out/dataset_post_
 686 WITH-AI; Table 5.4): the recent record sits further from the vote, not closer (ON-AI ρ +0.29 →
 +0.06, WITH-AI −0.57 → −0.94).
 
+**Ask: the most accurate method: have an agent go through every incident in pre to make sure post is
+classified properly; report the difference.** Done 2026-10-07. Every label not in the 620-label sample
+(4,978 labels, 2,748 records, 55 batches of 50, both dimensions per record) was read by two independent
+reviewers blind to the assignment step; splits went to an adjudicator per four batches; then 21 records
+whose two labels disagreed on "no attacker" were settled by one adjudicator (17 no adversary, 4 one).
+Models: the Fable usage limit was reached at batch 45; 4,331 second-pass labels had two Fable 5.1
+reviewers, 187 one Fable and one Opus 5.5, 460 two Opus 5.5; second-pass and consistency adjudication by
+Opus 5.5; existing Fable files were hashed before the switch and not overwritten. Result
+(`coded/review.json`, Tables 4.0b–4.0d): 3,698 of 5,598 labels confirmed, 1,847 corrected, 53 kept with a
+dissent; reviewers settled 95.8% between them. Kept as assigned: text rule 69.1%, corpus-label fallback
+53.6%, label-group rule 39.4%, coded labels 91.3%. Against the committed post (sample audit): entry point
+39.1% of labels changed, target 27.3%, AI medium 35.8%, objective 12.9%. Largest moves: direct prompt
+24.2% to 15.1%; consumer chatbot target 18.5% to 8.7% and "a model itself" 3.0% to 11.4% (a codebook
+boundary: research on named models); tracker-stub target 10.3% to 1.9%; "deepfake, medium not stated"
+41.6% to 25.6% and video 8.8% to 16.5%; no attacker rose to 9.6% (ON-AI) and 11.8% (WITH-AI). Decisions:
+the INC-07208 / INC-07291 objective follows the record text (impersonation), against the earlier coders'
+outside-knowledge note (art installation, awareness PSA); benchmark-run records without an attack are
+"no attacker" on both dimensions. `dataset_post.csv` gains `<dim>_review` (confirmed / corrected / kept
+with dissent). The population split leaks: no-attacker, WITH-AI-in-ON-AI ("other") and CVE-in-WITH-AI
+values are kept visible, not removed.
+
 ## Standing decisions
 
 1. The corpus is a sampling frame and pointer to primary sources; **no corpus label enters a coded field.**

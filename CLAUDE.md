@@ -14,8 +14,8 @@ Rules of the house
 - Stdlib + `genai-incidents` only. No plotting libraries, no model calls, no hand-edited numbers.
 - `coded/relabels.json` holds labels for the records step 4's rules left `unstated`, made in-session by two
   independent Claude coders plus an adjudicator (2026-10-06), not by the pipeline. `coded/review.json` holds
-  the 2026-10-07 audit of the rule-assigned labels (stratified sample, two independent Claude reviewers plus
-  an adjudicator) and the corrections s04 applies on top of the rules. Scripts read both; `make` cannot
+  the 2026-10-07 review of every step-4 label (two independent Claude reviewers per label, an adjudicator,
+  a no-attacker consistency pass) and the corrections s04 applies on top of the rules. Scripts read both; `make` cannot
   regenerate them; a human review is still owed before any of their values is cited as a finding.
 - Every figure in `draft.md` must trace to a file in `out/`; regenerate before quoting.
 - The corpus is a sampling frame, not coding material. Corpus labels (OWASP, ATLAS, attack_vector)
