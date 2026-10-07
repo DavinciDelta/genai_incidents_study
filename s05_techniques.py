@@ -267,10 +267,16 @@ L += ["", "## Use cases", "", *USE, "",
 frame = {x: collections.Counter(S[i]["population"] for i in S if S[i]["source_class"] == x and S[i]["population"] in ("ON-AI", "WITH-AI", "BOTH")) for x in CHANNELS}
 ADV = re.compile(r"attacker|threat actor|hacker|adversar|campaign|exploited|abused|scam|fraud|extort|stole|breach|malicious|\bAPT\b|state-sponsored|cybercrim|ransomware|phish|impersonat|weaponi[sz]", re.I)
 wv = [C[i] for i in S if S[i]["rule"] == "with-vector"]; wv_silent = sum(not ADV.search(text(r)) for r in wv)
+_NA, _NW = "no attacker: operator harm or model failure (misplaced record)", "none: conventional exploit record misplaced in WITH-AI"
+_on = [i for i in S if S[i]["population"] == "ON-AI"]; _wi = [i for i in S if S[i]["population"] == "WITH-AI"]
+LEAK = {"on": len(_on), "wi": len(_wi), "on_na": sum(METH[i]["entry_point"] == _NA for i in _on), "wi_na": sum(METH[i]["ai_role"] == _NA for i in _wi),
+        "on_other": sum(METH[i]["entry_point"] == "other" for i in _on), "wi_cve": sum(METH[i]["ai_role"] == _NW for i in _wi)}   # step 4's reviewed values
 LIMS = [f"- Labels are rule outputs: {pc(*seed_share(R))}% of OWASP codes come from the attack_vector seed, the rest from ingest records (Tables 5.1, 5.2).",
         f"- {ename('LLM04')} marks the CVE channel and {frame['cve/ghsa']['ON-AI']:,} of {sum(frame['cve/ghsa'].values()):,} cve/ghsa frame records are ON-AI, so pooled comparisons compare channels (Tables 1.10, 2.2).",
         f"- One coder hand-labelled a quota sample: {NG['ON-AI']} ON-AI and {NG['WITH-AI']} WITH-AI rows (Tables 1.14, 5.3).",
-        f"- The split is rule-based: {wv_silent:,} of {len(wv):,} vector-only WITH-AI rows name no adversary (Table 2.5).",
+        f"- The split is rule-based: {wv_silent:,} of {len(wv):,} vector-only WITH-AI rows name no adversary (Table 2.5). Step 4's review of every record found "
+        f"{LEAK['on_na']} ON-AI ({pc(LEAK['on_na'], LEAK['on'])}%) and {LEAK['wi_na']} WITH-AI ({pc(LEAK['wi_na'], LEAK['wi'])}%) records that describe no adversary, "
+        f"{LEAK['on_other']} ON-AI records whose entry point fits no value (such as an AI-assisted scam on people) and {LEAK['wi_cve']} CVE records in WITH-AI; they stay in the counts above (Tables 4.1, 4.4).",
         f"- Join losses: {g_lost} of {len(gold_ids):,} hand-labelled rows have no current record of their own (Table 1.13).",
         f"- Vote–data concordance is weak: weighted κ {KAPPA:.2f} ({sg(KCI[0])} to {sg(KCI[1])}) (Table 1.15).",
         f"- The two OWASP numberings differ on {diff_codes} of ten entries, so joins use names (Table 1.0).",

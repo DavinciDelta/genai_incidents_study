@@ -116,7 +116,7 @@ Why this is a limitation:
 - Labels are rule outputs: 36.0% of OWASP codes come from the attack_vector seed, the rest from ingest records (Tables 5.1, 5.2).
 - Supply Chain Vulnerabilities marks the CVE channel and 604 of 686 cve/ghsa frame records are ON-AI, so pooled comparisons compare channels (Tables 1.10, 2.2).
 - One coder hand-labelled a quota sample: 161 ON-AI and 174 WITH-AI rows (Tables 1.14, 5.3).
-- The split is rule-based: 707 of 1,262 vector-only WITH-AI rows name no adversary (Table 2.5).
+- The split is rule-based: 707 of 1,262 vector-only WITH-AI rows name no adversary (Table 2.5). Step 4's review of every record found 129 ON-AI (9.6%) and 173 WITH-AI (11.8%) records that describe no adversary, 70 ON-AI records whose entry point fits no value (such as an AI-assisted scam on people) and 81 CVE records in WITH-AI; they stay in the counts above (Tables 4.1, 4.4).
 - Join losses: 77 of 1,200 hand-labelled rows have no current record of their own (Table 1.13).
 - Vote–data concordance is weak: weighted κ 0.20 (−0.16 to 0.57) (Table 1.15).
 - The two OWASP numberings differ on 8 of ten entries, so joins use names (Table 1.0).

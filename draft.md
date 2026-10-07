@@ -148,11 +148,11 @@ label coded from the text by two independent coders with an adjudicator (854 lab
 per dimension, `coded/relabels.json`). Every label was then reviewed: two independent reviewers read
 each of the 5,598 labels (both dimensions of all 2,799 records) from the record text without seeing how
 it had been assigned, an adjudicator settled the 215 splits, and a final pass made the two labels of 21
-records agree on whether any adversary is described (`coded/review.json`). 3,698 labels (66.1%) were
-confirmed and 1,847 corrected (Table 4.0b); the reviewers settled 95.8% of labels between them (Table
+records agree on whether any adversary is described (`coded/review.json`). 67.0% of the
+5,598 labels were kept and 1,847 corrected (Table 4.0b); the reviewers settled 95.8% of labels between them (Table
 4.0c). Kept as assigned: 69.1% of text-rule labels, 53.6% of corpus-label fallbacks, 39.4% of label-group
 rules and 91.3% of the earlier coded labels. Tables 4.1–4.5 and the post dataset carry the reviewed
-values; Table 4.0d sets each value's rule count against its final count, and the post dataset records
+values; Table 4.0d follows each value from its rule count through the review to its final count, and the post dataset records
 every label's review status. Table 4.0 gives the source counts; the pre- and post-reclassification
 datasets are released, with a 2026-only cut of the post dataset. "Other" and "no attacker" stay visible
 as values.
