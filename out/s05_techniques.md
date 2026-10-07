@@ -52,6 +52,25 @@ What stands out:
 
 *Corpus rank* orders keyword labels, not incidents, and the vote is 20 candidates ranked by respondents; neither table is a corrected Top 10.
 
+**Table 5.4. 2026 records only: corpus rank against the vote (ON-AI ρ +0.06 vs +0.29 all years, WITH-AI ρ −0.94 vs −0.57 all years)** (ON-AI n = 730 of 1,339; WITH-AI n = 686 of 1,460)
+
+Records dated 2026 only (record year reflects when a tracker was ingested, Table 1.5, and CVE dates are month-only). ρ is Spearman's rank correlation between the vote rank and the corpus rank over the categories with 30+ records in that cut (+1 = same order, −1 = reversed; no CI, ten categories at most), shown beside the all-years value; a rise would mean the recent record sits closer to the vote. Columns per population: corpus records in 2026, corpus rank in 2026, places above the vote in 2026, and the all-years rank for comparison.
+
+| category [corpus code] | vote rank | ON-AI: 2026 records n (%) | ON-AI: 2026 rank | ON-AI: 2026 places above the vote | ON-AI: all-years rank | WITH-AI: 2026 records n (%) | WITH-AI: 2026 rank | WITH-AI: 2026 places above the vote | WITH-AI: all-years rank |
+|---|---|---|---|---|---|---|---|---|---|
+| Prompt Injection [LLM01] | 1 | 261 (35.8%) | 3 | −2 | 3 | 0 (0.0%)§ | — | — | 9 |
+| Sensitive Information Disclosure [LLM02] | 2 | 88 (12.1%) | 4 | −2 | 4 | 42 (6.1%) | 4 | −2 | 4 |
+| Excessive Agency [LLM03] | 4 | 19 (2.6%)§ | 7 | −3 | 5 | 1 (0.1%)§ | 6 | −2 | 6 |
+| Supply Chain Vulnerabilities [LLM04]‡ | 5 | 371 (50.8%) | 1 | +4 | 1 | 47 (6.9%) | 3 | +2 | 3 |
+| Data and Model Poisoning [LLM05] | 6 | 33 (4.5%) | 6 | 0 | 7 | 6 (0.9%)§ | 5 | +1 | 7 |
+| Unbounded Consumption [LLM06] | 8 | 1 (0.1%)§ | 10 | −2 | 9 | 0 (0.0%)§ | — | — | 8 |
+| Vector and Embedding Weaknesses [LLM09] | 11 | 4 (0.5%)§ | 8 | +3 | 10 | 0 (0.0%)§ | — | — | — |
+| Hidden Context Exposure [LLM08]‡ | 11.5 | 2 (0.3%)§ | 9 | +2.5 | 8 | 1 (0.1%)§ | 6 | +5.5 | 5 |
+| Improper Output Handling [LLM10] | 13 | 351 (48.1%) | 2 | +11 | 2 | 228 (33.2%) | 2 | +11 | 2 |
+| Misinformation [LLM07]‡ | 13 | 43 (5.9%) | 5 | +8 | 6 | 560 (81.6%) | 1 | +12 | 1 |
+
+What changes in the 2026 cut: ON-AI: ρ +0.29 → +0.06 over 6 categories, ranks that move: Excessive Agency −2, Data and Model Poisoning +1, Unbounded Consumption −1, Vector and Embedding Weaknesses +2, Hidden Context Exposure −1, Misinformation +1; WITH-AI: ρ −0.57 → −0.94 over 4 categories, ranks that move: Data and Model Poisoning +2, Hidden Context Exposure −1. The 2026 rows are 55% of ON-AI and 47% of WITH-AI, and the vote was collected before most of them were disclosed, so a closer match would say the vote anticipated the feed, not that the feed confirms the vote. `out/dataset_post_2026.csv` holds these rows.
+
 ## Limitation: one person's hand labels disagree with the corpus's categories
 
 Rank-validation's adjudicator hand-labelled 161 ON-AI and 174 WITH-AI records, drawn by quota (every pre-labeller disagreement, then 30 unanimous + 30 majority rows per entry), so counts are not prevalence. Data and Model Poisoning, the top ON-AI hand label (22), is the corpus's 7th; MCP Tool Interface Exploitation (17), Cross-Modal Safety Bypass (10) and Weaponized LLM Abuse (43) have no corpus code; no entry fits 23 ON-AI (14.3%) and 74 WITH-AI (42.5%) rows, 62 of them disagreement rows (no-entry share 59% there, 22% where two pre-labellers agreed, 10% where three did).
@@ -81,7 +100,7 @@ Why this is a limitation:
 
 - *The ranks do not match.* Data and Model Poisoning, the person's most-used ON-AI label (22), is the corpus's 7th; the corpus's first two, Supply Chain Vulnerabilities and Improper Output Handling, hold 34 of the 161 hand labels between them.
 - *The list lacks codes for what the person saw most.* MCP Tool Interface Exploitation (17 ON-AI hand labels; the corpus filed them as Supply Chain Vulnerabilities 14, Improper Output Handling 5), Cross-Modal Safety Bypass (10 ON-AI hand labels; the corpus filed them as Prompt Injection 6, Misinformation 1) and Weaponized LLM Abuse (43 WITH-AI hand labels; the corpus filed them as Misinformation 41, Sensitive Information Disclosure 7) have no corpus code.
-- *A large share fits nothing.* No entry fits 23 ON-AI (14%) and 74 WITH-AI (43%) rows: ON-AI mostly adversarial-input 8 (classifier evaluations), WITH-AI mostly non-consensual / abuse imagery 35 and political / influence 13 (deepfake fraud and abuse imagery; 67 of 74 are tracker stubs). The rubric wants an LLM mechanism: input that "alters the model's behavior in ways the operator did not intend", output "trusted and acted upon", or "cyberattacks against third-party targets"; the person's notes are boilerplate on 91 of 97 rows. 62 of the 74 WITH-AI rows are ones the three LLM pre-labellers disagreed on, a tier the quota took in full.
+- *A large share fits nothing.* No entry fits 23 ON-AI (14%) and 74 WITH-AI (43%) rows: ON-AI mostly adversarial-input 8 (classifier evaluations), WITH-AI mostly non-consensual / abuse imagery 31 and no attacker: operator harm or model failure (misplaced record) 14 (deepfake fraud and abuse imagery; 67 of 74 are tracker stubs). The rubric wants an LLM mechanism: input that "alters the model's behavior in ways the operator did not intend", output "trusted and acted upon", or "cyberattacks against third-party targets"; the person's notes are boilerplate on 91 of 97 rows. 62 of the 74 WITH-AI rows are ones the three LLM pre-labellers disagreed on, a tier the quota took in full.
 - *Where the person did use a corpus category, the corpus usually has it too* (Supply Chain Vulnerabilities 20 of 21; lowest Data and Model Poisoning 13 of 22), so the disagreement is in what the corpus adds in bulk and what it cannot name, not in the person rejecting its codes.
 
 ## Use cases
@@ -101,4 +120,6 @@ Why this is a limitation:
 - Join losses: 77 of 1,200 hand-labelled rows have no current record of their own (Table 1.13).
 - Vote–data concordance is weak: weighted κ 0.20 (−0.16 to 0.57) (Table 1.15).
 - The two OWASP numberings differ on 8 of ten entries, so joins use names (Table 1.0).
+- The public record is a small, self-selected sample: only 8.5% of CVE/GHSA records and 24.6% of harm-database records involve an adversary at all, `exploited_in_wild` is set on 14 records, and attacks that are never disclosed, settled privately or seen only in vendor telemetry are absent (Tables 2.2, 4.0).
+- The index pools trackers with different units: a CVE is one bug in one product, a harm-database row is one news event, a research row is one paper; counts across them, and the corpus's own merging of 1,340 multi-source records, mix units (Table 1.1).
 - Record year, date precision, stubs and empty fields: steps 1, 2 and 4.

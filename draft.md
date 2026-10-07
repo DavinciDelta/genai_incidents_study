@@ -145,20 +145,36 @@ attacker objective, assigned in a fixed order: a keyword rule over title + descr
 else the corpus attack-vector label where it maps to exactly one value; else a label-group rule (a
 conventional-exploit label is an entry point of its own kind; a tracker stub names no target); else a
 label coded from the text by two independent coders with an adjudicator (854 labels, agreement 85–100%
-per dimension, `coded/relabels.json`). Table 4.0 gives the source counts; the pre- and
-post-reclassification datasets are released. "Other" and "no attacker" stay visible as values.
+per dimension, `coded/relabels.json`). The rule-assigned labels were then audited: two independent
+reviewers read a stratified sample of 620 (up to 20 per value, 36 values) and an adjudicator settled the
+28 splits; 365 were judged correct, 249 corrected, and the corrections are applied in the post dataset
+(`coded/review.json`, Table 4.0b). Weighting each value's observed error by its size, an estimated 47% of
+entry-point, 36% of target, 36% of AI-medium and 15% of objective rule labels were wrong before the audit,
+and 39%, 31%, 32% and 12% remain wrong among the records the sample did not reach (Table 4.0c); each
+distribution table names the values whose sampled labels were mostly wrong. Table 4.0 gives the source
+counts; the pre- and post-reclassification datasets are released, with a 2026-only cut of the post
+dataset. "Other" and "no attacker" stay visible as values.
 
-**ON-AI (n = 1,339).** Entry point (Table 4.1): direct prompt 24.7%, exploit of a conventional software
-vulnerability 22.9%, indirect carrier 14.6%, malicious package / model 9.8%, prompt injection with the
-carrier not stated 6.0%, adversarial input 5.8%, the agent's tools or sandbox 5.3%, credential 4.7%,
-exposed service 3.7%. Target (Table 4.2): agents, copilots and MCP 48.9% (79.6% of the CVE channel),
-consumer chatbots 19.5%, tracker stubs naming no system 11.1%. Software basis (Table 4.3): 45.1% carry a
-CVE or CWE, 31.5% a model-level vector with none, 23.4% neither.
+**ON-AI (n = 1,339).** Entry point (Table 4.1): exploit of a conventional software vulnerability 24.7%,
+direct prompt 24.2%, indirect carrier 14.7%, malicious package / model 9.7%, prompt injection with the
+carrier not stated 5.5%, the agent's tools or sandbox 4.9%, adversarial input 4.6%, credential 3.4%,
+exposed service 3.2%; 2.2% describe no attacker. The audit found the sampled labels mostly wrong for
+credential (3 of 20 correct), prompt injection with carrier not stated (7 of 20), direct prompt (8 of 20)
+and the agent's tools (8 of 20): keyword hits on "credentials", "token" or "exposed" in what the text
+describes as SSRF, path traversal or auth bypass, so the conventional-exploit share is a floor and the
+direct-prompt share a ceiling. Target (Table 4.2): agents, copilots and MCP 49.1% (79.5% of the CVE
+channel; 17 of 20 sampled labels correct), consumer chatbots 18.5% (5 of 20 correct: named models, agents
+and no-attacker stories caught by product names), tracker stubs naming no system 10.3%. Software basis
+(Table 4.3): 45.1% carry a CVE or CWE, 31.5% a model-level vector with none, 23.4% neither.
 
-**WITH-AI (n = 1,460).** Medium (Table 4.4): "deepfake, medium not stated" 41.5%, image 19.0%, voice
-16.7%, text 7.9%, video 7.8%, generated code 0.6%. Objective (Table 4.5): financial fraud or extortion
-32.1%, political influence 19.5%, non-consensual or abuse imagery 14.8%, defamation or impersonation
-10.8%, intrusion 6.5%; 7.1% describe no attacker at all (a product failure filed as an incident).
+**WITH-AI (n = 1,460).** Medium (Table 4.4): "deepfake, medium not stated" 41.6%, image 18.9%, voice
+16.3%, video 8.8%, text 7.3%, generated code 0.5%; the audit found video under-counted (titles saying
+"video" labelled audio or text through entity tags and the word "phishing") and the label-group value
+"conventional exploit misplaced in WITH-AI" wrong in all 20 sampled cases (AI-driven-attack commentary and
+misuse stories, not software bugs). Objective (Table 4.5): financial fraud or extortion 32.2% (20 of 20
+sampled labels correct), political influence 19.5%, non-consensual or abuse imagery 14.4%, defamation or
+impersonation 9.8% (5 of 20 correct: "deepfake" or "phishing" in CVE texts), intrusion 7.0%; 7.7% describe
+no attacker at all (a product failure filed as an incident).
 
 <!-- TODO: 2 paragraphs interpreting. Points to make: ON-AI is an agent-and-tooling story and half of it
      is ordinary application security (Maugeri et al. 2025: two thirds of AI-relevant CVEs are conventional
@@ -166,7 +182,7 @@ CVE or CWE, 31.5% a model-level vector with none, 23.4% neither.
      is a deepfake-fraud story told by harm databases in stubs, and the authoritative count agrees: FBI
      IC3's first "AI related" tally (2025) is 22,364 complaints and $893M, all synthetic profiles, LLM-written
      BEC and voice cloning, with no intrusion category; LLM-assisted intrusion is nearly invisible in public
-     databases (generated code 0.6%, intrusion 6.5%) while vendor telemetry reports it in small numbers
+     databases (generated code 0.5%, intrusion 7.0%) while vendor telemetry reports it in small numbers
      (Microsoft/OpenAI 2024, OpenAI Oct 2025, Google GTIG Nov 2025, Anthropic Nov 2025) and the Paris Peace
      Forum INTAiC paper (Jul 2026) says no observer sees more than a slice of the AI-enabled attack chain. -->
 
@@ -185,6 +201,13 @@ twelfth (CSA research note, Aug 2026): the list is a judgement about defence, no
 Handling shows how three signals pull apart: the corpus's keyword rule ranks it 2nd in ON-AI, rank-
 validation's model-based data rank puts it 10th (interval 3–16, Table 1.15), and the person's hand labels
 put it 5th (Table 5.3).
+
+**Does the recent record sit closer to the vote? No (Table 5.4).** On the 2026-dated rows alone (730 ON-AI,
+686 WITH-AI), Spearman's ρ between the vote rank and the corpus rank over the categories with 30+ records
+falls from +0.29 to +0.06 in ON-AI and from −0.57 to −0.94 in WITH-AI; Improper Output Handling stays +11
+and Misinformation +12. The 2026 cut is ingestion-driven (Table 1.5) and postdates the vote, so even a closer
+match would have said the vote anticipated the feed, not that the feed confirms it. `out/dataset_post_2026.csv`
+holds these rows.
 
 **The hand labels disagree with both (Table 5.3).** The person's most-used ON-AI label, Data and Model
 Poisoning (22), is the corpus's 7th; three labels with no corpus code hold 70 hand labels (MCP Tool
@@ -216,6 +239,10 @@ Two coders on 20%, κ per field, rulebook frozen after a 30-incident pilot.
   validation standard for LLM annotation (Pangakis & Wolken ICWSM 2025; Törnberg 2024) and the alternative
   annotator test (Calderon, Reichart & Dror ACL 2025); the negative result for security codes (Camporese,
   Massacci & Gong 2026) is the reason the review is not optional.
+- Audit of the rule-assigned labels: a stratified sample (up to 20 per value and assignment step) read by
+  two independent LLM reviewers with an adjudicator; precision reported per value (Table 4.0b), residual
+  error estimated by weighting each value's error by its size (Table 4.0c); corrections applied to the
+  sampled records only, and no rule re-tuned on the audited sample, so the audit still measures the rules.
 - Cohen's κ per hand-coded field (quadratic-weighted for ordered fields), pre-adjudication value reported.
 - χ² / Fisher exact for ON-vs-WITH comparisons within channel, Cramér's V, Benjamini–Hochberg at 5% FDR.
 - Temporal claims on primary-source disclosure date only (corpus dates are month-only for CVE records).
@@ -236,7 +263,21 @@ Full list with numbers: `out/s05_techniques.md`, section "Limitations of the dat
 - Ingestion-driven years, month-only CVE dates, tracker stubs (67 of the 74 WITH-AI no-entry rows), empty
   exploitation and attribution fields (Tables 1.5–1.7, 4.0). CVE descriptions are no better upstream: 85%
   lack a root cause and 56% a vulnerability type (Guo, Xing & Li TOSEM 2022).
-- LLM-coded pre-labels for the formerly unstated rows await human review.
+- The public record is a small, self-selected sample of attacks: only 8.5% of CVE/GHSA records and 24.6% of
+  harm-database records involve an adversary at all; `exploited_in_wild` is set on 14 of 15,666 records;
+  attacks that are never disclosed, settled privately or seen only in vendor telemetry are absent. The
+  authoritative counts agree that disclosure is thin: IC3's AI-related complaints are 2.2% of its total, and
+  no observer sees more than a slice of the AI-enabled attack chain (INTAiC 2026).
+- The index pools trackers with different units: a CVE is one bug in one product, a harm-database row is one
+  news event, a research row is one paper; counts across them, and the corpus's own merging of 1,340
+  multi-source records, mix units (Table 1.1). This is why nothing here is reported pooled across channels.
+- Rule labels carry measured error: the audit judged 59% of 620 sampled rule labels correct (Table 4.0b);
+  by value, precision runs from 100% (financial fraud) to 15% (stolen credential) and 0% (the WITH-AI
+  "conventional exploit" label group). After correcting the sample, an estimated 12–39% of the remaining
+  rule labels per dimension are still wrong (Table 4.0c). The recurring errors: a keyword hit on an
+  incidental word ("credentials", "exposed", "deepfake" inside a CVE text), a record with no adversary
+  filed under an attack label by its corpus hint, and a use (phishing) read as a medium. LLM-coded and
+  LLM-reviewed labels both await human review.
 <!-- TODO: one sentence of mitigation per item. -->
 
 ## References

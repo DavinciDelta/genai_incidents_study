@@ -147,6 +147,43 @@ def category_table(p, num):
 category_table("ON-AI", "5.1"); category_table("WITH-AI", "5.2")
 L += ["", f"*Corpus rank* orders keyword labels, not incidents, and the vote is {len(ENTRIES)} candidates ranked by respondents; neither table is a corrected Top 10."]
 
+# ---------------------------------------------------------------- 2026 records only: is the recent record closer to the vote?
+def spearman(xs, ys):
+    """Spearman rank correlation of two equal-length lists of ranks (ties already shared); None below 3 pairs."""
+    n = len(xs)
+    if n < 3: return None
+    mx, my = sum(xs) / n, sum(ys) / n
+    sxy = sum((x - mx) * (y - my) for x, y in zip(xs, ys)); sxx = sum((x - mx) ** 2 for x in xs); syy = sum((y - my) ** 2 for y in ys)
+    return sxy / (sxx * syy) ** 0.5 if sxx and syy else None
+YEAR = 2026
+P26 = {p: [r for r in P[p] if r["year"] == YEAR] for p in POPS}
+CNT26 = {p: collections.Counter(c for r in P26[p] for c in set(llm(r))) for p in POPS}; CRANK26 = {p: ranks(CNT26[p]) for p in POPS}
+def rho(p, cnt, crank):
+    es = [e for e in TEN if RV2C[e] in crank and cnt[RV2C[e]] >= MIN_RECORDS]
+    return spearman([VR[e] for e in es], [crank[RV2C[e]] for e in es]), len(es)
+RHO = {p: (rho(p, CNT[p], CRANK[p]), rho(p, CNT26[p], CRANK26[p])) for p in POPS}
+fr = lambda v: "—" if v is None else f"{v:+.2f}".replace("-", "−")
+L += head("5.4", f"{YEAR} records only: corpus rank against the vote ({', '.join(f'{p} ρ {fr(RHO[p][1][0])} vs {fr(RHO[p][0][0])} all years' for p in POPS)})",
+          "; ".join(f"{p} n = {len(P26[p]):,} of {len(P[p]):,}" for p in POPS),
+          f"Records dated {YEAR} only (record year reflects when a tracker was ingested, Table 1.5, and CVE dates are month-only). ρ is Spearman's rank correlation between "
+          f"the vote rank and the corpus rank over the categories with {MIN_RECORDS}+ records in that cut (+1 = same order, −1 = reversed; no CI, ten categories at most), "
+          f"shown beside the all-years value; a rise would mean the recent record sits closer to the vote. Columns per population: corpus records in {YEAR}, corpus rank in "
+          f"{YEAR}, places above the vote in {YEAR}, and the all-years rank for comparison.",
+          ["category [corpus code]", "vote rank"] + [f"{p}: {x}" for p in POPS for x in (f"{YEAR} records n (%)", f"{YEAR} rank", f"{YEAR} places above the vote", "all-years rank")])
+for e in TEN:
+    c = RV2C[e]; cells = []
+    for p in POPS:
+        n26, cnt, crank = len(P26[p]), CNT26[p], CRANK26[p]
+        pl = (VR[e] - crank[c]) if c in crank else None
+        cells += [f"{npc(cnt[c], n26)}{SMALL if cnt[c] < MIN_RECORDS else ''}", str(crank.get(c, "—")), signed(pl) if pl is not None else "—", str(CRANK[p].get(c, "—"))]
+    L.append(f"| {code(c)}{'‡' if c in MARKER else ''} | {VR[e]:g} | " + " | ".join(cells) + " |")
+moved = {p: [(e, CRANK26[p][RV2C[e]] - CRANK[p][RV2C[e]]) for e in TEN if RV2C[e] in CRANK26[p] and RV2C[e] in CRANK[p] and CRANK26[p][RV2C[e]] != CRANK[p][RV2C[e]]] for p in POPS}
+L += ["", "What changes in the " + f"{YEAR} cut: " + "; ".join(
+    f"{p}: ρ {fr(RHO[p][0][0])} → {fr(RHO[p][1][0])} over {RHO[p][1][1]} categories" + (", ranks that move: " + ", ".join(f"{ename(RV2C[e])} {signed(-d)}" for e, d in moved[p]) if moved[p] else ", no category changes rank") for p in POPS) + ". "
+    f"The {YEAR} rows are {pc(len(P26['ON-AI']), len(P['ON-AI']), 0)}% of ON-AI and {pc(len(P26['WITH-AI']), len(P['WITH-AI']), 0)}% of WITH-AI, "
+    f"and the vote was collected before most of them were disclosed, so a closer match would say the vote anticipated the feed, not that the feed confirms the vote. "
+    f"`out/dataset_post_2026.csv` holds these rows."]
+
 # ---------------------------------------------------------------- Limitation: the hand labels (Table 5.3)
 TIERS = (("disagree", "disagreement rows"), ("split", "where two pre-labellers agreed"), ("agree", "where three did"))
 GW = GOLD["WITH-AI"]
@@ -237,6 +274,11 @@ LIMS = [f"- Labels are rule outputs: {pc(*seed_share(R))}% of OWASP codes come f
         f"- Join losses: {g_lost} of {len(gold_ids):,} hand-labelled rows have no current record of their own (Table 1.13).",
         f"- Vote–data concordance is weak: weighted κ {KAPPA:.2f} ({sg(KCI[0])} to {sg(KCI[1])}) (Table 1.15).",
         f"- The two OWASP numberings differ on {diff_codes} of ten entries, so joins use names (Table 1.0).",
+        f"- The public record is a small, self-selected sample: only {pc(sum(frame['cve/ghsa'].values()), sum(1 for i in S if S[i]['source_class'] == 'cve/ghsa'))}% of CVE/GHSA records "
+        f"and {pc(sum(frame['harm-db'].values()), sum(1 for i in S if S[i]['source_class'] == 'harm-db'))}% of harm-database records involve an adversary at all, `exploited_in_wild` is set on "
+        f"{sum(r.get('exploited_in_wild') is True for r in R)} records, and attacks that are never disclosed, settled privately or seen only in vendor telemetry are absent (Tables 2.2, 4.0).",
+        f"- The index pools trackers with different units: a CVE is one bug in one product, a harm-database row is one news event, a research row is one paper; counts across them, and the "
+        f"corpus's own merging of {sum(len(r['source_ids']) > 1 for r in R):,} multi-source records, mix units (Table 1.1).",
         "- Record year, date precision, stubs and empty fields: steps 1, 2 and 4."]
 L += ["", "## Limitations of the data", "", *LIMS]
 write("s05_techniques.md", L)

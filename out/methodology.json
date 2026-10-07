@@ -148,9 +148,10 @@
 "entry_point": "direct prompt by the user",
 "entry_point_how": "text rule",
 "entry_point_pre": "direct prompt by the user",
-"target": "RAG / vector / memory store",
-"target_how": "text rule",
-"target_pre": "RAG / vector / memory store"
+"target": "a model itself (vision, speech or text model attacked directly)",
+"target_how": "corrected by review",
+"target_pre": "RAG / vector / memory store",
+"target_pre_how": "text rule"
 },
 "INC-02703": {
 "dependency": "unstated",
@@ -166,9 +167,10 @@
 "entry_point": "query access to the model (extraction / inference)",
 "entry_point_how": "label-group rule",
 "entry_point_pre": "unstated",
-"target": "model hub / training pipeline / weights",
-"target_how": "text rule",
-"target_pre": "model hub / training pipeline / weights"
+"target": "a model itself (vision, speech or text model attacked directly)",
+"target_how": "corrected by review",
+"target_pre": "model hub / training pipeline / weights",
+"target_pre_how": "text rule"
 },
 "INC-03570": {
 "dependency": "unstated",
@@ -229,9 +231,10 @@
 "entry_point": "adversarial input to a classifier",
 "entry_point_how": "text rule",
 "entry_point_pre": "adversarial input to a classifier",
-"target": "model hub / training pipeline / weights",
-"target_how": "text rule",
-"target_pre": "model hub / training pipeline / weights"
+"target": "detection / classification model",
+"target_how": "corrected by review",
+"target_pre": "model hub / training pipeline / weights",
+"target_pre_how": "text rule"
 },
 "INC-04067": {
 "dependency": "unstated",
@@ -280,12 +283,13 @@
 },
 "INC-04739": {
 "dependency": "unstated",
-"entry_point": "stolen or leaked credential",
-"entry_point_how": "text rule",
+"entry_point": "other",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "stolen or leaked credential",
 "target": "consumer chatbot / hosted LLM app",
 "target_how": "text rule",
-"target_pre": "consumer chatbot / hosted LLM app"
+"target_pre": "consumer chatbot / hosted LLM app",
+"entry_point_pre_how": "text rule"
 },
 "INC-04721": {
 "dependency": "unstated",
@@ -307,12 +311,13 @@
 },
 "INC-03020": {
 "dependency": "unstated",
-"entry_point": "via the agent's tools or sandbox",
-"entry_point_how": "label-group rule",
+"entry_point": "other",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "unstated",
 "target": "agent / copilot / coding assistant / MCP",
 "target_how": "text rule",
-"target_pre": "agent / copilot / coding assistant / MCP"
+"target_pre": "agent / copilot / coding assistant / MCP",
+"entry_point_pre_how": "label-group rule"
 },
 "INC-02848": {
 "dependency": "unstated",
@@ -391,9 +396,10 @@
 "entry_point": "malicious package / model / skill (supply chain)",
 "entry_point_how": "text rule",
 "entry_point_pre": "malicious package / model / skill (supply chain)",
-"target": "consumer chatbot / hosted LLM app",
-"target_how": "text rule",
-"target_pre": "consumer chatbot / hosted LLM app"
+"target": "agent / copilot / coding assistant / MCP",
+"target_how": "corrected by review",
+"target_pre": "consumer chatbot / hosted LLM app",
+"target_pre_how": "text rule"
 },
 "INC-00834": {
 "dependency": "model-level attack vector, no CVE/CWE",
@@ -499,9 +505,10 @@
 "entry_point": "indirect carrier (web/email/doc/tool output)",
 "entry_point_how": "text rule",
 "entry_point_pre": "indirect carrier (web/email/doc/tool output)",
-"target": "consumer chatbot / hosted LLM app",
-"target_how": "text rule",
-"target_pre": "consumer chatbot / hosted LLM app"
+"target": "agent / copilot / coding assistant / MCP",
+"target_how": "corrected by review",
+"target_pre": "consumer chatbot / hosted LLM app",
+"target_pre_how": "text rule"
 },
 "INC-02629": {
 "dependency": "unstated",
@@ -526,9 +533,10 @@
 "entry_point": "exploit of a conventional software vulnerability",
 "entry_point_how": "label-group rule",
 "entry_point_pre": "unstated",
-"target": "agent / copilot / coding assistant / MCP",
-"target_how": "text rule",
-"target_pre": "agent / copilot / coding assistant / MCP"
+"target": "consumer chatbot / hosted LLM app",
+"target_how": "corrected by review",
+"target_pre": "agent / copilot / coding assistant / MCP",
+"target_pre_how": "text rule"
 },
 "INC-02471": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -568,12 +576,13 @@
 },
 "INC-03334": {
 "dependency": "CVE/CWE present (software vulnerability)",
-"entry_point": "exposed / misconfigured service",
-"entry_point_how": "text rule",
+"entry_point": "exploit of a conventional software vulnerability",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "exposed / misconfigured service",
 "target": "agent / copilot / coding assistant / MCP",
 "target_how": "text rule",
-"target_pre": "agent / copilot / coding assistant / MCP"
+"target_pre": "agent / copilot / coding assistant / MCP",
+"entry_point_pre_how": "text rule"
 },
 "INC-03010": {
 "dependency": "model-level attack vector, no CVE/CWE",
@@ -712,12 +721,13 @@
 },
 "INC-00746": {
 "dependency": "unstated",
-"entry_point": "exploit of a conventional software vulnerability",
-"entry_point_how": "label-group rule",
+"entry_point": "prompt injection, carrier not stated",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "unstated",
 "target": "consumer chatbot / hosted LLM app",
 "target_how": "text rule",
-"target_pre": "consumer chatbot / hosted LLM app"
+"target_pre": "consumer chatbot / hosted LLM app",
+"entry_point_pre_how": "label-group rule"
 },
 "INC-01297": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -748,12 +758,13 @@
 },
 "INC-01471": {
 "dependency": "CVE/CWE present (software vulnerability)",
-"entry_point": "exposed / misconfigured service",
-"entry_point_how": "text rule",
+"entry_point": "exploit of a conventional software vulnerability",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "exposed / misconfigured service",
 "target": "agent / copilot / coding assistant / MCP",
 "target_how": "text rule",
-"target_pre": "agent / copilot / coding assistant / MCP"
+"target_pre": "agent / copilot / coding assistant / MCP",
+"entry_point_pre_how": "text rule"
 },
 "INC-01063": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -775,12 +786,13 @@
 },
 "INC-01390": {
 "dependency": "CVE/CWE present (software vulnerability)",
-"entry_point": "exploit of a conventional software vulnerability",
-"entry_point_how": "label-group rule",
+"entry_point": "exposed / misconfigured service",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "unstated",
 "target": "agent / copilot / coding assistant / MCP",
 "target_how": "text rule",
-"target_pre": "agent / copilot / coding assistant / MCP"
+"target_pre": "agent / copilot / coding assistant / MCP",
+"entry_point_pre_how": "label-group rule"
 },
 "INC-02813": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -802,12 +814,13 @@
 },
 "INC-02686": {
 "dependency": "unstated",
-"entry_point": "direct prompt by the user",
-"entry_point_how": "text rule",
+"entry_point": "indirect carrier (web/email/doc/tool output)",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "direct prompt by the user",
 "target": "agent / copilot / coding assistant / MCP",
 "target_how": "text rule",
-"target_pre": "agent / copilot / coding assistant / MCP"
+"target_pre": "agent / copilot / coding assistant / MCP",
+"entry_point_pre_how": "text rule"
 },
 "INC-02980": {
 "dependency": "unstated",
@@ -958,9 +971,10 @@
 "entry_point": "exploit of a conventional software vulnerability",
 "entry_point_how": "label-group rule",
 "entry_point_pre": "unstated",
-"target": "consumer chatbot / hosted LLM app",
-"target_how": "text rule",
-"target_pre": "consumer chatbot / hosted LLM app"
+"target": "no attacker: operator harm or model failure (misplaced record)",
+"target_how": "corrected by review",
+"target_pre": "consumer chatbot / hosted LLM app",
+"target_pre_how": "text rule"
 },
 "INC-03639": {
 "dependency": "model-level attack vector, no CVE/CWE",
@@ -976,9 +990,10 @@
 "entry_point": "poisoned training data or model",
 "entry_point_how": "label-group rule",
 "entry_point_pre": "unstated",
-"target": "model hub / training pipeline / weights",
-"target_how": "text rule",
-"target_pre": "model hub / training pipeline / weights"
+"target": "no attacker: operator harm or model failure (misplaced record)",
+"target_how": "corrected by review",
+"target_pre": "model hub / training pipeline / weights",
+"target_pre_how": "text rule"
 },
 "INC-04021": {
 "dependency": "unstated",
@@ -1009,30 +1024,35 @@
 },
 "INC-03915": {
 "dependency": "model-level attack vector, no CVE/CWE",
-"entry_point": "adversarial input to a classifier",
-"entry_point_how": "corpus label",
+"entry_point": "no attacker: operator harm or model failure (misplaced record)",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "adversarial input to a classifier",
-"target": "detection / classification model",
-"target_how": "text rule",
-"target_pre": "detection / classification model"
+"target": "no attacker: operator harm or model failure (misplaced record)",
+"target_how": "corrected by review",
+"target_pre": "detection / classification model",
+"entry_point_pre_how": "corpus label",
+"target_pre_how": "text rule"
 },
 "INC-05072": {
 "dependency": "model-level attack vector, no CVE/CWE",
-"entry_point": "adversarial input to a classifier",
-"entry_point_how": "corpus label",
+"entry_point": "no attacker: operator harm or model failure (misplaced record)",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "adversarial input to a classifier",
-"target": "detection / classification model",
-"target_how": "text rule",
-"target_pre": "detection / classification model"
+"target": "no attacker: operator harm or model failure (misplaced record)",
+"target_how": "corrected by review",
+"target_pre": "detection / classification model",
+"entry_point_pre_how": "corpus label",
+"target_pre_how": "text rule"
 },
 "INC-04366": {
 "dependency": "model-level attack vector, no CVE/CWE",
-"entry_point": "adversarial input to a classifier",
-"entry_point_how": "corpus label",
+"entry_point": "no attacker: operator harm or model failure (misplaced record)",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "adversarial input to a classifier",
 "target": "detection / classification model",
 "target_how": "text rule",
-"target_pre": "detection / classification model"
+"target_pre": "detection / classification model",
+"entry_point_pre_how": "corpus label"
 },
 "INC-07491": {
 "dependency": "model-level attack vector, no CVE/CWE",
@@ -1057,27 +1077,30 @@
 "entry_point": "exploit of a conventional software vulnerability",
 "entry_point_how": "label-group rule",
 "entry_point_pre": "unstated",
-"target": "detection / classification model",
-"target_how": "text rule",
-"target_pre": "detection / classification model"
+"target": "other",
+"target_how": "corrected by review",
+"target_pre": "detection / classification model",
+"target_pre_how": "text rule"
 },
 "INC-04506": {
 "dependency": "unstated",
-"entry_point": "poisoned training data or model",
-"entry_point_how": "label-group rule",
+"entry_point": "no attacker: operator harm or model failure (misplaced record)",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "unstated",
 "target": "consumer chatbot / hosted LLM app",
 "target_how": "text rule",
-"target_pre": "consumer chatbot / hosted LLM app"
+"target_pre": "consumer chatbot / hosted LLM app",
+"entry_point_pre_how": "label-group rule"
 },
 "INC-04502": {
 "dependency": "unstated",
-"entry_point": "poisoned training data or model",
-"entry_point_how": "label-group rule",
+"entry_point": "no attacker: operator harm or model failure (misplaced record)",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "unstated",
 "target": "consumer chatbot / hosted LLM app",
 "target_how": "text rule",
-"target_pre": "consumer chatbot / hosted LLM app"
+"target_pre": "consumer chatbot / hosted LLM app",
+"entry_point_pre_how": "label-group rule"
 },
 "INC-03466": {
 "dependency": "unstated",
@@ -1144,21 +1167,23 @@
 },
 "INC-05370": {
 "dependency": "unstated",
-"entry_point": "direct prompt by the user",
-"entry_point_how": "text rule",
+"entry_point": "no attacker: operator harm or model failure (misplaced record)",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "direct prompt by the user",
 "target": "other (tracker stub, no system named)",
 "target_how": "label-group rule",
-"target_pre": "unstated"
+"target_pre": "unstated",
+"entry_point_pre_how": "text rule"
 },
 "INC-06862": {
 "dependency": "unstated",
 "entry_point": "exploit of a conventional software vulnerability",
 "entry_point_how": "label-group rule",
 "entry_point_pre": "unstated",
-"target": "detection / classification model",
-"target_how": "text rule",
-"target_pre": "detection / classification model"
+"target": "other",
+"target_how": "corrected by review",
+"target_pre": "detection / classification model",
+"target_pre_how": "text rule"
 },
 "INC-07226": {
 "dependency": "unstated",
@@ -1183,9 +1208,10 @@
 "entry_point": "direct prompt by the user",
 "entry_point_how": "text rule",
 "entry_point_pre": "direct prompt by the user",
-"target": "other (tracker stub, no system named)",
-"target_how": "label-group rule",
-"target_pre": "unstated"
+"target": "no attacker: operator harm or model failure (misplaced record)",
+"target_how": "corrected by review",
+"target_pre": "unstated",
+"target_pre_how": "label-group rule"
 },
 "INC-07233": {
 "dependency": "model-level attack vector, no CVE/CWE",
@@ -1228,9 +1254,10 @@
 "entry_point": "exploit of a conventional software vulnerability",
 "entry_point_how": "label-group rule",
 "entry_point_pre": "unstated",
-"target": "other (tracker stub, no system named)",
-"target_how": "label-group rule",
-"target_pre": "unstated"
+"target": "no attacker: operator harm or model failure (misplaced record)",
+"target_how": "corrected by review",
+"target_pre": "unstated",
+"target_pre_how": "label-group rule"
 },
 "INC-05352": {
 "dependency": "model-level attack vector, no CVE/CWE",
@@ -1270,12 +1297,14 @@
 },
 "INC-07434": {
 "dependency": "unstated",
-"entry_point": "via the agent's tools or sandbox",
-"entry_point_how": "label-group rule",
+"entry_point": "no attacker: operator harm or model failure (misplaced record)",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "unstated",
-"target": "other (tracker stub, no system named)",
-"target_how": "label-group rule",
-"target_pre": "unstated"
+"target": "no attacker: operator harm or model failure (misplaced record)",
+"target_how": "corrected by review",
+"target_pre": "unstated",
+"entry_point_pre_how": "label-group rule",
+"target_pre_how": "label-group rule"
 },
 "INC-07179": {
 "dependency": "unstated",
@@ -1297,12 +1326,13 @@
 },
 "INC-03771": {
 "dependency": "unstated",
-"entry_point": "malicious package / model / skill (supply chain)",
-"entry_point_how": "corpus label",
+"entry_point": "other",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "malicious package / model / skill (supply chain)",
 "target": "other (tracker stub, no system named)",
 "target_how": "label-group rule",
-"target_pre": "unstated"
+"target_pre": "unstated",
+"entry_point_pre_how": "corpus label"
 },
 "INC-03975": {
 "dependency": "unstated",
@@ -1333,12 +1363,13 @@
 },
 "INC-02232": {
 "dependency": "unstated",
-"entry_point": "exploit of a conventional software vulnerability",
-"entry_point_how": "label-group rule",
+"entry_point": "other",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "unstated",
 "target": "other (tracker stub, no system named)",
 "target_how": "label-group rule",
-"target_pre": "unstated"
+"target_pre": "unstated",
+"entry_point_pre_how": "label-group rule"
 },
 "INC-02339": {
 "dependency": "model-level attack vector, no CVE/CWE",
@@ -1363,9 +1394,10 @@
 "entry_point": "prompt injection, carrier not stated",
 "entry_point_how": "corpus label",
 "entry_point_pre": "prompt injection, carrier not stated",
-"target": "consumer chatbot / hosted LLM app",
-"target_how": "text rule",
-"target_pre": "consumer chatbot / hosted LLM app"
+"target": "no attacker: operator harm or model failure (misplaced record)",
+"target_how": "corrected by review",
+"target_pre": "consumer chatbot / hosted LLM app",
+"target_pre_how": "text rule"
 },
 "INC-02958": {
 "dependency": "unstated",
@@ -1534,9 +1566,10 @@
 "entry_point": "via the agent's tools or sandbox",
 "entry_point_how": "label-group rule",
 "entry_point_pre": "unstated",
-"target": "ML/LLM framework or serving library",
-"target_how": "text rule",
-"target_pre": "ML/LLM framework or serving library"
+"target": "other",
+"target_how": "corrected by review",
+"target_pre": "ML/LLM framework or serving library",
+"target_pre_how": "text rule"
 },
 "INC-00810": {
 "dependency": "model-level attack vector, no CVE/CWE",
@@ -1594,12 +1627,13 @@
 },
 "INC-01157": {
 "dependency": "unstated",
-"entry_point": "via the agent's tools or sandbox",
-"entry_point_how": "label-group rule",
+"entry_point": "other",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "unstated",
 "target": "agent / copilot / coding assistant / MCP",
 "target_how": "text rule",
-"target_pre": "agent / copilot / coding assistant / MCP"
+"target_pre": "agent / copilot / coding assistant / MCP",
+"entry_point_pre_how": "label-group rule"
 },
 "INC-00832": {
 "dependency": "unstated",
@@ -1792,12 +1826,13 @@
 },
 "INC-03445": {
 "dependency": "model-level attack vector, no CVE/CWE",
-"entry_point": "adversarial input to a classifier",
-"entry_point_how": "text rule",
+"entry_point": "direct prompt by the user",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "adversarial input to a classifier",
 "target": "consumer chatbot / hosted LLM app",
 "target_how": "text rule",
-"target_pre": "consumer chatbot / hosted LLM app"
+"target_pre": "consumer chatbot / hosted LLM app",
+"entry_point_pre_how": "text rule"
 },
 "INC-03557": {
 "dependency": "model-level attack vector, no CVE/CWE",
@@ -2092,9 +2127,10 @@
 "entry_point": "query access to the model (extraction / inference)",
 "entry_point_how": "label-group rule",
 "entry_point_pre": "unstated",
-"target": "model hub / training pipeline / weights",
-"target_how": "text rule",
-"target_pre": "model hub / training pipeline / weights"
+"target": "a model itself (vision, speech or text model attacked directly)",
+"target_how": "corrected by review",
+"target_pre": "model hub / training pipeline / weights",
+"target_pre_how": "text rule"
 },
 "INC-07568": {
 "dependency": "model-level attack vector, no CVE/CWE",
@@ -2110,9 +2146,10 @@
 "entry_point": "malicious package / model / skill (supply chain)",
 "entry_point_how": "text rule",
 "entry_point_pre": "malicious package / model / skill (supply chain)",
-"target": "detection / classification model",
-"target_how": "text rule",
-"target_pre": "detection / classification model"
+"target": "model hub / training pipeline / weights",
+"target_how": "corrected by review",
+"target_pre": "detection / classification model",
+"target_pre_how": "text rule"
 },
 "INC-07345": {
 "dependency": "unstated",
@@ -2143,12 +2180,13 @@
 },
 "INC-04483": {
 "dependency": "unstated",
-"entry_point": "malicious package / model / skill (supply chain)",
-"entry_point_how": "corpus label",
+"entry_point": "poisoned training data or model",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "malicious package / model / skill (supply chain)",
 "target": "consumer chatbot / hosted LLM app",
 "target_how": "text rule",
-"target_pre": "consumer chatbot / hosted LLM app"
+"target_pre": "consumer chatbot / hosted LLM app",
+"entry_point_pre_how": "corpus label"
 },
 "INC-04976": {
 "dependency": "unstated",
@@ -2224,12 +2262,13 @@
 },
 "INC-03037": {
 "dependency": "unstated",
-"entry_point": "indirect carrier (web/email/doc/tool output)",
-"entry_point_how": "text rule",
+"entry_point": "poisoned training data or model",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "indirect carrier (web/email/doc/tool output)",
 "target": "model hub / training pipeline / weights",
 "target_how": "text rule",
-"target_pre": "model hub / training pipeline / weights"
+"target_pre": "model hub / training pipeline / weights",
+"entry_point_pre_how": "text rule"
 },
 "INC-04180": {
 "dependency": "unstated",
@@ -2359,12 +2398,13 @@
 },
 "INC-01179": {
 "dependency": "model-level attack vector, no CVE/CWE",
-"entry_point": "direct prompt by the user",
-"entry_point_how": "text rule",
+"entry_point": "indirect carrier (web/email/doc/tool output)",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "direct prompt by the user",
 "target": "consumer chatbot / hosted LLM app",
 "target_how": "text rule",
-"target_pre": "consumer chatbot / hosted LLM app"
+"target_pre": "consumer chatbot / hosted LLM app",
+"entry_point_pre_how": "text rule"
 },
 "INC-02857": {
 "dependency": "model-level attack vector, no CVE/CWE",
@@ -2431,12 +2471,13 @@
 },
 "INC-04804": {
 "dependency": "unstated",
-"entry_point": "malicious package / model / skill (supply chain)",
-"entry_point_how": "corpus label",
+"entry_point": "poisoned training data or model",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "malicious package / model / skill (supply chain)",
 "target": "consumer chatbot / hosted LLM app",
 "target_how": "text rule",
-"target_pre": "consumer chatbot / hosted LLM app"
+"target_pre": "consumer chatbot / hosted LLM app",
+"entry_point_pre_how": "corpus label"
 },
 "INC-04779": {
 "dependency": "unstated",
@@ -2458,21 +2499,23 @@
 },
 "INC-04312": {
 "dependency": "unstated",
-"entry_point": "adversarial input to a classifier",
-"entry_point_how": "text rule",
+"entry_point": "poisoned training data or model",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "adversarial input to a classifier",
 "target": "model hub / training pipeline / weights",
 "target_how": "coded from text",
-"target_pre": "unstated"
+"target_pre": "unstated",
+"entry_point_pre_how": "text rule"
 },
 "INC-03262": {
 "dependency": "unstated",
-"entry_point": "malicious package / model / skill (supply chain)",
-"entry_point_how": "text rule",
+"entry_point": "poisoned training data or model",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "malicious package / model / skill (supply chain)",
 "target": "model hub / training pipeline / weights",
 "target_how": "coded from text",
-"target_pre": "unstated"
+"target_pre": "unstated",
+"entry_point_pre_how": "text rule"
 },
 "INC-03595": {
 "dependency": "unstated",
@@ -2524,9 +2567,10 @@
 "entry_point": "direct prompt by the user",
 "entry_point_how": "text rule",
 "entry_point_pre": "direct prompt by the user",
-"target": "consumer chatbot / hosted LLM app",
-"target_how": "text rule",
-"target_pre": "consumer chatbot / hosted LLM app"
+"target": "a model itself (vision, speech or text model attacked directly)",
+"target_how": "corrected by review",
+"target_pre": "consumer chatbot / hosted LLM app",
+"target_pre_how": "text rule"
 },
 "INC-04326": {
 "dependency": "model-level attack vector, no CVE/CWE",
@@ -2548,12 +2592,13 @@
 },
 "INC-03310": {
 "dependency": "model-level attack vector, no CVE/CWE",
-"entry_point": "prompt injection, carrier not stated",
-"entry_point_how": "corpus label",
+"entry_point": "indirect carrier (web/email/doc/tool output)",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "prompt injection, carrier not stated",
 "target": "a model itself (vision, speech or text model attacked directly)",
 "target_how": "coded from text",
-"target_pre": "unstated"
+"target_pre": "unstated",
+"entry_point_pre_how": "corpus label"
 },
 "INC-03195": {
 "dependency": "model-level attack vector, no CVE/CWE",
@@ -2629,21 +2674,24 @@
 },
 "INC-04961": {
 "dependency": "model-level attack vector, no CVE/CWE",
-"entry_point": "prompt injection, carrier not stated",
-"entry_point_how": "corpus label",
+"entry_point": "no attacker: operator harm or model failure (misplaced record)",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "prompt injection, carrier not stated",
 "target": "consumer chatbot / hosted LLM app",
 "target_how": "text rule",
-"target_pre": "consumer chatbot / hosted LLM app"
+"target_pre": "consumer chatbot / hosted LLM app",
+"entry_point_pre_how": "corpus label"
 },
 "INC-04304": {
 "dependency": "model-level attack vector, no CVE/CWE",
-"entry_point": "query access to the model (extraction / inference)",
-"entry_point_how": "label-group rule",
+"entry_point": "no attacker: operator harm or model failure (misplaced record)",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "unstated",
-"target": "consumer chatbot / hosted LLM app",
-"target_how": "text rule",
-"target_pre": "consumer chatbot / hosted LLM app"
+"target": "no attacker: operator harm or model failure (misplaced record)",
+"target_how": "corrected by review",
+"target_pre": "consumer chatbot / hosted LLM app",
+"entry_point_pre_how": "label-group rule",
+"target_pre_how": "text rule"
 },
 "INC-04963": {
 "dependency": "model-level attack vector, no CVE/CWE",
@@ -2746,12 +2794,13 @@
 },
 "INC-06470": {
 "dependency": "model-level attack vector, no CVE/CWE",
-"entry_point": "stolen or leaked credential",
-"entry_point_how": "text rule",
+"entry_point": "exposed / misconfigured service",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "stolen or leaked credential",
 "target": "model hub / training pipeline / weights",
 "target_how": "text rule",
-"target_pre": "model hub / training pipeline / weights"
+"target_pre": "model hub / training pipeline / weights",
+"entry_point_pre_how": "text rule"
 },
 "INC-07190": {
 "dependency": "model-level attack vector, no CVE/CWE",
@@ -2800,12 +2849,13 @@
 },
 "INC-05496": {
 "dependency": "model-level attack vector, no CVE/CWE",
-"entry_point": "adversarial input to a classifier",
-"entry_point_how": "corpus label",
+"entry_point": "poisoned training data or model",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "adversarial input to a classifier",
 "target": "model hub / training pipeline / weights",
 "target_how": "coded from text",
-"target_pre": "unstated"
+"target_pre": "unstated",
+"entry_point_pre_how": "corpus label"
 },
 "INC-05553": {
 "dependency": "model-level attack vector, no CVE/CWE",
@@ -2836,21 +2886,23 @@
 },
 "INC-06414": {
 "dependency": "model-level attack vector, no CVE/CWE",
-"entry_point": "stolen or leaked credential",
-"entry_point_how": "text rule",
+"entry_point": "adversarial input to a classifier",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "stolen or leaked credential",
 "target": "detection / classification model",
 "target_how": "coded from text",
-"target_pre": "unstated"
+"target_pre": "unstated",
+"entry_point_pre_how": "text rule"
 },
 "INC-05049": {
 "dependency": "model-level attack vector, no CVE/CWE",
-"entry_point": "adversarial input to a classifier",
-"entry_point_how": "corpus label",
+"entry_point": "indirect carrier (web/email/doc/tool output)",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "adversarial input to a classifier",
 "target": "other",
 "target_how": "coded from text",
-"target_pre": "unstated"
+"target_pre": "unstated",
+"entry_point_pre_how": "corpus label"
 },
 "INC-04349": {
 "dependency": "model-level attack vector, no CVE/CWE",
@@ -2872,12 +2924,13 @@
 },
 "INC-04792": {
 "dependency": "model-level attack vector, no CVE/CWE",
-"entry_point": "adversarial input to a classifier",
-"entry_point_how": "corpus label",
+"entry_point": "malicious package / model / skill (supply chain)",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "adversarial input to a classifier",
 "target": "model hub / training pipeline / weights",
 "target_how": "text rule",
-"target_pre": "model hub / training pipeline / weights"
+"target_pre": "model hub / training pipeline / weights",
+"entry_point_pre_how": "corpus label"
 },
 "INC-04391": {
 "dependency": "model-level attack vector, no CVE/CWE",
@@ -3061,12 +3114,13 @@
 },
 "INC-07257": {
 "dependency": "model-level attack vector, no CVE/CWE",
-"entry_point": "adversarial input to a classifier",
-"entry_point_how": "corpus label",
+"entry_point": "no attacker: operator harm or model failure (misplaced record)",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "adversarial input to a classifier",
 "target": "detection / classification model",
 "target_how": "text rule",
-"target_pre": "detection / classification model"
+"target_pre": "detection / classification model",
+"entry_point_pre_how": "corpus label"
 },
 "INC-05158": {
 "dependency": "model-level attack vector, no CVE/CWE",
@@ -3088,12 +3142,13 @@
 },
 "INC-05117": {
 "dependency": "model-level attack vector, no CVE/CWE",
-"entry_point": "adversarial input to a classifier",
-"entry_point_how": "corpus label",
+"entry_point": "no attacker: operator harm or model failure (misplaced record)",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "adversarial input to a classifier",
 "target": "no attacker: operator harm or model failure (misplaced record)",
 "target_how": "coded from text",
-"target_pre": "unstated"
+"target_pre": "unstated",
+"entry_point_pre_how": "corpus label"
 },
 "INC-05119": {
 "dependency": "model-level attack vector, no CVE/CWE",
@@ -3106,12 +3161,13 @@
 },
 "INC-05176": {
 "dependency": "model-level attack vector, no CVE/CWE",
-"entry_point": "adversarial input to a classifier",
-"entry_point_how": "corpus label",
+"entry_point": "no attacker: operator harm or model failure (misplaced record)",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "adversarial input to a classifier",
 "target": "no attacker: operator harm or model failure (misplaced record)",
 "target_how": "coded from text",
-"target_pre": "unstated"
+"target_pre": "unstated",
+"entry_point_pre_how": "corpus label"
 },
 "INC-05177": {
 "dependency": "model-level attack vector, no CVE/CWE",
@@ -3241,12 +3297,13 @@
 },
 "INC-07464": {
 "dependency": "model-level attack vector, no CVE/CWE",
-"entry_point": "exposed / misconfigured service",
-"entry_point_how": "text rule",
+"entry_point": "no attacker: operator harm or model failure (misplaced record)",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "exposed / misconfigured service",
 "target": "no attacker: operator harm or model failure (misplaced record)",
 "target_how": "coded from text",
-"target_pre": "unstated"
+"target_pre": "unstated",
+"entry_point_pre_how": "text rule"
 },
 "INC-04828": {
 "dependency": "model-level attack vector, no CVE/CWE",
@@ -3268,12 +3325,13 @@
 },
 "INC-02863": {
 "dependency": "model-level attack vector, no CVE/CWE",
-"entry_point": "prompt injection, carrier not stated",
-"entry_point_how": "corpus label",
+"entry_point": "direct prompt by the user",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "prompt injection, carrier not stated",
 "target": "consumer chatbot / hosted LLM app",
 "target_how": "coded from text",
-"target_pre": "unstated"
+"target_pre": "unstated",
+"entry_point_pre_how": "corpus label"
 },
 "INC-02604": {
 "dependency": "model-level attack vector, no CVE/CWE",
@@ -3298,9 +3356,10 @@
 "entry_point": "prompt injection, carrier not stated",
 "entry_point_how": "corpus label",
 "entry_point_pre": "prompt injection, carrier not stated",
-"target": "consumer chatbot / hosted LLM app",
-"target_how": "text rule",
-"target_pre": "consumer chatbot / hosted LLM app"
+"target": "no attacker: operator harm or model failure (misplaced record)",
+"target_how": "corrected by review",
+"target_pre": "consumer chatbot / hosted LLM app",
+"target_pre_how": "text rule"
 },
 "INC-02651": {
 "dependency": "model-level attack vector, no CVE/CWE",
@@ -3325,27 +3384,30 @@
 "entry_point": "prompt injection, carrier not stated",
 "entry_point_how": "corpus label",
 "entry_point_pre": "prompt injection, carrier not stated",
-"target": "consumer chatbot / hosted LLM app",
-"target_how": "text rule",
-"target_pre": "consumer chatbot / hosted LLM app"
+"target": "no attacker: operator harm or model failure (misplaced record)",
+"target_how": "corrected by review",
+"target_pre": "consumer chatbot / hosted LLM app",
+"target_pre_how": "text rule"
 },
 "INC-02504": {
 "dependency": "model-level attack vector, no CVE/CWE",
 "entry_point": "prompt injection, carrier not stated",
 "entry_point_how": "corpus label",
 "entry_point_pre": "prompt injection, carrier not stated",
-"target": "consumer chatbot / hosted LLM app",
-"target_how": "text rule",
-"target_pre": "consumer chatbot / hosted LLM app"
+"target": "a model itself (vision, speech or text model attacked directly)",
+"target_how": "corrected by review",
+"target_pre": "consumer chatbot / hosted LLM app",
+"target_pre_how": "text rule"
 },
 "INC-02913": {
 "dependency": "model-level attack vector, no CVE/CWE",
-"entry_point": "prompt injection, carrier not stated",
-"entry_point_how": "corpus label",
+"entry_point": "no attacker: operator harm or model failure (misplaced record)",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "prompt injection, carrier not stated",
 "target": "no attacker: operator harm or model failure (misplaced record)",
 "target_how": "coded from text",
-"target_pre": "unstated"
+"target_pre": "unstated",
+"entry_point_pre_how": "corpus label"
 },
 "INC-02914": {
 "dependency": "model-level attack vector, no CVE/CWE",
@@ -3835,12 +3897,13 @@
 },
 "INC-08203": {
 "dependency": "CVE/CWE present (software vulnerability)",
-"entry_point": "indirect carrier (web/email/doc/tool output)",
-"entry_point_how": "text rule",
+"entry_point": "exploit of a conventional software vulnerability",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "indirect carrier (web/email/doc/tool output)",
 "target": "agent / copilot / coding assistant / MCP",
 "target_how": "text rule",
-"target_pre": "agent / copilot / coding assistant / MCP"
+"target_pre": "agent / copilot / coding assistant / MCP",
+"entry_point_pre_how": "text rule"
 },
 "INC-13508": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -3925,12 +3988,13 @@
 },
 "INC-13521": {
 "dependency": "CVE/CWE present (software vulnerability)",
-"entry_point": "prompt injection, carrier not stated",
-"entry_point_how": "corpus label",
+"entry_point": "exploit of a conventional software vulnerability",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "prompt injection, carrier not stated",
 "target": "agent / copilot / coding assistant / MCP",
 "target_how": "text rule",
-"target_pre": "agent / copilot / coding assistant / MCP"
+"target_pre": "agent / copilot / coding assistant / MCP",
+"entry_point_pre_how": "corpus label"
 },
 "INC-13539": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -4069,12 +4133,13 @@
 },
 "INC-13833": {
 "dependency": "CVE/CWE present (software vulnerability)",
-"entry_point": "adversarial input to a classifier",
-"entry_point_how": "text rule",
+"entry_point": "via the agent's tools or sandbox",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "adversarial input to a classifier",
 "target": "agent / copilot / coding assistant / MCP",
 "target_how": "text rule",
-"target_pre": "agent / copilot / coding assistant / MCP"
+"target_pre": "agent / copilot / coding assistant / MCP",
+"entry_point_pre_how": "text rule"
 },
 "INC-13836": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -4096,12 +4161,13 @@
 },
 "INC-13838": {
 "dependency": "CVE/CWE present (software vulnerability)",
-"entry_point": "indirect carrier (web/email/doc/tool output)",
-"entry_point_how": "text rule",
+"entry_point": "prompt injection, carrier not stated",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "indirect carrier (web/email/doc/tool output)",
 "target": "agent / copilot / coding assistant / MCP",
 "target_how": "text rule",
-"target_pre": "agent / copilot / coding assistant / MCP"
+"target_pre": "agent / copilot / coding assistant / MCP",
+"entry_point_pre_how": "text rule"
 },
 "INC-13842": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -4177,12 +4243,13 @@
 },
 "INC-08231": {
 "dependency": "CVE/CWE present (software vulnerability)",
-"entry_point": "prompt injection, carrier not stated",
-"entry_point_how": "corpus label",
+"entry_point": "exploit of a conventional software vulnerability",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "prompt injection, carrier not stated",
 "target": "agent / copilot / coding assistant / MCP",
 "target_how": "text rule",
-"target_pre": "agent / copilot / coding assistant / MCP"
+"target_pre": "agent / copilot / coding assistant / MCP",
+"entry_point_pre_how": "corpus label"
 },
 "INC-08250": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -4225,9 +4292,10 @@
 "entry_point": "malicious package / model / skill (supply chain)",
 "entry_point_how": "corpus label",
 "entry_point_pre": "malicious package / model / skill (supply chain)",
-"target": "consumer chatbot / hosted LLM app",
-"target_how": "text rule",
-"target_pre": "consumer chatbot / hosted LLM app"
+"target": "ML/LLM framework or serving library",
+"target_how": "corrected by review",
+"target_pre": "consumer chatbot / hosted LLM app",
+"target_pre_how": "text rule"
 },
 "INC-13973": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -4339,12 +4407,13 @@
 },
 "INC-02060": {
 "dependency": "CVE/CWE present (software vulnerability)",
-"entry_point": "exposed / misconfigured service",
-"entry_point_how": "text rule",
+"entry_point": "exploit of a conventional software vulnerability",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "exposed / misconfigured service",
 "target": "agent / copilot / coding assistant / MCP",
 "target_how": "text rule",
-"target_pre": "agent / copilot / coding assistant / MCP"
+"target_pre": "agent / copilot / coding assistant / MCP",
+"entry_point_pre_how": "text rule"
 },
 "INC-01511": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -4366,12 +4435,13 @@
 },
 "INC-01513": {
 "dependency": "CVE/CWE present (software vulnerability)",
-"entry_point": "stolen or leaked credential",
-"entry_point_how": "text rule",
+"entry_point": "exploit of a conventional software vulnerability",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "stolen or leaked credential",
 "target": "agent / copilot / coding assistant / MCP",
 "target_how": "text rule",
-"target_pre": "agent / copilot / coding assistant / MCP"
+"target_pre": "agent / copilot / coding assistant / MCP",
+"entry_point_pre_how": "text rule"
 },
 "INC-01512": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -4546,12 +4616,13 @@
 },
 "INC-08558": {
 "dependency": "CVE/CWE present (software vulnerability)",
-"entry_point": "prompt injection, carrier not stated",
-"entry_point_how": "corpus label",
+"entry_point": "indirect carrier (web/email/doc/tool output)",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "prompt injection, carrier not stated",
 "target": "agent / copilot / coding assistant / MCP",
 "target_how": "text rule",
-"target_pre": "agent / copilot / coding assistant / MCP"
+"target_pre": "agent / copilot / coding assistant / MCP",
+"entry_point_pre_how": "corpus label"
 },
 "INC-08348": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -4618,12 +4689,13 @@
 },
 "INC-08469": {
 "dependency": "CVE/CWE present (software vulnerability)",
-"entry_point": "direct prompt by the user",
-"entry_point_how": "text rule",
+"entry_point": "exploit of a conventional software vulnerability",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "direct prompt by the user",
 "target": "agent / copilot / coding assistant / MCP",
 "target_how": "text rule",
-"target_pre": "agent / copilot / coding assistant / MCP"
+"target_pre": "agent / copilot / coding assistant / MCP",
+"entry_point_pre_how": "text rule"
 },
 "INC-04143": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -4636,12 +4708,13 @@
 },
 "INC-08511": {
 "dependency": "CVE/CWE present (software vulnerability)",
-"entry_point": "stolen or leaked credential",
-"entry_point_how": "text rule",
+"entry_point": "exploit of a conventional software vulnerability",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "stolen or leaked credential",
 "target": "agent / copilot / coding assistant / MCP",
 "target_how": "text rule",
-"target_pre": "agent / copilot / coding assistant / MCP"
+"target_pre": "agent / copilot / coding assistant / MCP",
+"entry_point_pre_how": "text rule"
 },
 "INC-08512": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -4879,12 +4952,13 @@
 },
 "INC-01671": {
 "dependency": "CVE/CWE present (software vulnerability)",
-"entry_point": "exposed / misconfigured service",
-"entry_point_how": "text rule",
+"entry_point": "exploit of a conventional software vulnerability",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "exposed / misconfigured service",
 "target": "agent / copilot / coding assistant / MCP",
 "target_how": "text rule",
-"target_pre": "agent / copilot / coding assistant / MCP"
+"target_pre": "agent / copilot / coding assistant / MCP",
+"entry_point_pre_how": "text rule"
 },
 "INC-00629": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -4933,12 +5007,13 @@
 },
 "INC-01674": {
 "dependency": "CVE/CWE present (software vulnerability)",
-"entry_point": "direct prompt by the user",
-"entry_point_how": "text rule",
+"entry_point": "exploit of a conventional software vulnerability",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "direct prompt by the user",
 "target": "agent / copilot / coding assistant / MCP",
 "target_how": "text rule",
-"target_pre": "agent / copilot / coding assistant / MCP"
+"target_pre": "agent / copilot / coding assistant / MCP",
+"entry_point_pre_how": "text rule"
 },
 "INC-01675": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -4960,12 +5035,13 @@
 },
 "INC-01888": {
 "dependency": "CVE/CWE present (software vulnerability)",
-"entry_point": "indirect carrier (web/email/doc/tool output)",
-"entry_point_how": "text rule",
+"entry_point": "exploit of a conventional software vulnerability",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "indirect carrier (web/email/doc/tool output)",
 "target": "agent / copilot / coding assistant / MCP",
 "target_how": "text rule",
-"target_pre": "agent / copilot / coding assistant / MCP"
+"target_pre": "agent / copilot / coding assistant / MCP",
+"entry_point_pre_how": "text rule"
 },
 "INC-01452": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -5140,12 +5216,13 @@
 },
 "INC-08899": {
 "dependency": "CVE/CWE present (software vulnerability)",
-"entry_point": "stolen or leaked credential",
-"entry_point_how": "text rule",
+"entry_point": "via the agent's tools or sandbox",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "stolen or leaked credential",
 "target": "agent / copilot / coding assistant / MCP",
 "target_how": "text rule",
-"target_pre": "agent / copilot / coding assistant / MCP"
+"target_pre": "agent / copilot / coding assistant / MCP",
+"entry_point_pre_how": "text rule"
 },
 "INC-08900": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -5158,12 +5235,13 @@
 },
 "INC-08903": {
 "dependency": "CVE/CWE present (software vulnerability)",
-"entry_point": "via the agent's tools or sandbox",
-"entry_point_how": "label-group rule",
+"entry_point": "exploit of a conventional software vulnerability",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "unstated",
 "target": "other",
 "target_how": "coded from text",
-"target_pre": "unstated"
+"target_pre": "unstated",
+"entry_point_pre_how": "label-group rule"
 },
 "INC-08917": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -5203,12 +5281,13 @@
 },
 "INC-08992": {
 "dependency": "CVE/CWE present (software vulnerability)",
-"entry_point": "adversarial input to a classifier",
-"entry_point_how": "text rule",
+"entry_point": "via the agent's tools or sandbox",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "adversarial input to a classifier",
 "target": "agent / copilot / coding assistant / MCP",
 "target_how": "coded from text",
-"target_pre": "unstated"
+"target_pre": "unstated",
+"entry_point_pre_how": "text rule"
 },
 "INC-08997": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -5260,9 +5339,10 @@
 "entry_point": "direct prompt by the user",
 "entry_point_how": "text rule",
 "entry_point_pre": "direct prompt by the user",
-"target": "agent / copilot / coding assistant / MCP",
-"target_how": "text rule",
-"target_pre": "agent / copilot / coding assistant / MCP"
+"target": "RAG / vector / memory store",
+"target_how": "corrected by review",
+"target_pre": "agent / copilot / coding assistant / MCP",
+"target_pre_how": "text rule"
 },
 "INC-00632": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -5311,12 +5391,13 @@
 },
 "INC-00673": {
 "dependency": "CVE/CWE present (software vulnerability)",
-"entry_point": "prompt injection, carrier not stated",
-"entry_point_how": "corpus label",
+"entry_point": "exploit of a conventional software vulnerability",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "prompt injection, carrier not stated",
 "target": "agent / copilot / coding assistant / MCP",
 "target_how": "text rule",
-"target_pre": "agent / copilot / coding assistant / MCP"
+"target_pre": "agent / copilot / coding assistant / MCP",
+"entry_point_pre_how": "corpus label"
 },
 "INC-00996": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -5392,12 +5473,13 @@
 },
 "INC-01153": {
 "dependency": "CVE/CWE present (software vulnerability)",
-"entry_point": "exposed / misconfigured service",
-"entry_point_how": "text rule",
+"entry_point": "exploit of a conventional software vulnerability",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "exposed / misconfigured service",
 "target": "agent / copilot / coding assistant / MCP",
 "target_how": "text rule",
-"target_pre": "agent / copilot / coding assistant / MCP"
+"target_pre": "agent / copilot / coding assistant / MCP",
+"entry_point_pre_how": "text rule"
 },
 "INC-01154": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -5500,12 +5582,13 @@
 },
 "INC-14191": {
 "dependency": "CVE/CWE present (software vulnerability)",
-"entry_point": "exposed / misconfigured service",
-"entry_point_how": "text rule",
+"entry_point": "exploit of a conventional software vulnerability",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "exposed / misconfigured service",
 "target": "agent / copilot / coding assistant / MCP",
 "target_how": "text rule",
-"target_pre": "agent / copilot / coding assistant / MCP"
+"target_pre": "agent / copilot / coding assistant / MCP",
+"entry_point_pre_how": "text rule"
 },
 "INC-09328": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -5635,12 +5718,14 @@
 },
 "INC-09485": {
 "dependency": "CVE/CWE present (software vulnerability)",
-"entry_point": "poisoned training data or model",
-"entry_point_how": "label-group rule",
+"entry_point": "exploit of a conventional software vulnerability",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "unstated",
-"target": "model hub / training pipeline / weights",
-"target_how": "text rule",
-"target_pre": "model hub / training pipeline / weights"
+"target": "RAG / vector / memory store",
+"target_how": "corrected by review",
+"target_pre": "model hub / training pipeline / weights",
+"entry_point_pre_how": "label-group rule",
+"target_pre_how": "text rule"
 },
 "INC-00902": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -5923,12 +6008,13 @@
 },
 "INC-02475": {
 "dependency": "CVE/CWE present (software vulnerability)",
-"entry_point": "direct prompt by the user",
-"entry_point_how": "text rule",
+"entry_point": "prompt injection, carrier not stated",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "direct prompt by the user",
 "target": "agent / copilot / coding assistant / MCP",
 "target_how": "text rule",
-"target_pre": "agent / copilot / coding assistant / MCP"
+"target_pre": "agent / copilot / coding assistant / MCP",
+"entry_point_pre_how": "text rule"
 },
 "INC-02476": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -5977,12 +6063,13 @@
 },
 "INC-10078": {
 "dependency": "CVE/CWE present (software vulnerability)",
-"entry_point": "via the agent's tools or sandbox",
-"entry_point_how": "label-group rule",
+"entry_point": "exploit of a conventional software vulnerability",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "unstated",
 "target": "other",
 "target_how": "coded from text",
-"target_pre": "unstated"
+"target_pre": "unstated",
+"entry_point_pre_how": "label-group rule"
 },
 "INC-10083": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -6193,12 +6280,13 @@
 },
 "INC-02843": {
 "dependency": "CVE/CWE present (software vulnerability)",
-"entry_point": "direct prompt by the user",
-"entry_point_how": "text rule",
+"entry_point": "exploit of a conventional software vulnerability",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "direct prompt by the user",
 "target": "agent / copilot / coding assistant / MCP",
 "target_how": "text rule",
-"target_pre": "agent / copilot / coding assistant / MCP"
+"target_pre": "agent / copilot / coding assistant / MCP",
+"entry_point_pre_how": "text rule"
 },
 "INC-03285": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -6211,12 +6299,13 @@
 },
 "INC-02311": {
 "dependency": "CVE/CWE present (software vulnerability)",
-"entry_point": "exploit of a conventional software vulnerability",
-"entry_point_how": "label-group rule",
+"entry_point": "exposed / misconfigured service",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "unstated",
 "target": "agent / copilot / coding assistant / MCP",
 "target_how": "text rule",
-"target_pre": "agent / copilot / coding assistant / MCP"
+"target_pre": "agent / copilot / coding assistant / MCP",
+"entry_point_pre_how": "label-group rule"
 },
 "INC-02529": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -6346,12 +6435,13 @@
 },
 "INC-10328": {
 "dependency": "CVE/CWE present (software vulnerability)",
-"entry_point": "indirect carrier (web/email/doc/tool output)",
-"entry_point_how": "text rule",
+"entry_point": "exploit of a conventional software vulnerability",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "indirect carrier (web/email/doc/tool output)",
 "target": "other",
 "target_how": "coded from text",
-"target_pre": "unstated"
+"target_pre": "unstated",
+"entry_point_pre_how": "text rule"
 },
 "INC-02612": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -6364,12 +6454,13 @@
 },
 "INC-02134": {
 "dependency": "CVE/CWE present (software vulnerability)",
-"entry_point": "direct prompt by the user",
-"entry_point_how": "text rule",
+"entry_point": "exploit of a conventional software vulnerability",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "direct prompt by the user",
 "target": "agent / copilot / coding assistant / MCP",
 "target_how": "text rule",
-"target_pre": "agent / copilot / coding assistant / MCP"
+"target_pre": "agent / copilot / coding assistant / MCP",
+"entry_point_pre_how": "text rule"
 },
 "INC-03231": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -6412,9 +6503,10 @@
 "entry_point": "via the agent's tools or sandbox",
 "entry_point_how": "label-group rule",
 "entry_point_pre": "unstated",
-"target": "model hub / training pipeline / weights",
-"target_how": "text rule",
-"target_pre": "model hub / training pipeline / weights"
+"target": "agent / copilot / coding assistant / MCP",
+"target_how": "corrected by review",
+"target_pre": "model hub / training pipeline / weights",
+"target_pre_how": "text rule"
 },
 "INC-10380": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -6715,12 +6807,13 @@
 },
 "INC-10872": {
 "dependency": "CVE/CWE present (software vulnerability)",
-"entry_point": "via the agent's tools or sandbox",
-"entry_point_how": "label-group rule",
+"entry_point": "exploit of a conventional software vulnerability",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "unstated",
 "target": "other",
 "target_how": "coded from text",
-"target_pre": "unstated"
+"target_pre": "unstated",
+"entry_point_pre_how": "label-group rule"
 },
 "INC-04229": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -6877,12 +6970,14 @@
 },
 "INC-06518": {
 "dependency": "unstated",
-"entry_point": "exploit of a conventional software vulnerability",
-"entry_point_how": "label-group rule",
+"entry_point": "no attacker: operator harm or model failure (misplaced record)",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "unstated",
-"target": "detection / classification model",
-"target_how": "text rule",
-"target_pre": "detection / classification model"
+"target": "no attacker: operator harm or model failure (misplaced record)",
+"target_how": "corrected by review",
+"target_pre": "detection / classification model",
+"entry_point_pre_how": "label-group rule",
+"target_pre_how": "text rule"
 },
 "INC-06797": {
 "dependency": "model-level attack vector, no CVE/CWE",
@@ -6898,9 +6993,10 @@
 "entry_point": "exploit of a conventional software vulnerability",
 "entry_point_how": "label-group rule",
 "entry_point_pre": "unstated",
-"target": "other (tracker stub, no system named)",
-"target_how": "label-group rule",
-"target_pre": "unstated"
+"target": "no attacker: operator harm or model failure (misplaced record)",
+"target_how": "corrected by review",
+"target_pre": "unstated",
+"target_pre_how": "label-group rule"
 },
 "INC-06265": {
 "dependency": "unstated",
@@ -6988,27 +7084,30 @@
 "entry_point": "exposed / misconfigured service",
 "entry_point_how": "text rule",
 "entry_point_pre": "exposed / misconfigured service",
-"target": "other (tracker stub, no system named)",
-"target_how": "label-group rule",
-"target_pre": "unstated"
+"target": "consumer chatbot / hosted LLM app",
+"target_how": "corrected by review",
+"target_pre": "unstated",
+"target_pre_how": "label-group rule"
 },
 "INC-06426": {
 "dependency": "unstated",
 "entry_point": "exploit of a conventional software vulnerability",
 "entry_point_how": "label-group rule",
 "entry_point_pre": "unstated",
-"target": "detection / classification model",
-"target_how": "text rule",
-"target_pre": "detection / classification model"
+"target": "other",
+"target_how": "corrected by review",
+"target_pre": "detection / classification model",
+"target_pre_how": "text rule"
 },
 "INC-06894": {
 "dependency": "unstated",
 "entry_point": "exploit of a conventional software vulnerability",
 "entry_point_how": "label-group rule",
 "entry_point_pre": "unstated",
-"target": "detection / classification model",
-"target_how": "text rule",
-"target_pre": "detection / classification model"
+"target": "other",
+"target_how": "corrected by review",
+"target_pre": "detection / classification model",
+"target_pre_how": "text rule"
 },
 "INC-06649": {
 "dependency": "unstated",
@@ -7213,18 +7312,20 @@
 "entry_point": "stolen or leaked credential",
 "entry_point_how": "text rule",
 "entry_point_pre": "stolen or leaked credential",
-"target": "other (tracker stub, no system named)",
-"target_how": "label-group rule",
-"target_pre": "unstated"
+"target": "no attacker: operator harm or model failure (misplaced record)",
+"target_how": "corrected by review",
+"target_pre": "unstated",
+"target_pre_how": "label-group rule"
 },
 "INC-01369": {
 "dependency": "unstated",
 "entry_point": "indirect carrier (web/email/doc/tool output)",
 "entry_point_how": "text rule",
 "entry_point_pre": "indirect carrier (web/email/doc/tool output)",
-"target": "model hub / training pipeline / weights",
-"target_how": "text rule",
-"target_pre": "model hub / training pipeline / weights"
+"target": "other (tracker stub, no system named)",
+"target_how": "corrected by review",
+"target_pre": "model hub / training pipeline / weights",
+"target_pre_how": "text rule"
 },
 "INC-01760": {
 "dependency": "model-level attack vector, no CVE/CWE",
@@ -7255,12 +7356,13 @@
 },
 "INC-00178": {
 "dependency": "unstated",
-"entry_point": "exploit of a conventional software vulnerability",
-"entry_point_how": "label-group rule",
+"entry_point": "no attacker: operator harm or model failure (misplaced record)",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "unstated",
 "target": "other (tracker stub, no system named)",
 "target_how": "label-group rule",
-"target_pre": "unstated"
+"target_pre": "unstated",
+"entry_point_pre_how": "label-group rule"
 },
 "INC-00357": {
 "dependency": "unstated",
@@ -7291,12 +7393,13 @@
 },
 "INC-00788": {
 "dependency": "model-level attack vector, no CVE/CWE",
-"entry_point": "prompt injection, carrier not stated",
-"entry_point_how": "corpus label",
+"entry_point": "no attacker: operator harm or model failure (misplaced record)",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "prompt injection, carrier not stated",
 "target": "agent / copilot / coding assistant / MCP",
 "target_how": "text rule",
-"target_pre": "agent / copilot / coding assistant / MCP"
+"target_pre": "agent / copilot / coding assistant / MCP",
+"entry_point_pre_how": "corpus label"
 },
 "INC-01394": {
 "dependency": "model-level attack vector, no CVE/CWE",
@@ -7312,9 +7415,10 @@
 "entry_point": "exploit of a conventional software vulnerability",
 "entry_point_how": "label-group rule",
 "entry_point_pre": "unstated",
-"target": "other (tracker stub, no system named)",
-"target_how": "label-group rule",
-"target_pre": "unstated"
+"target": "no attacker: operator harm or model failure (misplaced record)",
+"target_how": "corrected by review",
+"target_pre": "unstated",
+"target_pre_how": "label-group rule"
 },
 "INC-00051": {
 "dependency": "unstated",
@@ -7363,12 +7467,13 @@
 },
 "INC-00490": {
 "dependency": "unstated",
-"entry_point": "exploit of a conventional software vulnerability",
-"entry_point_how": "label-group rule",
+"entry_point": "other",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "unstated",
 "target": "other (tracker stub, no system named)",
 "target_how": "label-group rule",
-"target_pre": "unstated"
+"target_pre": "unstated",
+"entry_point_pre_how": "label-group rule"
 },
 "INC-00808": {
 "dependency": "model-level attack vector, no CVE/CWE",
@@ -7471,12 +7576,13 @@
 },
 "INC-00111": {
 "dependency": "model-level attack vector, no CVE/CWE",
-"entry_point": "prompt injection, carrier not stated",
-"entry_point_how": "corpus label",
+"entry_point": "no attacker: operator harm or model failure (misplaced record)",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "prompt injection, carrier not stated",
 "target": "consumer chatbot / hosted LLM app",
 "target_how": "text rule",
-"target_pre": "consumer chatbot / hosted LLM app"
+"target_pre": "consumer chatbot / hosted LLM app",
+"entry_point_pre_how": "corpus label"
 },
 "INC-14743": {
 "dependency": "model-level attack vector, no CVE/CWE",
@@ -7498,12 +7604,13 @@
 },
 "INC-14748": {
 "dependency": "model-level attack vector, no CVE/CWE",
-"entry_point": "query access to the model (extraction / inference)",
-"entry_point_how": "label-group rule",
+"entry_point": "other",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "unstated",
 "target": "other (tracker stub, no system named)",
 "target_how": "label-group rule",
-"target_pre": "unstated"
+"target_pre": "unstated",
+"entry_point_pre_how": "label-group rule"
 },
 "INC-00604": {
 "dependency": "model-level attack vector, no CVE/CWE",
@@ -7564,18 +7671,20 @@
 "entry_point": "exploit of a conventional software vulnerability",
 "entry_point_how": "label-group rule",
 "entry_point_pre": "unstated",
-"target": "other (tracker stub, no system named)",
-"target_how": "label-group rule",
-"target_pre": "unstated"
+"target": "no attacker: operator harm or model failure (misplaced record)",
+"target_how": "corrected by review",
+"target_pre": "unstated",
+"target_pre_how": "label-group rule"
 },
 "INC-00814": {
 "dependency": "model-level attack vector, no CVE/CWE",
-"entry_point": "stolen or leaked credential",
-"entry_point_how": "text rule",
+"entry_point": "malicious package / model / skill (supply chain)",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "stolen or leaked credential",
 "target": "agent / copilot / coding assistant / MCP",
 "target_how": "text rule",
-"target_pre": "agent / copilot / coding assistant / MCP"
+"target_pre": "agent / copilot / coding assistant / MCP",
+"entry_point_pre_how": "text rule"
 },
 "INC-00485": {
 "dependency": "unstated",
@@ -7687,12 +7796,13 @@
 },
 "INC-01926": {
 "dependency": "unstated",
-"entry_point": "poisoned training data or model",
-"entry_point_how": "label-group rule",
+"entry_point": "other",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "unstated",
 "target": "model hub / training pipeline / weights",
 "target_how": "text rule",
-"target_pre": "model hub / training pipeline / weights"
+"target_pre": "model hub / training pipeline / weights",
+"entry_point_pre_how": "label-group rule"
 },
 "INC-02039": {
 "dependency": "unstated",
@@ -7717,18 +7827,20 @@
 "entry_point": "prompt injection, carrier not stated",
 "entry_point_how": "corpus label",
 "entry_point_pre": "prompt injection, carrier not stated",
-"target": "other (tracker stub, no system named)",
-"target_how": "label-group rule",
-"target_pre": "unstated"
+"target": "agent / copilot / coding assistant / MCP",
+"target_how": "corrected by review",
+"target_pre": "unstated",
+"target_pre_how": "label-group rule"
 },
 "INC-01748": {
 "dependency": "model-level attack vector, no CVE/CWE",
-"entry_point": "prompt injection, carrier not stated",
-"entry_point_how": "corpus label",
+"entry_point": "no attacker: operator harm or model failure (misplaced record)",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "prompt injection, carrier not stated",
 "target": "agent / copilot / coding assistant / MCP",
 "target_how": "text rule",
-"target_pre": "agent / copilot / coding assistant / MCP"
+"target_pre": "agent / copilot / coding assistant / MCP",
+"entry_point_pre_how": "corpus label"
 },
 "INC-00452": {
 "dependency": "unstated",
@@ -7759,21 +7871,23 @@
 },
 "INC-00335": {
 "dependency": "model-level attack vector, no CVE/CWE",
-"entry_point": "adversarial input to a classifier",
-"entry_point_how": "corpus label",
+"entry_point": "no attacker: operator harm or model failure (misplaced record)",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "adversarial input to a classifier",
 "target": "other (tracker stub, no system named)",
 "target_how": "label-group rule",
-"target_pre": "unstated"
+"target_pre": "unstated",
+"entry_point_pre_how": "corpus label"
 },
 "INC-14775": {
 "dependency": "unstated",
-"entry_point": "exploit of a conventional software vulnerability",
-"entry_point_how": "label-group rule",
+"entry_point": "no attacker: operator harm or model failure (misplaced record)",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "unstated",
 "target": "other (tracker stub, no system named)",
 "target_how": "label-group rule",
-"target_pre": "unstated"
+"target_pre": "unstated",
+"entry_point_pre_how": "label-group rule"
 },
 "INC-00578": {
 "dependency": "unstated",
@@ -7876,12 +7990,14 @@
 },
 "INC-00042": {
 "dependency": "model-level attack vector, no CVE/CWE",
-"entry_point": "adversarial input to a classifier",
-"entry_point_how": "corpus label",
+"entry_point": "no attacker: operator harm or model failure (misplaced record)",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "adversarial input to a classifier",
-"target": "other (tracker stub, no system named)",
-"target_how": "label-group rule",
-"target_pre": "unstated"
+"target": "no attacker: operator harm or model failure (misplaced record)",
+"target_how": "corrected by review",
+"target_pre": "unstated",
+"entry_point_pre_how": "corpus label",
+"target_pre_how": "label-group rule"
 },
 "INC-01420": {
 "dependency": "unstated",
@@ -7939,12 +8055,13 @@
 },
 "INC-00749": {
 "dependency": "unstated",
-"entry_point": "poisoned training data or model",
-"entry_point_how": "label-group rule",
+"entry_point": "no attacker: operator harm or model failure (misplaced record)",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "unstated",
 "target": "consumer chatbot / hosted LLM app",
 "target_how": "text rule",
-"target_pre": "consumer chatbot / hosted LLM app"
+"target_pre": "consumer chatbot / hosted LLM app",
+"entry_point_pre_how": "label-group rule"
 },
 "INC-07752": {
 "dependency": "unstated",
@@ -7984,12 +8101,13 @@
 },
 "INC-07890": {
 "dependency": "model-level attack vector, no CVE/CWE",
-"entry_point": "stolen or leaked credential",
-"entry_point_how": "text rule",
+"entry_point": "prompt injection, carrier not stated",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "stolen or leaked credential",
 "target": "consumer chatbot / hosted LLM app",
 "target_how": "text rule",
-"target_pre": "consumer chatbot / hosted LLM app"
+"target_pre": "consumer chatbot / hosted LLM app",
+"entry_point_pre_how": "text rule"
 },
 "INC-07898": {
 "dependency": "unstated",
@@ -8005,9 +8123,10 @@
 "entry_point": "exploit of a conventional software vulnerability",
 "entry_point_how": "label-group rule",
 "entry_point_pre": "unstated",
-"target": "other (tracker stub, no system named)",
-"target_how": "label-group rule",
-"target_pre": "unstated"
+"target": "no attacker: operator harm or model failure (misplaced record)",
+"target_how": "corrected by review",
+"target_pre": "unstated",
+"target_pre_how": "label-group rule"
 },
 "INC-07925": {
 "dependency": "model-level attack vector, no CVE/CWE",
@@ -8092,12 +8211,13 @@
 },
 "INC-08076": {
 "dependency": "model-level attack vector, no CVE/CWE",
-"entry_point": "prompt injection, carrier not stated",
-"entry_point_how": "corpus label",
+"entry_point": "indirect carrier (web/email/doc/tool output)",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "prompt injection, carrier not stated",
 "target": "consumer chatbot / hosted LLM app",
 "target_how": "text rule",
-"target_pre": "consumer chatbot / hosted LLM app"
+"target_pre": "consumer chatbot / hosted LLM app",
+"entry_point_pre_how": "corpus label"
 },
 "INC-08099": {
 "dependency": "unstated",
@@ -8119,12 +8239,14 @@
 },
 "INC-08115": {
 "dependency": "unstated",
-"entry_point": "poisoned training data or model",
-"entry_point_how": "label-group rule",
+"entry_point": "no attacker: operator harm or model failure (misplaced record)",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "unstated",
-"target": "model hub / training pipeline / weights",
-"target_how": "text rule",
-"target_pre": "model hub / training pipeline / weights"
+"target": "no attacker: operator harm or model failure (misplaced record)",
+"target_how": "corrected by review",
+"target_pre": "model hub / training pipeline / weights",
+"entry_point_pre_how": "label-group rule",
+"target_pre_how": "text rule"
 },
 "INC-12992": {
 "dependency": "unstated",
@@ -8299,12 +8421,14 @@
 },
 "INC-13198": {
 "dependency": "model-level attack vector, no CVE/CWE",
-"entry_point": "adversarial input to a classifier",
-"entry_point_how": "corpus label",
+"entry_point": "no attacker: operator harm or model failure (misplaced record)",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "adversarial input to a classifier",
-"target": "other (tracker stub, no system named)",
-"target_how": "label-group rule",
-"target_pre": "unstated"
+"target": "no attacker: operator harm or model failure (misplaced record)",
+"target_how": "corrected by review",
+"target_pre": "unstated",
+"entry_point_pre_how": "corpus label",
+"target_pre_how": "label-group rule"
 },
 "INC-13229": {
 "dependency": "model-level attack vector, no CVE/CWE",
@@ -8344,12 +8468,14 @@
 },
 "INC-13274": {
 "dependency": "unstated",
-"entry_point": "poisoned training data or model",
-"entry_point_how": "label-group rule",
+"entry_point": "no attacker: operator harm or model failure (misplaced record)",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "unstated",
-"target": "model hub / training pipeline / weights",
-"target_how": "text rule",
-"target_pre": "model hub / training pipeline / weights"
+"target": "no attacker: operator harm or model failure (misplaced record)",
+"target_how": "corrected by review",
+"target_pre": "model hub / training pipeline / weights",
+"entry_point_pre_how": "label-group rule",
+"target_pre_how": "text rule"
 },
 "INC-13275": {
 "dependency": "unstated",
@@ -8374,18 +8500,20 @@
 "entry_point": "exploit of a conventional software vulnerability",
 "entry_point_how": "label-group rule",
 "entry_point_pre": "unstated",
-"target": "consumer chatbot / hosted LLM app",
-"target_how": "text rule",
-"target_pre": "consumer chatbot / hosted LLM app"
+"target": "no attacker: operator harm or model failure (misplaced record)",
+"target_how": "corrected by review",
+"target_pre": "consumer chatbot / hosted LLM app",
+"target_pre_how": "text rule"
 },
 "INC-13307": {
 "dependency": "model-level attack vector, no CVE/CWE",
-"entry_point": "direct prompt by the user",
-"entry_point_how": "text rule",
+"entry_point": "indirect carrier (web/email/doc/tool output)",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "direct prompt by the user",
 "target": "other (tracker stub, no system named)",
 "target_how": "label-group rule",
-"target_pre": "unstated"
+"target_pre": "unstated",
+"entry_point_pre_how": "text rule"
 },
 "INC-14246": {
 "dependency": "model-level attack vector, no CVE/CWE",
@@ -8407,12 +8535,13 @@
 },
 "INC-14258": {
 "dependency": "unstated",
-"entry_point": "poisoned training data or model",
-"entry_point_how": "label-group rule",
+"entry_point": "no attacker: operator harm or model failure (misplaced record)",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "unstated",
 "target": "model hub / training pipeline / weights",
 "target_how": "text rule",
-"target_pre": "model hub / training pipeline / weights"
+"target_pre": "model hub / training pipeline / weights",
+"entry_point_pre_how": "label-group rule"
 },
 "INC-14260": {
 "dependency": "model-level attack vector, no CVE/CWE",
@@ -8821,12 +8950,13 @@
 },
 "INC-02552": {
 "dependency": "unstated",
-"entry_point": "direct prompt by the user",
-"entry_point_how": "text rule",
+"entry_point": "prompt injection, carrier not stated",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "direct prompt by the user",
 "target": "consumer chatbot / hosted LLM app",
 "target_how": "text rule",
-"target_pre": "consumer chatbot / hosted LLM app"
+"target_pre": "consumer chatbot / hosted LLM app",
+"entry_point_pre_how": "text rule"
 },
 "INC-02397": {
 "dependency": "unstated",
@@ -8875,12 +9005,13 @@
 },
 "INC-02693": {
 "dependency": "model-level attack vector, no CVE/CWE",
-"entry_point": "prompt injection, carrier not stated",
-"entry_point_how": "corpus label",
+"entry_point": "direct prompt by the user",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "prompt injection, carrier not stated",
 "target": "consumer chatbot / hosted LLM app",
 "target_how": "text rule",
-"target_pre": "consumer chatbot / hosted LLM app"
+"target_pre": "consumer chatbot / hosted LLM app",
+"entry_point_pre_how": "corpus label"
 },
 "INC-02691": {
 "dependency": "model-level attack vector, no CVE/CWE",
@@ -8905,9 +9036,10 @@
 "entry_point": "indirect carrier (web/email/doc/tool output)",
 "entry_point_how": "text rule",
 "entry_point_pre": "indirect carrier (web/email/doc/tool output)",
-"target": "consumer chatbot / hosted LLM app",
-"target_how": "text rule",
-"target_pre": "consumer chatbot / hosted LLM app"
+"target": "agent / copilot / coding assistant / MCP",
+"target_how": "corrected by review",
+"target_pre": "consumer chatbot / hosted LLM app",
+"target_pre_how": "text rule"
 },
 "INC-03390": {
 "dependency": "model-level attack vector, no CVE/CWE",
@@ -8941,9 +9073,10 @@
 "entry_point": "malicious package / model / skill (supply chain)",
 "entry_point_how": "text rule",
 "entry_point_pre": "malicious package / model / skill (supply chain)",
-"target": "RAG / vector / memory store",
-"target_how": "text rule",
-"target_pre": "RAG / vector / memory store"
+"target": "model hub / training pipeline / weights",
+"target_how": "corrected by review",
+"target_pre": "RAG / vector / memory store",
+"target_pre_how": "text rule"
 },
 "INC-01681": {
 "dependency": "unstated",
@@ -8965,12 +9098,13 @@
 },
 "INC-00643": {
 "dependency": "unstated",
-"entry_point": "stolen or leaked credential",
-"entry_point_how": "text rule",
+"entry_point": "exploit of a conventional software vulnerability",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "stolen or leaked credential",
 "target": "agent / copilot / coding assistant / MCP",
 "target_how": "text rule",
-"target_pre": "agent / copilot / coding assistant / MCP"
+"target_pre": "agent / copilot / coding assistant / MCP",
+"entry_point_pre_how": "text rule"
 },
 "INC-04255": {
 "dependency": "unstated",
@@ -8983,21 +9117,23 @@
 },
 "INC-03248": {
 "dependency": "unstated",
-"entry_point": "via the agent's tools or sandbox",
-"entry_point_how": "label-group rule",
+"entry_point": "other",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "unstated",
 "target": "other",
 "target_how": "coded from text",
-"target_pre": "unstated"
+"target_pre": "unstated",
+"entry_point_pre_how": "label-group rule"
 },
 "INC-03315": {
 "dependency": "unstated",
-"entry_point": "via the agent's tools or sandbox",
-"entry_point_how": "label-group rule",
+"entry_point": "other",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "unstated",
 "target": "agent / copilot / coding assistant / MCP",
 "target_how": "text rule",
-"target_pre": "agent / copilot / coding assistant / MCP"
+"target_pre": "agent / copilot / coding assistant / MCP",
+"entry_point_pre_how": "label-group rule"
 },
 "INC-03314": {
 "dependency": "unstated",
@@ -9139,9 +9275,10 @@
 "entry_point": "prompt injection, carrier not stated",
 "entry_point_how": "corpus label",
 "entry_point_pre": "prompt injection, carrier not stated",
-"target": "consumer chatbot / hosted LLM app",
-"target_how": "text rule",
-"target_pre": "consumer chatbot / hosted LLM app"
+"target": "a model itself (vision, speech or text model attacked directly)",
+"target_how": "corrected by review",
+"target_pre": "consumer chatbot / hosted LLM app",
+"target_pre_how": "text rule"
 },
 "INC-02955": {
 "dependency": "unstated",
@@ -9154,12 +9291,13 @@
 },
 "INC-00735": {
 "dependency": "model-level attack vector, no CVE/CWE",
-"entry_point": "direct prompt by the user",
-"entry_point_how": "text rule",
+"entry_point": "other",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "direct prompt by the user",
 "target": "agent / copilot / coding assistant / MCP",
 "target_how": "text rule",
-"target_pre": "agent / copilot / coding assistant / MCP"
+"target_pre": "agent / copilot / coding assistant / MCP",
+"entry_point_pre_how": "text rule"
 },
 "INC-02855": {
 "dependency": "unstated",
@@ -9280,21 +9418,23 @@
 },
 "INC-02326": {
 "dependency": "unstated",
-"entry_point": "malicious package / model / skill (supply chain)",
-"entry_point_how": "text rule",
+"entry_point": "other",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "malicious package / model / skill (supply chain)",
 "target": "consumer chatbot / hosted LLM app",
 "target_how": "text rule",
-"target_pre": "consumer chatbot / hosted LLM app"
+"target_pre": "consumer chatbot / hosted LLM app",
+"entry_point_pre_how": "text rule"
 },
 "INC-04232": {
 "dependency": "model-level attack vector, no CVE/CWE",
 "entry_point": "adversarial input to a classifier",
 "entry_point_how": "corpus label",
 "entry_point_pre": "adversarial input to a classifier",
-"target": "detection / classification model",
-"target_how": "text rule",
-"target_pre": "detection / classification model"
+"target": "other",
+"target_how": "corrected by review",
+"target_pre": "detection / classification model",
+"target_pre_how": "text rule"
 },
 "INC-03682": {
 "dependency": "unstated",
@@ -9334,12 +9474,13 @@
 },
 "INC-03005": {
 "dependency": "unstated",
-"entry_point": "via the agent's tools or sandbox",
-"entry_point_how": "label-group rule",
+"entry_point": "direct prompt by the user",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "unstated",
 "target": "consumer chatbot / hosted LLM app",
 "target_how": "text rule",
-"target_pre": "consumer chatbot / hosted LLM app"
+"target_pre": "consumer chatbot / hosted LLM app",
+"entry_point_pre_how": "label-group rule"
 },
 "INC-02680": {
 "dependency": "unstated",
@@ -9352,12 +9493,13 @@
 },
 "INC-03573": {
 "dependency": "unstated",
-"entry_point": "via the agent's tools or sandbox",
-"entry_point_how": "label-group rule",
+"entry_point": "direct prompt by the user",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "unstated",
 "target": "consumer chatbot / hosted LLM app",
 "target_how": "text rule",
-"target_pre": "consumer chatbot / hosted LLM app"
+"target_pre": "consumer chatbot / hosted LLM app",
+"entry_point_pre_how": "label-group rule"
 },
 "INC-04003": {
 "dependency": "unstated",
@@ -9400,9 +9542,10 @@
 "entry_point": "direct prompt by the user",
 "entry_point_how": "text rule",
 "entry_point_pre": "direct prompt by the user",
-"target": "consumer chatbot / hosted LLM app",
-"target_how": "text rule",
-"target_pre": "consumer chatbot / hosted LLM app"
+"target": "model hub / training pipeline / weights",
+"target_how": "corrected by review",
+"target_pre": "consumer chatbot / hosted LLM app",
+"target_pre_how": "text rule"
 },
 "INC-14912": {
 "dependency": "model-level attack vector, no CVE/CWE",
@@ -9514,21 +9657,23 @@
 },
 "INC-14928": {
 "dependency": "unstated",
-"entry_point": "poisoned training data or model",
-"entry_point_how": "label-group rule",
+"entry_point": "malicious package / model / skill (supply chain)",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "unstated",
 "target": "model hub / training pipeline / weights",
 "target_how": "coded from text",
-"target_pre": "unstated"
+"target_pre": "unstated",
+"entry_point_pre_how": "label-group rule"
 },
 "INC-14930": {
 "dependency": "model-level attack vector, no CVE/CWE",
-"entry_point": "direct prompt by the user",
-"entry_point_how": "text rule",
+"entry_point": "prompt injection, carrier not stated",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "direct prompt by the user",
 "target": "consumer chatbot / hosted LLM app",
 "target_how": "text rule",
-"target_pre": "consumer chatbot / hosted LLM app"
+"target_pre": "consumer chatbot / hosted LLM app",
+"entry_point_pre_how": "text rule"
 },
 "INC-14931": {
 "dependency": "model-level attack vector, no CVE/CWE",
@@ -9922,9 +10067,10 @@
 "entry_point": "direct prompt by the user",
 "entry_point_how": "text rule",
 "entry_point_pre": "direct prompt by the user",
-"target": "consumer chatbot / hosted LLM app",
-"target_how": "text rule",
-"target_pre": "consumer chatbot / hosted LLM app"
+"target": "a model itself (vision, speech or text model attacked directly)",
+"target_how": "corrected by review",
+"target_pre": "consumer chatbot / hosted LLM app",
+"target_pre_how": "text rule"
 },
 "INC-15000": {
 "dependency": "model-level attack vector, no CVE/CWE",
@@ -10360,12 +10506,13 @@
 },
 "INC-15699": {
 "dependency": "CVE/CWE present (software vulnerability)",
-"entry_point": "stolen or leaked credential",
-"entry_point_how": "text rule",
+"entry_point": "exploit of a conventional software vulnerability",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "stolen or leaked credential",
 "target": "agent / copilot / coding assistant / MCP",
 "target_how": "text rule",
-"target_pre": "agent / copilot / coding assistant / MCP"
+"target_pre": "agent / copilot / coding assistant / MCP",
+"entry_point_pre_how": "text rule"
 },
 "INC-15700": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -10441,12 +10588,14 @@
 },
 "INC-15793": {
 "dependency": "CVE/CWE present (software vulnerability)",
-"entry_point": "poisoned training data or model",
-"entry_point_how": "label-group rule",
+"entry_point": "malicious package / model / skill (supply chain)",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "unstated",
-"target": "model hub / training pipeline / weights",
-"target_how": "text rule",
-"target_pre": "model hub / training pipeline / weights"
+"target": "ML/LLM framework or serving library",
+"target_how": "corrected by review",
+"target_pre": "model hub / training pipeline / weights",
+"entry_point_pre_how": "label-group rule",
+"target_pre_how": "text rule"
 },
 "INC-15800": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -10495,30 +10644,33 @@
 },
 "INC-15862": {
 "dependency": "CVE/CWE present (software vulnerability)",
-"entry_point": "exposed / misconfigured service",
-"entry_point_how": "text rule",
+"entry_point": "exploit of a conventional software vulnerability",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "exposed / misconfigured service",
 "target": "agent / copilot / coding assistant / MCP",
 "target_how": "text rule",
-"target_pre": "agent / copilot / coding assistant / MCP"
+"target_pre": "agent / copilot / coding assistant / MCP",
+"entry_point_pre_how": "text rule"
 },
 "INC-15866": {
 "dependency": "CVE/CWE present (software vulnerability)",
-"entry_point": "stolen or leaked credential",
-"entry_point_how": "text rule",
+"entry_point": "exploit of a conventional software vulnerability",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "stolen or leaked credential",
 "target": "agent / copilot / coding assistant / MCP",
 "target_how": "text rule",
-"target_pre": "agent / copilot / coding assistant / MCP"
+"target_pre": "agent / copilot / coding assistant / MCP",
+"entry_point_pre_how": "text rule"
 },
 "INC-15875": {
 "dependency": "CVE/CWE present (software vulnerability)",
-"entry_point": "via the agent's tools or sandbox",
-"entry_point_how": "label-group rule",
+"entry_point": "exploit of a conventional software vulnerability",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "unstated",
 "target": "ML/LLM framework or serving library",
 "target_how": "text rule",
-"target_pre": "ML/LLM framework or serving library"
+"target_pre": "ML/LLM framework or serving library",
+"entry_point_pre_how": "label-group rule"
 },
 "INC-15890": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -10531,30 +10683,33 @@
 },
 "INC-15892": {
 "dependency": "CVE/CWE present (software vulnerability)",
-"entry_point": "stolen or leaked credential",
-"entry_point_how": "text rule",
+"entry_point": "exploit of a conventional software vulnerability",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "stolen or leaked credential",
 "target": "agent / copilot / coding assistant / MCP",
 "target_how": "text rule",
-"target_pre": "agent / copilot / coding assistant / MCP"
+"target_pre": "agent / copilot / coding assistant / MCP",
+"entry_point_pre_how": "text rule"
 },
 "INC-15893": {
 "dependency": "CVE/CWE present (software vulnerability)",
-"entry_point": "stolen or leaked credential",
-"entry_point_how": "text rule",
+"entry_point": "via the agent's tools or sandbox",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "stolen or leaked credential",
 "target": "agent / copilot / coding assistant / MCP",
 "target_how": "text rule",
-"target_pre": "agent / copilot / coding assistant / MCP"
+"target_pre": "agent / copilot / coding assistant / MCP",
+"entry_point_pre_how": "text rule"
 },
 "INC-15894": {
 "dependency": "CVE/CWE present (software vulnerability)",
-"entry_point": "indirect carrier (web/email/doc/tool output)",
-"entry_point_how": "text rule",
+"entry_point": "via the agent's tools or sandbox",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "indirect carrier (web/email/doc/tool output)",
 "target": "consumer chatbot / hosted LLM app",
 "target_how": "text rule",
-"target_pre": "consumer chatbot / hosted LLM app"
+"target_pre": "consumer chatbot / hosted LLM app",
+"entry_point_pre_how": "text rule"
 },
 "INC-15896": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -10864,12 +11019,13 @@
 },
 "INC-16240": {
 "dependency": "CVE/CWE present (software vulnerability)",
-"entry_point": "stolen or leaked credential",
-"entry_point_how": "text rule",
+"entry_point": "exploit of a conventional software vulnerability",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "stolen or leaked credential",
 "target": "agent / copilot / coding assistant / MCP",
 "target_how": "text rule",
-"target_pre": "agent / copilot / coding assistant / MCP"
+"target_pre": "agent / copilot / coding assistant / MCP",
+"entry_point_pre_how": "text rule"
 },
 "INC-16246": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -11071,12 +11227,13 @@
 },
 "INC-16322": {
 "dependency": "CVE/CWE present (software vulnerability)",
-"entry_point": "stolen or leaked credential",
-"entry_point_how": "text rule",
+"entry_point": "exposed / misconfigured service",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "stolen or leaked credential",
 "target": "agent / copilot / coding assistant / MCP",
 "target_how": "text rule",
-"target_pre": "agent / copilot / coding assistant / MCP"
+"target_pre": "agent / copilot / coding assistant / MCP",
+"entry_point_pre_how": "text rule"
 },
 "INC-16323": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -11332,12 +11489,13 @@
 },
 "INC-16585": {
 "dependency": "CVE/CWE present (software vulnerability)",
-"entry_point": "stolen or leaked credential",
-"entry_point_how": "text rule",
+"entry_point": "exploit of a conventional software vulnerability",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "stolen or leaked credential",
 "target": "agent / copilot / coding assistant / MCP",
 "target_how": "text rule",
-"target_pre": "agent / copilot / coding assistant / MCP"
+"target_pre": "agent / copilot / coding assistant / MCP",
+"entry_point_pre_how": "text rule"
 },
 "INC-16593": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -11368,12 +11526,13 @@
 },
 "INC-16619": {
 "dependency": "CVE/CWE present (software vulnerability)",
-"entry_point": "indirect carrier (web/email/doc/tool output)",
-"entry_point_how": "text rule",
+"entry_point": "via the agent's tools or sandbox",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "indirect carrier (web/email/doc/tool output)",
 "target": "agent / copilot / coding assistant / MCP",
 "target_how": "text rule",
-"target_pre": "agent / copilot / coding assistant / MCP"
+"target_pre": "agent / copilot / coding assistant / MCP",
+"entry_point_pre_how": "text rule"
 },
 "INC-16643": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -11386,12 +11545,13 @@
 },
 "INC-16651": {
 "dependency": "CVE/CWE present (software vulnerability)",
-"entry_point": "exposed / misconfigured service",
-"entry_point_how": "text rule",
+"entry_point": "exploit of a conventional software vulnerability",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "exposed / misconfigured service",
 "target": "agent / copilot / coding assistant / MCP",
 "target_how": "text rule",
-"target_pre": "agent / copilot / coding assistant / MCP"
+"target_pre": "agent / copilot / coding assistant / MCP",
+"entry_point_pre_how": "text rule"
 },
 "INC-16666": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -11416,9 +11576,10 @@
 "entry_point": "via the agent's tools or sandbox",
 "entry_point_how": "label-group rule",
 "entry_point_pre": "unstated",
-"target": "agent / copilot / coding assistant / MCP",
-"target_how": "text rule",
-"target_pre": "agent / copilot / coding assistant / MCP"
+"target": "a non-AI application with an AI feature (web app, CMS plugin, SaaS)",
+"target_how": "corrected by review",
+"target_pre": "agent / copilot / coding assistant / MCP",
+"target_pre_how": "text rule"
 },
 "INC-16721": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -11476,12 +11637,13 @@
 },
 "INC-16756": {
 "dependency": "CVE/CWE present (software vulnerability)",
-"entry_point": "stolen or leaked credential",
-"entry_point_how": "text rule",
+"entry_point": "exploit of a conventional software vulnerability",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "stolen or leaked credential",
 "target": "agent / copilot / coding assistant / MCP",
 "target_how": "text rule",
-"target_pre": "agent / copilot / coding assistant / MCP"
+"target_pre": "agent / copilot / coding assistant / MCP",
+"entry_point_pre_how": "text rule"
 },
 "INC-16772": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -11863,12 +12025,13 @@
 },
 "INC-17009": {
 "dependency": "CVE/CWE present (software vulnerability)",
-"entry_point": "via the agent's tools or sandbox",
-"entry_point_how": "label-group rule",
+"entry_point": "exploit of a conventional software vulnerability",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "unstated",
 "target": "agent / copilot / coding assistant / MCP",
 "target_how": "text rule",
-"target_pre": "agent / copilot / coding assistant / MCP"
+"target_pre": "agent / copilot / coding assistant / MCP",
+"entry_point_pre_how": "label-group rule"
 },
 "INC-17013": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -11899,12 +12062,13 @@
 },
 "INC-17043": {
 "dependency": "CVE/CWE present (software vulnerability)",
-"entry_point": "exposed / misconfigured service",
-"entry_point_how": "text rule",
+"entry_point": "indirect carrier (web/email/doc/tool output)",
+"entry_point_how": "corrected by review",
 "entry_point_pre": "exposed / misconfigured service",
 "target": "agent / copilot / coding assistant / MCP",
 "target_how": "text rule",
-"target_pre": "agent / copilot / coding assistant / MCP"
+"target_pre": "agent / copilot / coding assistant / MCP",
+"entry_point_pre_how": "text rule"
 },
 "INC-17044": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -12052,12 +12216,13 @@
 },
 "INC-03484": {
 "dependency": "unstated",
-"ai_role": "generated text (phishing / lures / disinformation)",
-"ai_role_how": "text rule",
+"ai_role": "synthetic video",
+"ai_role_how": "corrected by review",
 "ai_role_pre": "generated text (phishing / lures / disinformation)",
 "objective": "financial fraud / extortion",
 "objective_how": "text rule",
-"objective_pre": "financial fraud / extortion"
+"objective_pre": "financial fraud / extortion",
+"ai_role_pre_how": "text rule"
 },
 "INC-04221": {
 "dependency": "unstated",
@@ -12214,12 +12379,13 @@
 },
 "INC-04476": {
 "dependency": "unstated",
-"ai_role": "deepfake, medium not stated",
-"ai_role_how": "corpus label",
+"ai_role": "other",
+"ai_role_how": "corrected by review",
 "ai_role_pre": "deepfake, medium not stated",
 "objective": "financial fraud / extortion",
 "objective_how": "text rule",
-"objective_pre": "financial fraud / extortion"
+"objective_pre": "financial fraud / extortion",
+"ai_role_pre_how": "corpus label"
 },
 "INC-05192": {
 "dependency": "unstated",
@@ -12505,9 +12671,10 @@
 "ai_role": "none: conventional exploit record misplaced in WITH-AI",
 "ai_role_how": "label-group rule",
 "ai_role_pre": "unstated",
-"objective": "non-consensual / abuse imagery",
-"objective_how": "text rule",
-"objective_pre": "non-consensual / abuse imagery"
+"objective": "no attacker: operator harm or model failure (misplaced record)",
+"objective_how": "corrected by review",
+"objective_pre": "non-consensual / abuse imagery",
+"objective_pre_how": "text rule"
 },
 "INC-07725": {
 "dependency": "unstated",
@@ -12790,12 +12957,13 @@
 },
 "INC-02561": {
 "dependency": "unstated",
-"ai_role": "generated text (phishing / lures / disinformation)",
-"ai_role_how": "text rule",
+"ai_role": "synthetic video",
+"ai_role_how": "corrected by review",
 "ai_role_pre": "generated text (phishing / lures / disinformation)",
 "objective": "public deception, not political (hoax, fake news, clickbait)",
 "objective_how": "coded from text",
-"objective_pre": "unstated"
+"objective_pre": "unstated",
+"ai_role_pre_how": "text rule"
 },
 "INC-02489": {
 "dependency": "unstated",
@@ -12838,9 +13006,10 @@
 "ai_role": "deepfake, medium not stated",
 "ai_role_how": "corpus label",
 "ai_role_pre": "deepfake, medium not stated",
-"objective": "defamation / impersonation of a person",
-"objective_how": "text rule",
-"objective_pre": "defamation / impersonation of a person"
+"objective": "political / influence",
+"objective_how": "corrected by review",
+"objective_pre": "defamation / impersonation of a person",
+"objective_pre_how": "text rule"
 },
 "INC-03504": {
 "dependency": "unstated",
@@ -12916,12 +13085,13 @@
 },
 "INC-04887": {
 "dependency": "unstated",
-"ai_role": "synthetic image",
-"ai_role_how": "text rule",
+"ai_role": "deepfake, medium not stated",
+"ai_role_how": "corrected by review",
 "ai_role_pre": "synthetic image",
 "objective": "non-consensual / abuse imagery",
 "objective_how": "text rule",
-"objective_pre": "non-consensual / abuse imagery"
+"objective_pre": "non-consensual / abuse imagery",
+"ai_role_pre_how": "text rule"
 },
 "INC-05189": {
 "dependency": "unstated",
@@ -13279,9 +13449,10 @@
 "ai_role": "deepfake, medium not stated",
 "ai_role_how": "corpus label",
 "ai_role_pre": "deepfake, medium not stated",
-"objective": "intrusion / cyber operation",
-"objective_how": "text rule",
-"objective_pre": "intrusion / cyber operation"
+"objective": "political / influence",
+"objective_how": "corrected by review",
+"objective_pre": "intrusion / cyber operation",
+"objective_pre_how": "text rule"
 },
 "INC-04741": {
 "dependency": "unstated",
@@ -13402,12 +13573,13 @@
 },
 "INC-04579": {
 "dependency": "unstated",
-"ai_role": "deepfake, medium not stated",
-"ai_role_how": "corpus label",
+"ai_role": "synthetic video",
+"ai_role_how": "corrected by review",
 "ai_role_pre": "deepfake, medium not stated",
 "objective": "political / influence",
 "objective_how": "coded from text",
-"objective_pre": "unstated"
+"objective_pre": "unstated",
+"ai_role_pre_how": "corpus label"
 },
 "INC-04513": {
 "dependency": "unstated",
@@ -13540,9 +13712,10 @@
 "ai_role": "synthetic image",
 "ai_role_how": "text rule",
 "ai_role_pre": "synthetic image",
-"objective": "non-consensual / abuse imagery",
-"objective_how": "corpus label",
-"objective_pre": "non-consensual / abuse imagery"
+"objective": "no attacker: operator harm or model failure (misplaced record)",
+"objective_how": "corrected by review",
+"objective_pre": "non-consensual / abuse imagery",
+"objective_pre_how": "corpus label"
 },
 "INC-04564": {
 "dependency": "unstated",
@@ -13690,21 +13863,23 @@
 },
 "INC-04597": {
 "dependency": "unstated",
-"ai_role": "deepfake, medium not stated",
-"ai_role_how": "corpus label",
+"ai_role": "synthetic image",
+"ai_role_how": "corrected by review",
 "ai_role_pre": "deepfake, medium not stated",
 "objective": "political / influence",
 "objective_how": "coded from text",
-"objective_pre": "unstated"
+"objective_pre": "unstated",
+"ai_role_pre_how": "corpus label"
 },
 "INC-04608": {
 "dependency": "unstated",
-"ai_role": "deepfake, medium not stated",
-"ai_role_how": "corpus label",
+"ai_role": "synthetic image",
+"ai_role_how": "corrected by review",
 "ai_role_pre": "deepfake, medium not stated",
 "objective": "public deception, not political (hoax, fake news, clickbait)",
 "objective_how": "coded from text",
-"objective_pre": "unstated"
+"objective_pre": "unstated",
+"ai_role_pre_how": "corpus label"
 },
 "INC-04637": {
 "dependency": "unstated",
@@ -13717,12 +13892,13 @@
 },
 "INC-05175": {
 "dependency": "unstated",
-"ai_role": "deepfake, medium not stated",
-"ai_role_how": "corpus label",
+"ai_role": "synthetic video",
+"ai_role_how": "corrected by review",
 "ai_role_pre": "deepfake, medium not stated",
 "objective": "political / influence",
 "objective_how": "coded from text",
-"objective_pre": "unstated"
+"objective_pre": "unstated",
+"ai_role_pre_how": "corpus label"
 },
 "INC-05088": {
 "dependency": "unstated",
@@ -13843,12 +14019,14 @@
 },
 "INC-05382": {
 "dependency": "unstated",
-"ai_role": "synthetic image",
-"ai_role_how": "corpus label",
+"ai_role": "no attacker: operator harm or model failure (misplaced record)",
+"ai_role_how": "corrected by review",
 "ai_role_pre": "synthetic image",
-"objective": "non-consensual / abuse imagery",
-"objective_how": "corpus label",
-"objective_pre": "non-consensual / abuse imagery"
+"objective": "no attacker: operator harm or model failure (misplaced record)",
+"objective_how": "corrected by review",
+"objective_pre": "non-consensual / abuse imagery",
+"ai_role_pre_how": "corpus label",
+"objective_pre_how": "corpus label"
 },
 "INC-05744": {
 "dependency": "unstated",
@@ -14239,12 +14417,13 @@
 },
 "INC-07264": {
 "dependency": "unstated",
-"ai_role": "generated text (phishing / lures / disinformation)",
-"ai_role_how": "text rule",
+"ai_role": "deepfake, medium not stated",
+"ai_role_how": "corrected by review",
 "ai_role_pre": "generated text (phishing / lures / disinformation)",
 "objective": "other",
 "objective_how": "coded from text",
-"objective_pre": "unstated"
+"objective_pre": "unstated",
+"ai_role_pre_how": "text rule"
 },
 "INC-07387": {
 "dependency": "unstated",
@@ -14302,12 +14481,14 @@
 },
 "INC-05194": {
 "dependency": "unstated",
-"ai_role": "none: conventional exploit record misplaced in WITH-AI",
-"ai_role_how": "label-group rule",
+"ai_role": "synthetic image",
+"ai_role_how": "corrected by review",
 "ai_role_pre": "unstated",
-"objective": "defamation / impersonation of a person",
-"objective_how": "text rule",
-"objective_pre": "defamation / impersonation of a person"
+"objective": "non-consensual / abuse imagery",
+"objective_how": "corrected by review",
+"objective_pre": "defamation / impersonation of a person",
+"ai_role_pre_how": "label-group rule",
+"objective_pre_how": "text rule"
 },
 "INC-05093": {
 "dependency": "unstated",
@@ -14410,12 +14591,13 @@
 },
 "INC-04942": {
 "dependency": "unstated",
-"ai_role": "none: conventional exploit record misplaced in WITH-AI",
-"ai_role_how": "label-group rule",
+"ai_role": "no attacker: operator harm or model failure (misplaced record)",
+"ai_role_how": "corrected by review",
 "ai_role_pre": "unstated",
 "objective": "no attacker: operator harm or model failure (misplaced record)",
 "objective_how": "coded from text",
-"objective_pre": "unstated"
+"objective_pre": "unstated",
+"ai_role_pre_how": "label-group rule"
 },
 "INC-04434": {
 "dependency": "unstated",
@@ -14527,12 +14709,13 @@
 },
 "INC-04420": {
 "dependency": "unstated",
-"ai_role": "synthetic image",
-"ai_role_how": "text rule",
+"ai_role": "no attacker: operator harm or model failure (misplaced record)",
+"ai_role_how": "corrected by review",
 "ai_role_pre": "synthetic image",
 "objective": "no attacker: operator harm or model failure (misplaced record)",
 "objective_how": "coded from text",
-"objective_pre": "unstated"
+"objective_pre": "unstated",
+"ai_role_pre_how": "text rule"
 },
 "INC-04562": {
 "dependency": "unstated",
@@ -14572,12 +14755,13 @@
 },
 "INC-04123": {
 "dependency": "unstated",
-"ai_role": "synthetic audio/voice",
-"ai_role_how": "text rule",
+"ai_role": "synthetic video",
+"ai_role_how": "corrected by review",
 "ai_role_pre": "synthetic audio/voice",
 "objective": "political / influence",
 "objective_how": "text rule",
-"objective_pre": "political / influence"
+"objective_pre": "political / influence",
+"ai_role_pre_how": "text rule"
 },
 "INC-03548": {
 "dependency": "unstated",
@@ -14698,12 +14882,13 @@
 },
 "INC-03713": {
 "dependency": "unstated",
-"ai_role": "none: conventional exploit record misplaced in WITH-AI",
-"ai_role_how": "label-group rule",
+"ai_role": "deepfake, medium not stated",
+"ai_role_how": "corrected by review",
 "ai_role_pre": "unstated",
 "objective": "political / influence",
 "objective_how": "text rule",
-"objective_pre": "political / influence"
+"objective_pre": "political / influence",
+"ai_role_pre_how": "label-group rule"
 },
 "INC-03725": {
 "dependency": "unstated",
@@ -15085,12 +15270,13 @@
 },
 "INC-03708": {
 "dependency": "unstated",
-"ai_role": "deepfake, medium not stated",
-"ai_role_how": "corpus label",
+"ai_role": "synthetic image",
+"ai_role_how": "corrected by review",
 "ai_role_pre": "deepfake, medium not stated",
 "objective": "financial fraud / extortion",
 "objective_how": "text rule",
-"objective_pre": "financial fraud / extortion"
+"objective_pre": "financial fraud / extortion",
+"ai_role_pre_how": "corpus label"
 },
 "INC-04319": {
 "dependency": "unstated",
@@ -15184,12 +15370,13 @@
 },
 "INC-03688": {
 "dependency": "unstated",
-"ai_role": "synthetic video",
-"ai_role_how": "text rule",
+"ai_role": "deepfake, medium not stated",
+"ai_role_how": "corrected by review",
 "ai_role_pre": "synthetic video",
 "objective": "financial fraud / extortion",
 "objective_how": "text rule",
-"objective_pre": "financial fraud / extortion"
+"objective_pre": "financial fraud / extortion",
+"ai_role_pre_how": "text rule"
 },
 "INC-03521": {
 "dependency": "unstated",
@@ -15337,12 +15524,13 @@
 },
 "INC-03546": {
 "dependency": "unstated",
-"ai_role": "none: conventional exploit record misplaced in WITH-AI",
-"ai_role_how": "label-group rule",
+"ai_role": "no attacker: operator harm or model failure (misplaced record)",
+"ai_role_how": "corrected by review",
 "ai_role_pre": "unstated",
 "objective": "no attacker: operator harm or model failure (misplaced record)",
 "objective_how": "coded from text",
-"objective_pre": "unstated"
+"objective_pre": "unstated",
+"ai_role_pre_how": "label-group rule"
 },
 "INC-04128": {
 "dependency": "unstated",
@@ -15517,12 +15705,13 @@
 },
 "INC-05148": {
 "dependency": "unstated",
-"ai_role": "synthetic image",
-"ai_role_how": "text rule",
+"ai_role": "deepfake, medium not stated",
+"ai_role_how": "corrected by review",
 "ai_role_pre": "synthetic image",
 "objective": "non-consensual / abuse imagery",
 "objective_how": "coded from text",
-"objective_pre": "unstated"
+"objective_pre": "unstated",
+"ai_role_pre_how": "text rule"
 },
 "INC-04184": {
 "dependency": "unstated",
@@ -15598,12 +15787,13 @@
 },
 "INC-03543": {
 "dependency": "unstated",
-"ai_role": "none: conventional exploit record misplaced in WITH-AI",
-"ai_role_how": "label-group rule",
+"ai_role": "deepfake, medium not stated",
+"ai_role_how": "corrected by review",
 "ai_role_pre": "unstated",
 "objective": "financial fraud / extortion",
 "objective_how": "text rule",
-"objective_pre": "financial fraud / extortion"
+"objective_pre": "financial fraud / extortion",
+"ai_role_pre_how": "label-group rule"
 },
 "INC-02271": {
 "dependency": "unstated",
@@ -15859,21 +16049,23 @@
 },
 "INC-03249": {
 "dependency": "unstated",
-"ai_role": "generated or assisted code (malware / tooling)",
-"ai_role_how": "text rule",
+"ai_role": "generated text (phishing / lures / disinformation)",
+"ai_role_how": "corrected by review",
 "ai_role_pre": "generated or assisted code (malware / tooling)",
 "objective": "financial fraud / extortion",
 "objective_how": "text rule",
-"objective_pre": "financial fraud / extortion"
+"objective_pre": "financial fraud / extortion",
+"ai_role_pre_how": "text rule"
 },
 "INC-03024": {
 "dependency": "unstated",
-"ai_role": "generated text (phishing / lures / disinformation)",
-"ai_role_how": "text rule",
+"ai_role": "synthetic video",
+"ai_role_how": "corrected by review",
 "ai_role_pre": "generated text (phishing / lures / disinformation)",
 "objective": "financial fraud / extortion",
 "objective_how": "text rule",
-"objective_pre": "financial fraud / extortion"
+"objective_pre": "financial fraud / extortion",
+"ai_role_pre_how": "text rule"
 },
 "INC-03783": {
 "dependency": "unstated",
@@ -16390,12 +16582,13 @@
 },
 "INC-03073": {
 "dependency": "unstated",
-"ai_role": "deepfake, medium not stated",
-"ai_role_how": "corpus label",
+"ai_role": "synthetic video",
+"ai_role_how": "corrected by review",
 "ai_role_pre": "deepfake, medium not stated",
 "objective": "financial fraud / extortion",
 "objective_how": "text rule",
-"objective_pre": "financial fraud / extortion"
+"objective_pre": "financial fraud / extortion",
+"ai_role_pre_how": "corpus label"
 },
 "INC-03539": {
 "dependency": "unstated",
@@ -16471,12 +16664,13 @@
 },
 "INC-03072": {
 "dependency": "unstated",
-"ai_role": "synthetic audio/voice",
-"ai_role_how": "text rule",
+"ai_role": "synthetic video",
+"ai_role_how": "corrected by review",
 "ai_role_pre": "synthetic audio/voice",
 "objective": "political / influence",
 "objective_how": "text rule",
-"objective_pre": "political / influence"
+"objective_pre": "political / influence",
+"ai_role_pre_how": "text rule"
 },
 "INC-02239": {
 "dependency": "unstated",
@@ -16552,12 +16746,13 @@
 },
 "INC-08176": {
 "dependency": "unstated",
-"ai_role": "synthetic audio/voice",
-"ai_role_how": "text rule",
+"ai_role": "synthetic video",
+"ai_role_how": "corrected by review",
 "ai_role_pre": "synthetic audio/voice",
 "objective": "political / influence",
 "objective_how": "coded from text",
-"objective_pre": "unstated"
+"objective_pre": "unstated",
+"ai_role_pre_how": "text rule"
 },
 "INC-02725": {
 "dependency": "unstated",
@@ -16651,21 +16846,24 @@
 },
 "INC-02960": {
 "dependency": "unstated",
-"ai_role": "synthetic audio/voice",
-"ai_role_how": "text rule",
+"ai_role": "synthetic video",
+"ai_role_how": "corrected by review",
 "ai_role_pre": "synthetic audio/voice",
-"objective": "defamation / impersonation of a person",
-"objective_how": "text rule",
-"objective_pre": "defamation / impersonation of a person"
+"objective": "intrusion / cyber operation",
+"objective_how": "corrected by review",
+"objective_pre": "defamation / impersonation of a person",
+"ai_role_pre_how": "text rule",
+"objective_pre_how": "text rule"
 },
 "INC-08177": {
 "dependency": "unstated",
-"ai_role": "reconnaissance / planning / orchestration",
-"ai_role_how": "text rule",
+"ai_role": "other",
+"ai_role_how": "corrected by review",
 "ai_role_pre": "reconnaissance / planning / orchestration",
 "objective": "financial fraud / extortion",
 "objective_how": "text rule",
-"objective_pre": "financial fraud / extortion"
+"objective_pre": "financial fraud / extortion",
+"ai_role_pre_how": "text rule"
 },
 "INC-02275": {
 "dependency": "unstated",
@@ -17092,12 +17290,13 @@
 },
 "INC-03058": {
 "dependency": "unstated",
-"ai_role": "synthetic audio/voice",
-"ai_role_how": "text rule",
+"ai_role": "synthetic video",
+"ai_role_how": "corrected by review",
 "ai_role_pre": "synthetic audio/voice",
 "objective": "political / influence",
 "objective_how": "coded from text",
-"objective_pre": "unstated"
+"objective_pre": "unstated",
+"ai_role_pre_how": "text rule"
 },
 "INC-03092": {
 "dependency": "unstated",
@@ -17245,12 +17444,13 @@
 },
 "INC-02336": {
 "dependency": "unstated",
-"ai_role": "none: conventional exploit record misplaced in WITH-AI",
-"ai_role_how": "label-group rule",
+"ai_role": "no attacker: operator harm or model failure (misplaced record)",
+"ai_role_how": "corrected by review",
 "ai_role_pre": "unstated",
 "objective": "no attacker: operator harm or model failure (misplaced record)",
 "objective_how": "coded from text",
-"objective_pre": "unstated"
+"objective_pre": "unstated",
+"ai_role_pre_how": "label-group rule"
 },
 "INC-03086": {
 "dependency": "unstated",
@@ -17689,9 +17889,10 @@
 "ai_role": "synthetic image",
 "ai_role_how": "text rule",
 "ai_role_pre": "synthetic image",
-"objective": "non-consensual / abuse imagery",
-"objective_how": "text rule",
-"objective_pre": "non-consensual / abuse imagery"
+"objective": "no attacker: operator harm or model failure (misplaced record)",
+"objective_how": "corrected by review",
+"objective_pre": "non-consensual / abuse imagery",
+"objective_pre_how": "text rule"
 },
 "INC-03170": {
 "dependency": "unstated",
@@ -18082,12 +18283,13 @@
 },
 "INC-03099": {
 "dependency": "unstated",
-"ai_role": "synthetic audio/voice",
-"ai_role_how": "text rule",
+"ai_role": "synthetic video",
+"ai_role_how": "corrected by review",
 "ai_role_pre": "synthetic audio/voice",
 "objective": "financial fraud / extortion",
 "objective_how": "text rule",
-"objective_pre": "financial fraud / extortion"
+"objective_pre": "financial fraud / extortion",
+"ai_role_pre_how": "text rule"
 },
 "INC-04988": {
 "dependency": "unstated",
@@ -18238,9 +18440,10 @@
 "ai_role": "synthetic audio/voice",
 "ai_role_how": "text rule",
 "ai_role_pre": "synthetic audio/voice",
-"objective": "intrusion / cyber operation",
-"objective_how": "text rule",
-"objective_pre": "intrusion / cyber operation"
+"objective": "political / influence",
+"objective_how": "corrected by review",
+"objective_pre": "intrusion / cyber operation",
+"objective_pre_how": "text rule"
 },
 "INC-03069": {
 "dependency": "unstated",
@@ -18607,9 +18810,10 @@
 "ai_role": "deepfake, medium not stated",
 "ai_role_how": "corpus label",
 "ai_role_pre": "deepfake, medium not stated",
-"objective": "political / influence",
-"objective_how": "text rule",
-"objective_pre": "political / influence"
+"objective": "intrusion / cyber operation",
+"objective_how": "corrected by review",
+"objective_pre": "political / influence",
+"objective_pre_how": "text rule"
 },
 "INC-13938": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -18652,9 +18856,10 @@
 "ai_role": "deepfake, medium not stated",
 "ai_role_how": "corpus label",
 "ai_role_pre": "deepfake, medium not stated",
-"objective": "defamation / impersonation of a person",
-"objective_how": "text rule",
-"objective_pre": "defamation / impersonation of a person"
+"objective": "intrusion / cyber operation",
+"objective_how": "corrected by review",
+"objective_pre": "defamation / impersonation of a person",
+"objective_pre_how": "text rule"
 },
 "INC-08457": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -18769,18 +18974,20 @@
 "ai_role": "generated text (phishing / lures / disinformation)",
 "ai_role_how": "text rule",
 "ai_role_pre": "generated text (phishing / lures / disinformation)",
-"objective": "defamation / impersonation of a person",
-"objective_how": "text rule",
-"objective_pre": "defamation / impersonation of a person"
+"objective": "intrusion / cyber operation",
+"objective_how": "corrected by review",
+"objective_pre": "defamation / impersonation of a person",
+"objective_pre_how": "text rule"
 },
 "INC-09009": {
 "dependency": "CVE/CWE present (software vulnerability)",
-"ai_role": "generated text (phishing / lures / disinformation)",
-"ai_role_how": "text rule",
+"ai_role": "none: conventional exploit record misplaced in WITH-AI",
+"ai_role_how": "corrected by review",
 "ai_role_pre": "generated text (phishing / lures / disinformation)",
 "objective": "intrusion / cyber operation",
 "objective_how": "coded from text",
-"objective_pre": "unstated"
+"objective_pre": "unstated",
+"ai_role_pre_how": "text rule"
 },
 "INC-09057": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -18829,30 +19036,33 @@
 },
 "INC-09254": {
 "dependency": "CVE/CWE present (software vulnerability)",
-"ai_role": "synthetic image",
-"ai_role_how": "text rule",
+"ai_role": "none: conventional exploit record misplaced in WITH-AI",
+"ai_role_how": "corrected by review",
 "ai_role_pre": "synthetic image",
 "objective": "non-consensual / abuse imagery",
 "objective_how": "text rule",
-"objective_pre": "non-consensual / abuse imagery"
+"objective_pre": "non-consensual / abuse imagery",
+"ai_role_pre_how": "text rule"
 },
 "INC-09266": {
 "dependency": "CVE/CWE present (software vulnerability)",
-"ai_role": "generated text (phishing / lures / disinformation)",
-"ai_role_how": "text rule",
+"ai_role": "none: conventional exploit record misplaced in WITH-AI",
+"ai_role_how": "corrected by review",
 "ai_role_pre": "generated text (phishing / lures / disinformation)",
 "objective": "intrusion / cyber operation",
 "objective_how": "coded from text",
-"objective_pre": "unstated"
+"objective_pre": "unstated",
+"ai_role_pre_how": "text rule"
 },
 "INC-09399": {
 "dependency": "CVE/CWE present (software vulnerability)",
 "ai_role": "deepfake, medium not stated",
 "ai_role_how": "corpus label",
 "ai_role_pre": "deepfake, medium not stated",
-"objective": "defamation / impersonation of a person",
-"objective_how": "text rule",
-"objective_pre": "defamation / impersonation of a person"
+"objective": "intrusion / cyber operation",
+"objective_how": "corrected by review",
+"objective_pre": "defamation / impersonation of a person",
+"objective_pre_how": "text rule"
 },
 "INC-09502": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -18901,12 +19111,13 @@
 },
 "INC-09990": {
 "dependency": "CVE/CWE present (software vulnerability)",
-"ai_role": "generated text (phishing / lures / disinformation)",
-"ai_role_how": "text rule",
+"ai_role": "none: conventional exploit record misplaced in WITH-AI",
+"ai_role_how": "corrected by review",
 "ai_role_pre": "generated text (phishing / lures / disinformation)",
 "objective": "intrusion / cyber operation",
 "objective_how": "text rule",
-"objective_pre": "intrusion / cyber operation"
+"objective_pre": "intrusion / cyber operation",
+"ai_role_pre_how": "text rule"
 },
 "INC-02810": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -18985,9 +19196,10 @@
 "ai_role": "deepfake, medium not stated",
 "ai_role_how": "corpus label",
 "ai_role_pre": "deepfake, medium not stated",
-"objective": "defamation / impersonation of a person",
-"objective_how": "text rule",
-"objective_pre": "defamation / impersonation of a person"
+"objective": "intrusion / cyber operation",
+"objective_how": "corrected by review",
+"objective_pre": "defamation / impersonation of a person",
+"objective_pre_how": "text rule"
 },
 "INC-10514": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -19075,18 +19287,20 @@
 "ai_role": "deepfake, medium not stated",
 "ai_role_how": "corpus label",
 "ai_role_pre": "deepfake, medium not stated",
-"objective": "defamation / impersonation of a person",
-"objective_how": "text rule",
-"objective_pre": "defamation / impersonation of a person"
+"objective": "intrusion / cyber operation",
+"objective_how": "corrected by review",
+"objective_pre": "defamation / impersonation of a person",
+"objective_pre_how": "text rule"
 },
 "INC-10940": {
 "dependency": "CVE/CWE present (software vulnerability)",
 "ai_role": "generated text (phishing / lures / disinformation)",
 "ai_role_how": "text rule",
 "ai_role_pre": "generated text (phishing / lures / disinformation)",
-"objective": "defamation / impersonation of a person",
-"objective_how": "text rule",
-"objective_pre": "defamation / impersonation of a person"
+"objective": "intrusion / cyber operation",
+"objective_how": "corrected by review",
+"objective_pre": "defamation / impersonation of a person",
+"objective_pre_how": "text rule"
 },
 "INC-10990": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -19102,9 +19316,10 @@
 "ai_role": "generated text (phishing / lures / disinformation)",
 "ai_role_how": "text rule",
 "ai_role_pre": "generated text (phishing / lures / disinformation)",
-"objective": "defamation / impersonation of a person",
-"objective_how": "text rule",
-"objective_pre": "defamation / impersonation of a person"
+"objective": "intrusion / cyber operation",
+"objective_how": "corrected by review",
+"objective_pre": "defamation / impersonation of a person",
+"objective_pre_how": "text rule"
 },
 "INC-03672": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -19192,9 +19407,10 @@
 "ai_role": "deepfake, medium not stated",
 "ai_role_how": "corpus label",
 "ai_role_pre": "deepfake, medium not stated",
-"objective": "political / influence",
-"objective_how": "text rule",
-"objective_pre": "political / influence"
+"objective": "intrusion / cyber operation",
+"objective_how": "corrected by review",
+"objective_pre": "political / influence",
+"objective_pre_how": "text rule"
 },
 "INC-12217": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -19210,9 +19426,10 @@
 "ai_role": "deepfake, medium not stated",
 "ai_role_how": "corpus label",
 "ai_role_pre": "deepfake, medium not stated",
-"objective": "defamation / impersonation of a person",
-"objective_how": "text rule",
-"objective_pre": "defamation / impersonation of a person"
+"objective": "intrusion / cyber operation",
+"objective_how": "corrected by review",
+"objective_pre": "defamation / impersonation of a person",
+"objective_pre_how": "text rule"
 },
 "INC-12350": {
 "dependency": "CVE/CWE present (software vulnerability)",
@@ -19282,9 +19499,10 @@
 "ai_role": "deepfake, medium not stated",
 "ai_role_how": "corpus label",
 "ai_role_pre": "deepfake, medium not stated",
-"objective": "intrusion / cyber operation",
-"objective_how": "text rule",
-"objective_pre": "intrusion / cyber operation"
+"objective": "no attacker: operator harm or model failure (misplaced record)",
+"objective_how": "corrected by review",
+"objective_pre": "intrusion / cyber operation",
+"objective_pre_how": "text rule"
 },
 "INC-06280": {
 "dependency": "unstated",
@@ -19306,12 +19524,13 @@
 },
 "INC-06498": {
 "dependency": "unstated",
-"ai_role": "generated text (phishing / lures / disinformation)",
-"ai_role_how": "text rule",
+"ai_role": "deepfake, medium not stated",
+"ai_role_how": "corrected by review",
 "ai_role_pre": "generated text (phishing / lures / disinformation)",
 "objective": "financial fraud / extortion",
 "objective_how": "text rule",
-"objective_pre": "financial fraud / extortion"
+"objective_pre": "financial fraud / extortion",
+"ai_role_pre_how": "text rule"
 },
 "INC-07009": {
 "dependency": "unstated",
@@ -19324,12 +19543,13 @@
 },
 "INC-06499": {
 "dependency": "unstated",
-"ai_role": "generated or assisted code (malware / tooling)",
-"ai_role_how": "text rule",
+"ai_role": "deepfake, medium not stated",
+"ai_role_how": "corrected by review",
 "ai_role_pre": "generated or assisted code (malware / tooling)",
 "objective": "financial fraud / extortion",
 "objective_how": "text rule",
-"objective_pre": "financial fraud / extortion"
+"objective_pre": "financial fraud / extortion",
+"ai_role_pre_how": "text rule"
 },
 "INC-06550": {
 "dependency": "unstated",
@@ -19900,12 +20120,13 @@
 },
 "INC-00765": {
 "dependency": "unstated",
-"ai_role": "reconnaissance / planning / orchestration",
-"ai_role_how": "text rule",
+"ai_role": "other",
+"ai_role_how": "corrected by review",
 "ai_role_pre": "reconnaissance / planning / orchestration",
 "objective": "no attacker: operator harm or model failure (misplaced record)",
 "objective_how": "coded from text",
-"objective_pre": "unstated"
+"objective_pre": "unstated",
+"ai_role_pre_how": "text rule"
 },
 "INC-00408": {
 "dependency": "unstated",
@@ -19972,12 +20193,13 @@
 },
 "INC-14689": {
 "dependency": "unstated",
-"ai_role": "reconnaissance / planning / orchestration",
-"ai_role_how": "text rule",
+"ai_role": "no attacker: operator harm or model failure (misplaced record)",
+"ai_role_how": "corrected by review",
 "ai_role_pre": "reconnaissance / planning / orchestration",
 "objective": "no attacker: operator harm or model failure (misplaced record)",
 "objective_how": "coded from text",
-"objective_pre": "unstated"
+"objective_pre": "unstated",
+"ai_role_pre_how": "text rule"
 },
 "INC-01067": {
 "dependency": "unstated",
@@ -20017,12 +20239,13 @@
 },
 "INC-00283": {
 "dependency": "unstated",
-"ai_role": "none: conventional exploit record misplaced in WITH-AI",
-"ai_role_how": "label-group rule",
+"ai_role": "other",
+"ai_role_how": "corrected by review",
 "ai_role_pre": "unstated",
 "objective": "intrusion / cyber operation",
 "objective_how": "coded from text",
-"objective_pre": "unstated"
+"objective_pre": "unstated",
+"ai_role_pre_how": "label-group rule"
 },
 "INC-14690": {
 "dependency": "unstated",
@@ -20377,12 +20600,13 @@
 },
 "INC-00720": {
 "dependency": "unstated",
-"ai_role": "none: conventional exploit record misplaced in WITH-AI",
-"ai_role_how": "label-group rule",
+"ai_role": "other",
+"ai_role_how": "corrected by review",
 "ai_role_pre": "unstated",
 "objective": "financial fraud / extortion",
 "objective_how": "text rule",
-"objective_pre": "financial fraud / extortion"
+"objective_pre": "financial fraud / extortion",
+"ai_role_pre_how": "label-group rule"
 },
 "INC-00312": {
 "dependency": "unstated",
@@ -20719,12 +20943,13 @@
 },
 "INC-00509": {
 "dependency": "unstated",
-"ai_role": "deepfake, medium not stated",
-"ai_role_how": "corpus label",
+"ai_role": "synthetic video",
+"ai_role_how": "corrected by review",
 "ai_role_pre": "deepfake, medium not stated",
 "objective": "public deception, not political (hoax, fake news, clickbait)",
 "objective_how": "coded from text",
-"objective_pre": "unstated"
+"objective_pre": "unstated",
+"ai_role_pre_how": "corpus label"
 },
 "INC-00403": {
 "dependency": "unstated",
@@ -20791,12 +21016,13 @@
 },
 "INC-14730": {
 "dependency": "unstated",
-"ai_role": "reconnaissance / planning / orchestration",
-"ai_role_how": "text rule",
+"ai_role": "no attacker: operator harm or model failure (misplaced record)",
+"ai_role_how": "corrected by review",
 "ai_role_pre": "reconnaissance / planning / orchestration",
 "objective": "no attacker: operator harm or model failure (misplaced record)",
 "objective_how": "coded from text",
-"objective_pre": "unstated"
+"objective_pre": "unstated",
+"ai_role_pre_how": "text rule"
 },
 "INC-00462": {
 "dependency": "unstated",
@@ -20821,9 +21047,10 @@
 "ai_role": "synthetic image",
 "ai_role_how": "text rule",
 "ai_role_pre": "synthetic image",
-"objective": "non-consensual / abuse imagery",
-"objective_how": "text rule",
-"objective_pre": "non-consensual / abuse imagery"
+"objective": "no attacker: operator harm or model failure (misplaced record)",
+"objective_how": "corrected by review",
+"objective_pre": "non-consensual / abuse imagery",
+"objective_pre_how": "text rule"
 },
 "INC-00654": {
 "dependency": "unstated",
@@ -21226,9 +21453,10 @@
 "ai_role": "synthetic image",
 "ai_role_how": "text rule",
 "ai_role_pre": "synthetic image",
-"objective": "non-consensual / abuse imagery",
-"objective_how": "text rule",
-"objective_pre": "non-consensual / abuse imagery"
+"objective": "no attacker: operator harm or model failure (misplaced record)",
+"objective_how": "corrected by review",
+"objective_pre": "non-consensual / abuse imagery",
+"objective_pre_how": "text rule"
 },
 "INC-01281": {
 "dependency": "unstated",
@@ -21253,9 +21481,10 @@
 "ai_role": "deepfake, medium not stated",
 "ai_role_how": "corpus label",
 "ai_role_pre": "deepfake, medium not stated",
-"objective": "non-consensual / abuse imagery",
-"objective_how": "text rule",
-"objective_pre": "non-consensual / abuse imagery"
+"objective": "no attacker: operator harm or model failure (misplaced record)",
+"objective_how": "corrected by review",
+"objective_pre": "non-consensual / abuse imagery",
+"objective_pre_how": "text rule"
 },
 "INC-00152": {
 "dependency": "unstated",
@@ -21430,12 +21659,13 @@
 },
 "INC-00045": {
 "dependency": "unstated",
-"ai_role": "none: conventional exploit record misplaced in WITH-AI",
-"ai_role_how": "label-group rule",
+"ai_role": "no attacker: operator harm or model failure (misplaced record)",
+"ai_role_how": "corrected by review",
 "ai_role_pre": "unstated",
 "objective": "other",
 "objective_how": "coded from text",
-"objective_pre": "unstated"
+"objective_pre": "unstated",
+"ai_role_pre_how": "label-group rule"
 },
 "INC-01081": {
 "dependency": "unstated",
@@ -21691,12 +21921,13 @@
 },
 "INC-00852": {
 "dependency": "unstated",
-"ai_role": "none: conventional exploit record misplaced in WITH-AI",
-"ai_role_how": "label-group rule",
+"ai_role": "synthetic video",
+"ai_role_how": "corrected by review",
 "ai_role_pre": "unstated",
 "objective": "other",
 "objective_how": "coded from text",
-"objective_pre": "unstated"
+"objective_pre": "unstated",
+"ai_role_pre_how": "label-group rule"
 },
 "INC-01180": {
 "dependency": "unstated",
@@ -21721,9 +21952,10 @@
 "ai_role": "synthetic video",
 "ai_role_how": "text rule",
 "ai_role_pre": "synthetic video",
-"objective": "political / influence",
-"objective_how": "text rule",
-"objective_pre": "political / influence"
+"objective": "defamation / impersonation of a person",
+"objective_how": "corrected by review",
+"objective_pre": "political / influence",
+"objective_pre_how": "text rule"
 },
 "INC-01451": {
 "dependency": "unstated",
@@ -21892,9 +22124,10 @@
 "ai_role": "deepfake, medium not stated",
 "ai_role_how": "corpus label",
 "ai_role_pre": "deepfake, medium not stated",
-"objective": "intrusion / cyber operation",
-"objective_how": "text rule",
-"objective_pre": "intrusion / cyber operation"
+"objective": "no attacker: operator harm or model failure (misplaced record)",
+"objective_how": "corrected by review",
+"objective_pre": "intrusion / cyber operation",
+"objective_pre_how": "text rule"
 },
 "INC-00149": {
 "dependency": "unstated",
@@ -22036,9 +22269,10 @@
 "ai_role": "deepfake, medium not stated",
 "ai_role_how": "corpus label",
 "ai_role_pre": "deepfake, medium not stated",
-"objective": "defamation / impersonation of a person",
-"objective_how": "text rule",
-"objective_pre": "defamation / impersonation of a person"
+"objective": "financial fraud / extortion",
+"objective_how": "corrected by review",
+"objective_pre": "defamation / impersonation of a person",
+"objective_pre_how": "text rule"
 },
 "INC-00708": {
 "dependency": "unstated",
@@ -22231,12 +22465,13 @@
 },
 "INC-00300": {
 "dependency": "unstated",
-"ai_role": "none: conventional exploit record misplaced in WITH-AI",
-"ai_role_how": "label-group rule",
+"ai_role": "other",
+"ai_role_how": "corrected by review",
 "ai_role_pre": "unstated",
 "objective": "financial fraud / extortion",
 "objective_how": "text rule",
-"objective_pre": "financial fraud / extortion"
+"objective_pre": "financial fraud / extortion",
+"ai_role_pre_how": "label-group rule"
 },
 "INC-00144": {
 "dependency": "unstated",
@@ -22528,12 +22763,13 @@
 },
 "INC-00538": {
 "dependency": "unstated",
-"ai_role": "none: conventional exploit record misplaced in WITH-AI",
-"ai_role_how": "label-group rule",
+"ai_role": "other",
+"ai_role_how": "corrected by review",
 "ai_role_pre": "unstated",
 "objective": "no attacker: operator harm or model failure (misplaced record)",
 "objective_how": "coded from text",
-"objective_pre": "unstated"
+"objective_pre": "unstated",
+"ai_role_pre_how": "label-group rule"
 },
 "INC-14797": {
 "dependency": "unstated",
@@ -22564,21 +22800,23 @@
 },
 "INC-00420": {
 "dependency": "unstated",
-"ai_role": "generated text (phishing / lures / disinformation)",
-"ai_role_how": "text rule",
+"ai_role": "deepfake, medium not stated",
+"ai_role_how": "corrected by review",
 "ai_role_pre": "generated text (phishing / lures / disinformation)",
 "objective": "political / influence",
 "objective_how": "coded from text",
-"objective_pre": "unstated"
+"objective_pre": "unstated",
+"ai_role_pre_how": "text rule"
 },
 "INC-01968": {
 "dependency": "unstated",
 "ai_role": "deepfake, medium not stated",
 "ai_role_how": "corpus label",
 "ai_role_pre": "deepfake, medium not stated",
-"objective": "defamation / impersonation of a person",
-"objective_how": "text rule",
-"objective_pre": "defamation / impersonation of a person"
+"objective": "no attacker: operator harm or model failure (misplaced record)",
+"objective_how": "corrected by review",
+"objective_pre": "defamation / impersonation of a person",
+"objective_pre_how": "text rule"
 },
 "INC-00277": {
 "dependency": "unstated",
@@ -22951,12 +23189,13 @@
 },
 "INC-07819": {
 "dependency": "unstated",
-"ai_role": "synthetic image",
-"ai_role_how": "text rule",
+"ai_role": "no attacker: operator harm or model failure (misplaced record)",
+"ai_role_how": "corrected by review",
 "ai_role_pre": "synthetic image",
 "objective": "non-consensual / abuse imagery",
 "objective_how": "text rule",
-"objective_pre": "non-consensual / abuse imagery"
+"objective_pre": "non-consensual / abuse imagery",
+"ai_role_pre_how": "text rule"
 },
 "INC-07824": {
 "dependency": "unstated",
@@ -23212,12 +23451,13 @@
 },
 "INC-07933": {
 "dependency": "unstated",
-"ai_role": "none: conventional exploit record misplaced in WITH-AI",
-"ai_role_how": "label-group rule",
+"ai_role": "other",
+"ai_role_how": "corrected by review",
 "ai_role_pre": "unstated",
 "objective": "intrusion / cyber operation",
 "objective_how": "coded from text",
-"objective_pre": "unstated"
+"objective_pre": "unstated",
+"ai_role_pre_how": "label-group rule"
 },
 "INC-07937": {
 "dependency": "unstated",
@@ -23617,12 +23857,13 @@
 },
 "INC-08134": {
 "dependency": "unstated",
-"ai_role": "none: conventional exploit record misplaced in WITH-AI",
-"ai_role_how": "label-group rule",
+"ai_role": "other",
+"ai_role_how": "corrected by review",
 "ai_role_pre": "unstated",
 "objective": "intrusion / cyber operation",
 "objective_how": "coded from text",
-"objective_pre": "unstated"
+"objective_pre": "unstated",
+"ai_role_pre_how": "label-group rule"
 },
 "INC-08140": {
 "dependency": "unstated",
@@ -24139,12 +24380,13 @@
 },
 "INC-13175": {
 "dependency": "unstated",
-"ai_role": "none: conventional exploit record misplaced in WITH-AI",
-"ai_role_how": "label-group rule",
+"ai_role": "no attacker: operator harm or model failure (misplaced record)",
+"ai_role_how": "corrected by review",
 "ai_role_pre": "unstated",
 "objective": "other",
 "objective_how": "coded from text",
-"objective_pre": "unstated"
+"objective_pre": "unstated",
+"ai_role_pre_how": "label-group rule"
 },
 "INC-13177": {
 "dependency": "unstated",
@@ -24430,9 +24672,10 @@
 "ai_role": "synthetic video",
 "ai_role_how": "text rule",
 "ai_role_pre": "synthetic video",
-"objective": "defamation / impersonation of a person",
-"objective_how": "text rule",
-"objective_pre": "defamation / impersonation of a person"
+"objective": "public deception, not political (hoax, fake news, clickbait)",
+"objective_how": "corrected by review",
+"objective_pre": "defamation / impersonation of a person",
+"objective_pre_how": "text rule"
 },
 "INC-14255": {
 "dependency": "unstated",
@@ -24517,12 +24760,13 @@
 },
 "INC-14300": {
 "dependency": "unstated",
-"ai_role": "none: conventional exploit record misplaced in WITH-AI",
-"ai_role_how": "label-group rule",
+"ai_role": "other",
+"ai_role_how": "corrected by review",
 "ai_role_pre": "unstated",
 "objective": "financial fraud / extortion",
 "objective_how": "text rule",
-"objective_pre": "financial fraud / extortion"
+"objective_pre": "financial fraud / extortion",
+"ai_role_pre_how": "label-group rule"
 },
 "INC-14303": {
 "dependency": "unstated",
@@ -24643,12 +24887,13 @@
 },
 "INC-14351": {
 "dependency": "unstated",
-"ai_role": "none: conventional exploit record misplaced in WITH-AI",
-"ai_role_how": "label-group rule",
+"ai_role": "other",
+"ai_role_how": "corrected by review",
 "ai_role_pre": "unstated",
 "objective": "financial fraud / extortion",
 "objective_how": "text rule",
-"objective_pre": "financial fraud / extortion"
+"objective_pre": "financial fraud / extortion",
+"ai_role_pre_how": "label-group rule"
 },
 "INC-14353": {
 "dependency": "unstated",
@@ -24679,12 +24924,13 @@
 },
 "INC-14378": {
 "dependency": "unstated",
-"ai_role": "none: conventional exploit record misplaced in WITH-AI",
-"ai_role_how": "label-group rule",
+"ai_role": "other",
+"ai_role_how": "corrected by review",
 "ai_role_pre": "unstated",
 "objective": "intrusion / cyber operation",
 "objective_how": "coded from text",
-"objective_pre": "unstated"
+"objective_pre": "unstated",
+"ai_role_pre_how": "label-group rule"
 },
 "INC-14382": {
 "dependency": "unstated",
@@ -24742,12 +24988,13 @@
 },
 "INC-14396": {
 "dependency": "unstated",
-"ai_role": "none: conventional exploit record misplaced in WITH-AI",
-"ai_role_how": "label-group rule",
+"ai_role": "no attacker: operator harm or model failure (misplaced record)",
+"ai_role_how": "corrected by review",
 "ai_role_pre": "unstated",
 "objective": "financial fraud / extortion",
 "objective_how": "text rule",
-"objective_pre": "financial fraud / extortion"
+"objective_pre": "financial fraud / extortion",
+"ai_role_pre_how": "label-group rule"
 },
 "INC-14402": {
 "dependency": "unstated",
@@ -24772,9 +25019,10 @@
 "ai_role": "synthetic video",
 "ai_role_how": "text rule",
 "ai_role_pre": "synthetic video",
-"objective": "defamation / impersonation of a person",
-"objective_how": "text rule",
-"objective_pre": "defamation / impersonation of a person"
+"objective": "public deception, not political (hoax, fake news, clickbait)",
+"objective_how": "corrected by review",
+"objective_pre": "defamation / impersonation of a person",
+"objective_pre_how": "text rule"
 },
 "INC-14415": {
 "dependency": "unstated",
@@ -24949,12 +25197,13 @@
 },
 "INC-14552": {
 "dependency": "unstated",
-"ai_role": "none: conventional exploit record misplaced in WITH-AI",
-"ai_role_how": "label-group rule",
+"ai_role": "synthetic video",
+"ai_role_how": "corrected by review",
 "ai_role_pre": "unstated",
 "objective": "political / influence",
 "objective_how": "coded from text",
-"objective_pre": "unstated"
+"objective_pre": "unstated",
+"ai_role_pre_how": "label-group rule"
 },
 "INC-14556": {
 "dependency": "unstated",

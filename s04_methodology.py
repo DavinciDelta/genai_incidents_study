@@ -59,7 +59,8 @@ STUB = ("Tracked by the OECD", "AI Incident Database (AIID) entry", "AIAAIC-trac
 def reclass(r, dim):
     if dim == "target": return T_STUB if r["description"].startswith(STUB) else None
     return next((v for gs, v in RECLASS[dim] if any(r["attack_vector"] in GNAME[g] for g in gs)), None)
-HOW = ("text rule", "corpus label", "label-group rule", "coded from text", "other")
+HOW = ("text rule", "corpus label", "label-group rule", "coded from text", "other", "corrected by review")
+REVIEW = json.load(open(ROOT / "coded" / "review.json")) if (ROOT / "coded" / "review.json").exists() else None   # label review: sample verdicts + corrections
 def assign(r, dim):
     """(value, how, coder record or None); the pre value is the value when how is one of the first two, else 'unstated'."""
     v = first(DIMS[dim], text(r), None)
@@ -90,6 +91,12 @@ for pop, rows in POPS:
             m[d], m[d + "_how"], m[d + "_pre"] = v, how, (v if how in HOW[:2] else "unstated")
             if c: used[d].add(r["id"]); notes += [f"{d}: {c['note']}"] if c["note"] else []
         M[r["id"]] = m; NOTE[r["id"]] = "; ".join(notes)
+STRATUM_N = collections.Counter((d, M[r["id"]][d], M[r["id"]][d + "_how"]) for d in DIM4 for r in POP[d])   # rule-assigned population per (dim, value, how), before any correction
+if REVIEW:   # corrections from the two-reviewer sample audit override the rule value; the pre value and the audit trail stay
+    for c in REVIEW["corrections"]:
+        m = M[c["id"]]; assert m[c["dim"]] == c["from"], c
+        m[c["dim"] + "_pre_how"] = m[c["dim"] + "_how"]   # the rule source stays with the pre value in dataset_pre.csv
+        m[c["dim"]], m[c["dim"] + "_how"] = c["to"], HOW[5]; NOTE[c["id"]] = (NOTE[c["id"]] + "; " if NOTE[c["id"]] else "") + f"{c['dim']}: review: {c['note']}"
 left = {d: sum(M[r["id"]][d + "_how"] == HOW[4] for r in POP[d]) for d in DIM4}
 print("still unstated after the coded labels, set to 'other':", left); assert not any(left.values()), left  # the count is printed before the assert
 assert all(used[d] == set(CODED["labels"][d]) for d in DIM4), {d: (len(used[d]), len(CODED["labels"][d])) for d in DIM4}  # the coded file covers exactly what the rules leave
@@ -101,18 +108,21 @@ json.dump(M, open(OUT / "methodology.json", "w"), indent=0); print(f"wrote out/m
 IDENT = ["id", "population", "channel", "year", "record_type", "attack_vector", "cve_ids", "title", "affected", "description"]
 ident = lambda r, pop: [r["id"], pop, source_class(r), r["year"], r.get("category", ""), r.get("attack_vector", ""), ";".join(r.get("cve_ids") or []), r["title"], r.get("affected") or "", r["description"]]
 g = lambda r, k: M[r["id"]].get(k, "")
-pre_src = lambda r, d: (lambda h: h if h in HOW[:2] else "unstated")(g(r, d + "_how")) if d in M[r["id"]] else ""
-def dataset(name, header, row):
+pre_src = lambda r, d: (lambda h: h if h in HOW[:2] else "unstated")(M[r["id"]].get(d + "_pre_how") or g(r, d + "_how")) if d in M[r["id"]] else ""
+def dataset(name, header, row, keep=lambda r: True):
     with open(OUT / name, "w", newline="", encoding="utf-8") as f:
         w = csv.writer(f); w.writerow(header); n = 0
         for pop, rows in POPS:
-            for r in rows: w.writerow(ident(r, pop) + row(r)); n += 1
+            for r in rows:
+                if keep(r): w.writerow(ident(r, pop) + row(r)); n += 1
     print(f"wrote out/{name} ({n:,} rows)")
 dataset("dataset_pre.csv", IDENT + [x for d in DIM4[:2] for x in (d, d + "_source")] + ["dependency"] + [x for d in DIM4[2:] for x in (d, d + "_source")],
         lambda r: [x for d in DIM4[:2] for x in (g(r, d + "_pre"), pre_src(r, d))] + [g(r, "dependency")] + [x for d in DIM4[2:] for x in (g(r, d + "_pre"), pre_src(r, d))])
 post3 = lambda r, d: [g(r, d + "_pre"), g(r, d), g(r, d + "_how")]
-dataset("dataset_post.csv", IDENT + [f"{d}_{x}" for d in DIM4[:2] for x in ("pre", "post", "how")] + ["dependency"] + [f"{d}_{x}" for d in DIM4[2:] for x in ("pre", "post", "how")] + ["coded_note"],
-        lambda r: [x for d in DIM4[:2] for x in post3(r, d)] + [g(r, "dependency")] + [x for d in DIM4[2:] for x in post3(r, d)] + [NOTE[r["id"]]])
+POST_H = IDENT + [f"{d}_{x}" for d in DIM4[:2] for x in ("pre", "post", "how")] + ["dependency"] + [f"{d}_{x}" for d in DIM4[2:] for x in ("pre", "post", "how")] + ["coded_note"]
+POST_R = lambda r: [x for d in DIM4[:2] for x in post3(r, d)] + [g(r, "dependency")] + [x for d in DIM4[2:] for x in post3(r, d)] + [NOTE[r["id"]]]
+dataset("dataset_post.csv", POST_H, POST_R)
+dataset("dataset_post_2026.csv", POST_H, POST_R, keep=lambda r: r["year"] == 2026)   # the 2026-only cut read by step 5's Table 5.4
 
 # ---------------------------------------------------------------- markdown
 pct = lambda a, b: f"{100*a/b:.1f}" if b else "—"
@@ -152,15 +162,37 @@ L = ["# Step 4 — Entry point, target, AI medium and objective, after reclassif
      f"records entered the populations by step 2's rules (Table 2.4), and by channel ON-AI has {chan_n(ON)} records and WITH-AI {chan_n(WI)} "
      f"(channel columns are % of that channel, so each {100/ch(WI)['research/other']:.1f} in WITH-AI's research/other column is one record).", "", READ, "",
      f"**Table 4.0. How each value was assigned** (ON-AI n = {len(ON):,}; WITH-AI n = {len(WI):,})", "",
-     "Counts of records per dimension by the step that fixed the value (the four step columns sum to the records); the last column counts records holding one of the four residue values defined above, whichever step set them. In the notes of Tables 4.1–4.5, 'rule' = label-group rule, 'coded' = coded from text, and * marks a value that did not exist before this step.", "",
-     "| dimension (table) | records | text rule | corpus label | label-group rule | coded from text (coders agreed / adjudicated) | value 'other', 'no attacker' or 'none' |", "|---|---|---|---|---|---|---|"]
+     "Counts of records per dimension by the step that fixed the value (the four step columns sum to the records); the last column counts records holding one of the four residue values defined above, whichever step set them. In the notes of Tables 4.1–4.5, 'rule' = label-group rule, 'coded' = coded from text, 'review' = corrected by review, and * marks a value that did not exist before this step.", "",
+     "| dimension (table) | records | text rule | corpus label | label-group rule | coded from text (coders agreed / adjudicated) |" + (" corrected by review |" if REVIEW else "") + " value 'other', 'no attacker' or 'none' |", "|---|---|---|---|---|---|" + ("---|" if REVIEW else "") + "---|"]
 T0 = {}
 for d in DIM4:
     P = POP[d]; hc = collections.Counter(M[r["id"]][d + "_how"] for r in P); cs = [CODED["labels"][d][r["id"]] for r in P if M[r["id"]][d + "_how"] == HOW[3]]
     adj = sum(c["adjudicated"] for c in cs); oth = sum(bool(res_kind(M[r["id"]][d])) for r in P); cell = lambda a: f"{a:,} ({pct(a, len(P))}%)"
     T0[d] = (len(P), hc[HOW[0]], hc[HOW[1]], hc[HOW[2]], len(cs), len(cs) - adj, adj, oth)
-    L.append(f"| {'ON-AI' if P is ON else 'WITH-AI'} {NAME[d]} ({NUM[d]}) | {len(P):,} | {cell(hc[HOW[0]])} | {cell(hc[HOW[1]])} | {cell(hc[HOW[2]])} | {cell(len(cs))} ({len(cs) - adj} / {adj}) | {cell(oth)} |")
-SHORT = {HOW[2]: "rule", HOW[3]: "coded"}
+    L.append(f"| {'ON-AI' if P is ON else 'WITH-AI'} {NAME[d]} ({NUM[d]}) | {len(P):,} | {cell(hc[HOW[0]])} | {cell(hc[HOW[1]])} | {cell(hc[HOW[2]])} | {cell(len(cs))} ({len(cs) - adj} / {adj}) |" + (f" {cell(hc[HOW[5]])} |" if REVIEW else "") + f" {cell(oth)} |")
+if REVIEW:
+    st = REVIEW["strata"]; tot = {k: sum(x[k] for x in st) for k in ("reviewed", "correct", "corrected", "disputed")}
+    L += ["", f"**Table 4.0b. Label review: two independent reviewers read {tot['reviewed']} rule-assigned labels ({len(st)} values); both judged {tot['correct']} correct ({pct(tot['correct'], tot['reviewed'])}%), "
+              f"{tot['corrected']} were corrected, {tot['disputed']} stayed as assigned with a dissent** (n = {tot['reviewed']} labels)", "",
+          f"{REVIEW['meta']['design']} A label was corrected when both reviewers rejected it and agreed on the replacement, or when an adjudicator settled a split; "
+          f"'disputed' = one reviewer rejected it and the adjudicator kept it. Corrections are applied in Tables 4.1–4.5 and `out/dataset_post.csv` (how = 'corrected by review'); the per-value share judged "
+          f"correct is the precision estimate for that rule on a sample of at most {REVIEW['meta']['per_value']} records.", "",
+          "| dimension | value | how assigned | records with this label | reviewed | both reviewers: correct | corrected (to) | disputed |", "|---|---|---|---|---|---|---|---|"]
+    for x in st:
+        to = ", ".join(f"{v} {n}" for v, n in x["corrected_to"].items()) if x["corrected_to"] else "—"
+        L.append(f"| {NAME[x['dim']]} | {x['value']} | {x['how']} | {STRATUM_N[(x['dim'], x['value'], x['how'])]:,} | {x['reviewed']} | {x['correct']} ({pct(x['correct'], x['reviewed'])}%) | {x['corrected']}{' (' + to + ')' if x['corrected'] else ''} | {x['disputed']} |")
+    # population-weighted view: each stratum's observed error rate (corrected / reviewed) applied to the records of that stratum the sample did not reach
+    L += ["", f"**Table 4.0c. What the review implies for the labels it did not read** (rule-assigned labels per dimension)", "",
+          "The sample took at most 20 records per value, so small values were read in full and large ones were not. 'estimated wrong before review' applies each value's observed error rate to all of its records; "
+          "'still wrong after correction' is the same estimate for the records the sample did not reach, i.e. the error that remains in Tables 4.1–4.5 and `out/dataset_post.csv`. Values read in full contribute no remaining error.", "",
+          "| dimension | rule-assigned labels | read in full (values) | reviewed | corrected | estimated wrong before review | still wrong after correction |", "|---|---|---|---|---|---|---|"]
+    for d in DIM4:
+        rows = [x for x in st if x["dim"] == d]; n_all = sum(n for (dd, v, h), n in STRATUM_N.items() if dd == d and h in HOW[:3])
+        full = sum(STRATUM_N[(d, x["value"], x["how"])] <= x["reviewed"] for x in rows)
+        est = sum(STRATUM_N[(d, x["value"], x["how"])] * x["corrected"] / x["reviewed"] for x in rows)
+        rem = sum(max(STRATUM_N[(d, x["value"], x["how"])] - x["reviewed"], 0) * x["corrected"] / x["reviewed"] for x in rows)
+        L.append(f"| {NAME[d]} | {n_all:,} | {full} of {len(rows)} | {sum(x['reviewed'] for x in rows)} | {sum(x['corrected'] for x in rows)} | {est:,.0f} ({pct(est, n_all)}%) | {rem:,.0f} ({pct(rem, n_all)}%) |")
+SHORT = {HOW[2]: "rule", HOW[3]: "coded", HOW[5]: "review"}
 def post_table(d, question):
     P = POP[d]; c = collections.Counter(M[r["id"]][d] for r in P); top, tn = c.most_common(1)[0]; oth = sum(bool(res_kind(v)) for v in c.elements())
     un = [r for r in P if M[r["id"]][d + "_pre"] == "unstated"]; cu = collections.Counter(M[r["id"]][d] for r in un)
@@ -170,6 +202,13 @@ def post_table(d, question):
     desc = (f"Before reclassification {len(un):,} records ({pct(len(un), len(P))}%) were unstated; they now hold, largest first: "
             + "; ".join(f"{v}{'' if v in known else '*'} {n} ({how_s(v)})" for v, n in cu.most_common())
             + ".")
+    if REVIEW:   # values whose rule-assigned labels the audit found mostly wrong: the unreviewed remainder of such a value carries that error
+        prec = collections.defaultdict(lambda: [0, 0])
+        for x in REVIEW["strata"]:
+            if x["dim"] == d: prec[x["value"]][0] += x["correct"] + x["disputed"]; prec[x["value"]][1] += x["reviewed"]
+        low = sorted(((v, a, b) for v, (a, b) in prec.items() if a < b / 2), key=lambda t: t[1] / t[2])
+        if low: desc += (" Audit (Table 4.0b): fewer than half of the sampled rule-assigned labels were correct for "
+                         + ", ".join(f"{v} ({a} of {b})" for v, a, b in low) + "; the unreviewed records under these values carry that error rate.")
     return table(f"{'ON-AI' if P is ON else 'WITH-AI'}: {question} {top} {pct(tn, len(P))}%; {pct(oth, len(P))}% {res_phrase(c)}",
                  P, val(d), ci=True, channels=True, num=NUM[d], top=len(c), rest=False, desc=desc)
 L += post_table("entry_point", "how did the adversary first reach the AI system?")

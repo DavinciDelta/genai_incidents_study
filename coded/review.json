@@ -1,0 +1,2256 @@
+{
+ "meta": {
+  "made": "2026-10-07",
+  "design": "Two independent Claude (claude-fable-5-1) reviewers read each sampled label with the record's title, description (first 700 characters), affected field and corpus labels, and judged it correct or proposed another value from the same codebook; a third reviewer adjudicated every split.",
+  "per_value": 20,
+  "sample": "stratified: every rule-assigned value (text rule, corpus label, label-group rule), up to 20 records each, seed 20261007",
+  "coders_agreed_on_verdict": 592,
+  "adjudicated": 28
+ },
+ "strata": [
+  {
+   "dim": "ai_role",
+   "value": "deepfake, medium not stated",
+   "how": "corpus label",
+   "reviewed": 20,
+   "correct": 12,
+   "corrected": 8,
+   "disputed": 0,
+   "corrected_to": {
+    "synthetic video": 4,
+    "synthetic image": 3,
+    "other": 1
+   }
+  },
+  {
+   "dim": "ai_role",
+   "value": "generated or assisted code (malware / tooling)",
+   "how": "text rule",
+   "reviewed": 9,
+   "correct": 7,
+   "corrected": 2,
+   "disputed": 0,
+   "corrected_to": {
+    "deepfake, medium not stated": 1,
+    "generated text (phishing / lures / disinformation)": 1
+   }
+  },
+  {
+   "dim": "ai_role",
+   "value": "generated text (phishing / lures / disinformation)",
+   "how": "text rule",
+   "reviewed": 20,
+   "correct": 11,
+   "corrected": 9,
+   "disputed": 0,
+   "corrected_to": {
+    "none: conventional exploit record misplaced in WITH-AI": 3,
+    "synthetic video": 3,
+    "deepfake, medium not stated": 3
+   }
+  },
+  {
+   "dim": "ai_role",
+   "value": "none: conventional exploit record misplaced in WITH-AI",
+   "how": "label-group rule",
+   "reviewed": 20,
+   "correct": 0,
+   "corrected": 20,
+   "disputed": 0,
+   "corrected_to": {
+    "other": 9,
+    "no attacker: operator harm or model failure (misplaced record)": 6,
+    "synthetic video": 2,
+    "deepfake, medium not stated": 2,
+    "synthetic image": 1
+   }
+  },
+  {
+   "dim": "ai_role",
+   "value": "reconnaissance / planning / orchestration",
+   "how": "text rule",
+   "reviewed": 5,
+   "correct": 1,
+   "corrected": 4,
+   "disputed": 0,
+   "corrected_to": {
+    "other": 2,
+    "no attacker: operator harm or model failure (misplaced record)": 2
+   }
+  },
+  {
+   "dim": "ai_role",
+   "value": "synthetic audio/voice",
+   "how": "text rule",
+   "reviewed": 20,
+   "correct": 14,
+   "corrected": 6,
+   "disputed": 0,
+   "corrected_to": {
+    "synthetic video": 6
+   }
+  },
+  {
+   "dim": "ai_role",
+   "value": "synthetic image",
+   "how": "corpus label",
+   "reviewed": 2,
+   "correct": 1,
+   "corrected": 1,
+   "disputed": 0,
+   "corrected_to": {
+    "no attacker: operator harm or model failure (misplaced record)": 1
+   }
+  },
+  {
+   "dim": "ai_role",
+   "value": "synthetic image",
+   "how": "text rule",
+   "reviewed": 20,
+   "correct": 15,
+   "corrected": 5,
+   "disputed": 0,
+   "corrected_to": {
+    "no attacker: operator harm or model failure (misplaced record)": 2,
+    "deepfake, medium not stated": 2,
+    "none: conventional exploit record misplaced in WITH-AI": 1
+   }
+  },
+  {
+   "dim": "ai_role",
+   "value": "synthetic video",
+   "how": "text rule",
+   "reviewed": 20,
+   "correct": 19,
+   "corrected": 1,
+   "disputed": 0,
+   "corrected_to": {
+    "deepfake, medium not stated": 1
+   }
+  },
+  {
+   "dim": "entry_point",
+   "value": "adversarial input to a classifier",
+   "how": "corpus label",
+   "reviewed": 20,
+   "correct": 8,
+   "corrected": 12,
+   "disputed": 0,
+   "corrected_to": {
+    "no attacker: operator harm or model failure (misplaced record)": 9,
+    "indirect carrier (web/email/doc/tool output)": 1,
+    "malicious package / model / skill (supply chain)": 1,
+    "poisoned training data or model": 1
+   }
+  },
+  {
+   "dim": "entry_point",
+   "value": "adversarial input to a classifier",
+   "how": "text rule",
+   "reviewed": 20,
+   "correct": 16,
+   "corrected": 4,
+   "disputed": 0,
+   "corrected_to": {
+    "via the agent's tools or sandbox": 2,
+    "direct prompt by the user": 1,
+    "poisoned training data or model": 1
+   }
+  },
+  {
+   "dim": "entry_point",
+   "value": "direct prompt by the user",
+   "how": "text rule",
+   "reviewed": 20,
+   "correct": 8,
+   "corrected": 12,
+   "disputed": 0,
+   "corrected_to": {
+    "exploit of a conventional software vulnerability": 4,
+    "indirect carrier (web/email/doc/tool output)": 3,
+    "prompt injection, carrier not stated": 3,
+    "no attacker: operator harm or model failure (misplaced record)": 1,
+    "other": 1
+   }
+  },
+  {
+   "dim": "entry_point",
+   "value": "exploit of a conventional software vulnerability",
+   "how": "label-group rule",
+   "reviewed": 20,
+   "correct": 12,
+   "corrected": 8,
+   "disputed": 0,
+   "corrected_to": {
+    "no attacker: operator harm or model failure (misplaced record)": 3,
+    "exposed / misconfigured service": 2,
+    "other": 2,
+    "prompt injection, carrier not stated": 1
+   }
+  },
+  {
+   "dim": "entry_point",
+   "value": "exposed / misconfigured service",
+   "how": "text rule",
+   "reviewed": 20,
+   "correct": 10,
+   "corrected": 10,
+   "disputed": 0,
+   "corrected_to": {
+    "exploit of a conventional software vulnerability": 8,
+    "no attacker: operator harm or model failure (misplaced record)": 1,
+    "indirect carrier (web/email/doc/tool output)": 1
+   }
+  },
+  {
+   "dim": "entry_point",
+   "value": "indirect carrier (web/email/doc/tool output)",
+   "how": "corpus label",
+   "reviewed": 1,
+   "correct": 1,
+   "corrected": 0,
+   "disputed": 0,
+   "corrected_to": {}
+  },
+  {
+   "dim": "entry_point",
+   "value": "indirect carrier (web/email/doc/tool output)",
+   "how": "text rule",
+   "reviewed": 20,
+   "correct": 13,
+   "corrected": 7,
+   "disputed": 0,
+   "corrected_to": {
+    "exploit of a conventional software vulnerability": 3,
+    "via the agent's tools or sandbox": 2,
+    "prompt injection, carrier not stated": 1,
+    "poisoned training data or model": 1
+   }
+  },
+  {
+   "dim": "entry_point",
+   "value": "malicious package / model / skill (supply chain)",
+   "how": "corpus label",
+   "reviewed": 20,
+   "correct": 16,
+   "corrected": 3,
+   "disputed": 1,
+   "corrected_to": {
+    "poisoned training data or model": 2,
+    "other": 1
+   }
+  },
+  {
+   "dim": "entry_point",
+   "value": "malicious package / model / skill (supply chain)",
+   "how": "text rule",
+   "reviewed": 20,
+   "correct": 17,
+   "corrected": 2,
+   "disputed": 1,
+   "corrected_to": {
+    "other": 1,
+    "poisoned training data or model": 1
+   }
+  },
+  {
+   "dim": "entry_point",
+   "value": "poisoned training data or model",
+   "how": "label-group rule",
+   "reviewed": 20,
+   "correct": 10,
+   "corrected": 10,
+   "disputed": 0,
+   "corrected_to": {
+    "no attacker: operator harm or model failure (misplaced record)": 6,
+    "malicious package / model / skill (supply chain)": 2,
+    "other": 1,
+    "exploit of a conventional software vulnerability": 1
+   }
+  },
+  {
+   "dim": "entry_point",
+   "value": "prompt injection, carrier not stated",
+   "how": "corpus label",
+   "reviewed": 20,
+   "correct": 7,
+   "corrected": 13,
+   "disputed": 0,
+   "corrected_to": {
+    "no attacker: operator harm or model failure (misplaced record)": 5,
+    "indirect carrier (web/email/doc/tool output)": 3,
+    "exploit of a conventional software vulnerability": 3,
+    "direct prompt by the user": 2
+   }
+  },
+  {
+   "dim": "entry_point",
+   "value": "query access to the model (extraction / inference)",
+   "how": "label-group rule",
+   "reviewed": 11,
+   "correct": 9,
+   "corrected": 2,
+   "disputed": 0,
+   "corrected_to": {
+    "other": 1,
+    "no attacker: operator harm or model failure (misplaced record)": 1
+   }
+  },
+  {
+   "dim": "entry_point",
+   "value": "stolen or leaked credential",
+   "how": "text rule",
+   "reviewed": 20,
+   "correct": 3,
+   "corrected": 17,
+   "disputed": 0,
+   "corrected_to": {
+    "exploit of a conventional software vulnerability": 9,
+    "exposed / misconfigured service": 2,
+    "via the agent's tools or sandbox": 2,
+    "prompt injection, carrier not stated": 1,
+    "malicious package / model / skill (supply chain)": 1,
+    "adversarial input to a classifier": 1,
+    "other": 1
+   }
+  },
+  {
+   "dim": "entry_point",
+   "value": "via the agent's tools or sandbox",
+   "how": "label-group rule",
+   "reviewed": 20,
+   "correct": 8,
+   "corrected": 12,
+   "disputed": 0,
+   "corrected_to": {
+    "exploit of a conventional software vulnerability": 5,
+    "other": 4,
+    "direct prompt by the user": 2,
+    "no attacker: operator harm or model failure (misplaced record)": 1
+   }
+  },
+  {
+   "dim": "objective",
+   "value": "defamation / impersonation of a person",
+   "how": "text rule",
+   "reviewed": 20,
+   "correct": 4,
+   "corrected": 15,
+   "disputed": 1,
+   "corrected_to": {
+    "intrusion / cyber operation": 9,
+    "public deception, not political (hoax, fake news, clickbait)": 2,
+    "non-consensual / abuse imagery": 1,
+    "financial fraud / extortion": 1,
+    "no attacker: operator harm or model failure (misplaced record)": 1,
+    "political / influence": 1
+   }
+  },
+  {
+   "dim": "objective",
+   "value": "financial fraud / extortion",
+   "how": "text rule",
+   "reviewed": 20,
+   "correct": 20,
+   "corrected": 0,
+   "disputed": 0,
+   "corrected_to": {}
+  },
+  {
+   "dim": "objective",
+   "value": "intrusion / cyber operation",
+   "how": "text rule",
+   "reviewed": 20,
+   "correct": 15,
+   "corrected": 4,
+   "disputed": 1,
+   "corrected_to": {
+    "no attacker: operator harm or model failure (misplaced record)": 2,
+    "political / influence": 2
+   }
+  },
+  {
+   "dim": "objective",
+   "value": "non-consensual / abuse imagery",
+   "how": "corpus label",
+   "reviewed": 3,
+   "correct": 1,
+   "corrected": 2,
+   "disputed": 0,
+   "corrected_to": {
+    "no attacker: operator harm or model failure (misplaced record)": 2
+   }
+  },
+  {
+   "dim": "objective",
+   "value": "non-consensual / abuse imagery",
+   "how": "text rule",
+   "reviewed": 20,
+   "correct": 14,
+   "corrected": 5,
+   "disputed": 1,
+   "corrected_to": {
+    "no attacker: operator harm or model failure (misplaced record)": 5
+   }
+  },
+  {
+   "dim": "objective",
+   "value": "political / influence",
+   "how": "text rule",
+   "reviewed": 20,
+   "correct": 17,
+   "corrected": 3,
+   "disputed": 0,
+   "corrected_to": {
+    "intrusion / cyber operation": 2,
+    "defamation / impersonation of a person": 1
+   }
+  },
+  {
+   "dim": "target",
+   "value": "ML/LLM framework or serving library",
+   "how": "text rule",
+   "reviewed": 19,
+   "correct": 18,
+   "corrected": 1,
+   "disputed": 0,
+   "corrected_to": {
+    "other": 1
+   }
+  },
+  {
+   "dim": "target",
+   "value": "RAG / vector / memory store",
+   "how": "text rule",
+   "reviewed": 10,
+   "correct": 8,
+   "corrected": 2,
+   "disputed": 0,
+   "corrected_to": {
+    "model hub / training pipeline / weights": 1,
+    "a model itself (vision, speech or text model attacked directly)": 1
+   }
+  },
+  {
+   "dim": "target",
+   "value": "agent / copilot / coding assistant / MCP",
+   "how": "text rule",
+   "reviewed": 20,
+   "correct": 17,
+   "corrected": 3,
+   "disputed": 0,
+   "corrected_to": {
+    "a non-AI application with an AI feature (web app, CMS plugin, SaaS)": 1,
+    "RAG / vector / memory store": 1,
+    "consumer chatbot / hosted LLM app": 1
+   }
+  },
+  {
+   "dim": "target",
+   "value": "consumer chatbot / hosted LLM app",
+   "how": "text rule",
+   "reviewed": 20,
+   "correct": 5,
+   "corrected": 15,
+   "disputed": 0,
+   "corrected_to": {
+    "no attacker: operator harm or model failure (misplaced record)": 6,
+    "a model itself (vision, speech or text model attacked directly)": 4,
+    "agent / copilot / coding assistant / MCP": 3,
+    "ML/LLM framework or serving library": 1,
+    "model hub / training pipeline / weights": 1
+   }
+  },
+  {
+   "dim": "target",
+   "value": "detection / classification model",
+   "how": "text rule",
+   "reviewed": 20,
+   "correct": 10,
+   "corrected": 9,
+   "disputed": 1,
+   "corrected_to": {
+    "other": 5,
+    "no attacker: operator harm or model failure (misplaced record)": 3,
+    "model hub / training pipeline / weights": 1
+   }
+  },
+  {
+   "dim": "target",
+   "value": "model hub / training pipeline / weights",
+   "how": "text rule",
+   "reviewed": 20,
+   "correct": 10,
+   "corrected": 10,
+   "disputed": 0,
+   "corrected_to": {
+    "no attacker: operator harm or model failure (misplaced record)": 3,
+    "a model itself (vision, speech or text model attacked directly)": 2,
+    "other (tracker stub, no system named)": 1,
+    "ML/LLM framework or serving library": 1,
+    "RAG / vector / memory store": 1,
+    "agent / copilot / coding assistant / MCP": 1,
+    "detection / classification model": 1
+   }
+  },
+  {
+   "dim": "target",
+   "value": "other (tracker stub, no system named)",
+   "how": "label-group rule",
+   "reviewed": 20,
+   "correct": 8,
+   "corrected": 12,
+   "disputed": 0,
+   "corrected_to": {
+    "no attacker: operator harm or model failure (misplaced record)": 10,
+    "consumer chatbot / hosted LLM app": 1,
+    "agent / copilot / coding assistant / MCP": 1
+   }
+  }
+ ],
+ "corrections": [
+  {
+   "id": "INC-00045",
+   "dim": "ai_role",
+   "from": "none: conventional exploit record misplaced in WITH-AI",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "Advocacy over AI-generated children's videos; no adversary described."
+  },
+  {
+   "id": "INC-00283",
+   "dim": "ai_role",
+   "from": "none: conventional exploit record misplaced in WITH-AI",
+   "to": "other",
+   "note": "AI-driven attack trend report; not a software bug; medium unstated."
+  },
+  {
+   "id": "INC-00300",
+   "dim": "ai_role",
+   "from": "none: conventional exploit record misplaced in WITH-AI",
+   "to": "other",
+   "note": "Fraud-trend report; not a software bug; medium unstated."
+  },
+  {
+   "id": "INC-00420",
+   "dim": "ai_role",
+   "from": "generated text (phishing / lures / disinformation)",
+   "to": "deepfake, medium not stated",
+   "note": "Title says deepfakes; disinformation is the purpose, not LLM text."
+  },
+  {
+   "id": "INC-00509",
+   "dim": "ai_role",
+   "from": "deepfake, medium not stated",
+   "to": "synthetic video",
+   "note": "Title says AI-generated videos."
+  },
+  {
+   "id": "INC-00538",
+   "dim": "ai_role",
+   "from": "none: conventional exploit record misplaced in WITH-AI",
+   "to": "other",
+   "note": "Commentary on AI-powered attacks; not a software bug; medium unstated."
+  },
+  {
+   "id": "INC-00720",
+   "dim": "ai_role",
+   "from": "none: conventional exploit record misplaced in WITH-AI",
+   "to": "other",
+   "note": "Defensive AI blocking fraud; attacker AI unspecified; not a software bug."
+  },
+  {
+   "id": "INC-00765",
+   "dim": "ai_role",
+   "from": "reconnaissance / planning / orchestration",
+   "to": "other",
+   "note": "Autonomous weapons development, not an attack operation; no recon or orchestration stated."
+  },
+  {
+   "id": "INC-00852",
+   "dim": "ai_role",
+   "from": "none: conventional exploit record misplaced in WITH-AI",
+   "to": "synthetic video",
+   "note": "Title states AI-generated video; no software exploit."
+  },
+  {
+   "id": "INC-02336",
+   "dim": "ai_role",
+   "from": "none: conventional exploit record misplaced in WITH-AI",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "Judge misusing ChatGPT to draft ruling; no adversary, not an exploit."
+  },
+  {
+   "id": "INC-02561",
+   "dim": "ai_role",
+   "from": "generated text (phishing / lures / disinformation)",
+   "to": "synthetic video",
+   "note": "Title says fake AI videos; named systems are video generators."
+  },
+  {
+   "id": "INC-02960",
+   "dim": "ai_role",
+   "from": "synthetic audio/voice",
+   "to": "synthetic video",
+   "note": "Executive deepfakes on a Zoom call are live video-call face swaps."
+  },
+  {
+   "id": "INC-03024",
+   "dim": "ai_role",
+   "from": "generated text (phishing / lures / disinformation)",
+   "to": "synthetic video",
+   "note": "Title says AI-generated video; phishing is the use."
+  },
+  {
+   "id": "INC-03058",
+   "dim": "ai_role",
+   "from": "synthetic audio/voice",
+   "to": "synthetic video",
+   "note": "Title says deepfake video; synthetic audio is a component of it."
+  },
+  {
+   "id": "INC-03072",
+   "dim": "ai_role",
+   "from": "synthetic audio/voice",
+   "to": "synthetic video",
+   "note": "Title says AI-manipulated videos."
+  },
+  {
+   "id": "INC-03073",
+   "dim": "ai_role",
+   "from": "deepfake, medium not stated",
+   "to": "synthetic video",
+   "note": "Title says AI-manipulated videos."
+  },
+  {
+   "id": "INC-03099",
+   "dim": "ai_role",
+   "from": "synthetic audio/voice",
+   "to": "synthetic video",
+   "note": "Title says deepfake videos."
+  },
+  {
+   "id": "INC-03249",
+   "dim": "ai_role",
+   "from": "generated or assisted code (malware / tooling)",
+   "to": "generated text (phishing / lures / disinformation)",
+   "note": "Call-centre scripts are scam dialogue, not code."
+  },
+  {
+   "id": "INC-03484",
+   "dim": "ai_role",
+   "from": "generated text (phishing / lures / disinformation)",
+   "to": "synthetic video",
+   "note": "Video-conference deepfake avatars with voice synthesis; not LLM-written text."
+  },
+  {
+   "id": "INC-03543",
+   "dim": "ai_role",
+   "from": "none: conventional exploit record misplaced in WITH-AI",
+   "to": "deepfake, medium not stated",
+   "note": "Celebrity deepfake investment scam; no exploit; medium not specified."
+  },
+  {
+   "id": "INC-03546",
+   "dim": "ai_role",
+   "from": "none: conventional exploit record misplaced in WITH-AI",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "ChatGPT fabricated citations; no adversary, not a software exploit."
+  },
+  {
+   "id": "INC-03688",
+   "dim": "ai_role",
+   "from": "synthetic video",
+   "to": "deepfake, medium not stated",
+   "note": "Deepfake and face swapping named; neither video nor still image stated."
+  },
+  {
+   "id": "INC-03708",
+   "dim": "ai_role",
+   "from": "deepfake, medium not stated",
+   "to": "synthetic image",
+   "note": "Fake ID documents are generated images; no voice or video involved."
+  },
+  {
+   "id": "INC-03713",
+   "dim": "ai_role",
+   "from": "none: conventional exploit record misplaced in WITH-AI",
+   "to": "deepfake, medium not stated",
+   "note": "Title says deepfake, medium not stated; not a software exploit."
+  },
+  {
+   "id": "INC-04123",
+   "dim": "ai_role",
+   "from": "synthetic audio/voice",
+   "to": "synthetic video",
+   "note": "Title says deepfake video; audio tag is secondary."
+  },
+  {
+   "id": "INC-04420",
+   "dim": "ai_role",
+   "from": "synthetic image",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "Deployers named are the platform and the technology; no adversary in text."
+  },
+  {
+   "id": "INC-04476",
+   "dim": "ai_role",
+   "from": "deepfake, medium not stated",
+   "to": "other",
+   "note": "Fraud sold fake 'AI' coaching; no AI output generated at all."
+  },
+  {
+   "id": "INC-04579",
+   "dim": "ai_role",
+   "from": "deepfake, medium not stated",
+   "to": "synthetic video",
+   "note": "A documentary ('doc') is video; the deepfake is embedded in it."
+  },
+  {
+   "id": "INC-04597",
+   "dim": "ai_role",
+   "from": "deepfake, medium not stated",
+   "to": "synthetic image",
+   "note": "System is Midjourney, an image generator."
+  },
+  {
+   "id": "INC-04608",
+   "dim": "ai_role",
+   "from": "deepfake, medium not stated",
+   "to": "synthetic image",
+   "note": "System is Midjourney, an image generator; no video or audio named."
+  },
+  {
+   "id": "INC-04887",
+   "dim": "ai_role",
+   "from": "synthetic image",
+   "to": "deepfake, medium not stated",
+   "note": "'Nude deepfakes' with neither image nor video stated."
+  },
+  {
+   "id": "INC-04942",
+   "dim": "ai_role",
+   "from": "none: conventional exploit record misplaced in WITH-AI",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "Professor misusing ChatGPT on students; no adversary, not a software exploit."
+  },
+  {
+   "id": "INC-05148",
+   "dim": "ai_role",
+   "from": "synthetic image",
+   "to": "deepfake, medium not stated",
+   "note": "'Image' describes her advocacy, not the deepfake; deepfake medium unstated."
+  },
+  {
+   "id": "INC-05175",
+   "dim": "ai_role",
+   "from": "deepfake, medium not stated",
+   "to": "synthetic video",
+   "note": "Technology line says Video-to-video and Synthesia; medium is video."
+  },
+  {
+   "id": "INC-05194",
+   "dim": "ai_role",
+   "from": "none: conventional exploit record misplaced in WITH-AI",
+   "to": "synthetic image",
+   "note": "Stable Diffusion image generator used for celebrity porn; no software exploit."
+  },
+  {
+   "id": "INC-05382",
+   "dim": "ai_role",
+   "from": "synthetic image",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "AI Dungeon is a text game; title blames filter upgrade, no adversary."
+  },
+  {
+   "id": "INC-06498",
+   "dim": "ai_role",
+   "from": "generated text (phishing / lures / disinformation)",
+   "to": "deepfake, medium not stated",
+   "note": "Title says deepfake AI; phishing is the use, medium not given."
+  },
+  {
+   "id": "INC-06499",
+   "dim": "ai_role",
+   "from": "generated or assisted code (malware / tooling)",
+   "to": "deepfake, medium not stated",
+   "note": "Title says deepfake AI; ransomware is the scheme, not AI-written code."
+  },
+  {
+   "id": "INC-07264",
+   "dim": "ai_role",
+   "from": "generated text (phishing / lures / disinformation)",
+   "to": "deepfake, medium not stated",
+   "note": "It is a deepfake, not written text; image or video not stated."
+  },
+  {
+   "id": "INC-07819",
+   "dim": "ai_role",
+   "from": "synthetic image",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "Title frames operator's legal fallout over its model's output; no adversary or medium named."
+  },
+  {
+   "id": "INC-07933",
+   "dim": "ai_role",
+   "from": "none: conventional exploit record misplaced in WITH-AI",
+   "to": "other",
+   "note": "Overview of AI-driven attacks; not a software bug; medium unstated."
+  },
+  {
+   "id": "INC-08134",
+   "dim": "ai_role",
+   "from": "none: conventional exploit record misplaced in WITH-AI",
+   "to": "other",
+   "note": "AI-driven attack surge report; not a software bug; medium unstated."
+  },
+  {
+   "id": "INC-08176",
+   "dim": "ai_role",
+   "from": "synthetic audio/voice",
+   "to": "synthetic video",
+   "note": "Title says AI-generated video."
+  },
+  {
+   "id": "INC-08177",
+   "dim": "ai_role",
+   "from": "reconnaissance / planning / orchestration",
+   "to": "other",
+   "note": "Identity fraud with deepfake and LLM tags; AI did not plan or orchestrate."
+  },
+  {
+   "id": "INC-09009",
+   "dim": "ai_role",
+   "from": "generated text (phishing / lures / disinformation)",
+   "to": "none: conventional exploit record misplaced in WITH-AI",
+   "note": "CSRF vulnerability disclosure; no AI-generated content involved."
+  },
+  {
+   "id": "INC-09254",
+   "dim": "ai_role",
+   "from": "synthetic image",
+   "to": "none: conventional exploit record misplaced in WITH-AI",
+   "note": "IDOR vulnerability disclosure; no AI output at all."
+  },
+  {
+   "id": "INC-09266",
+   "dim": "ai_role",
+   "from": "generated text (phishing / lures / disinformation)",
+   "to": "none: conventional exploit record misplaced in WITH-AI",
+   "note": "Stored HTML injection CVE; no AI output."
+  },
+  {
+   "id": "INC-09990",
+   "dim": "ai_role",
+   "from": "generated text (phishing / lures / disinformation)",
+   "to": "none: conventional exploit record misplaced in WITH-AI",
+   "note": "Open-redirect CVE in Taguette; no AI-generated content at all."
+  },
+  {
+   "id": "INC-13175",
+   "dim": "ai_role",
+   "from": "none: conventional exploit record misplaced in WITH-AI",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "AI content flood degrading a feed; no adversary and no software exploit described."
+  },
+  {
+   "id": "INC-14300",
+   "dim": "ai_role",
+   "from": "none: conventional exploit record misplaced in WITH-AI",
+   "to": "other",
+   "note": "Regulator warning on AI-enabled attacks; not a software bug; medium unstated."
+  },
+  {
+   "id": "INC-14351",
+   "dim": "ai_role",
+   "from": "none: conventional exploit record misplaced in WITH-AI",
+   "to": "other",
+   "note": "AI-powered fraud network, not a software bug; medium unstated."
+  },
+  {
+   "id": "INC-14378",
+   "dim": "ai_role",
+   "from": "none: conventional exploit record misplaced in WITH-AI",
+   "to": "other",
+   "note": "Report on AI-driven attacks, not a software bug; AI medium unstated."
+  },
+  {
+   "id": "INC-14396",
+   "dim": "ai_role",
+   "from": "none: conventional exploit record misplaced in WITH-AI",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "Regulatory advisory to banks; no exploit, no incident, no adversary described."
+  },
+  {
+   "id": "INC-14552",
+   "dim": "ai_role",
+   "from": "none: conventional exploit record misplaced in WITH-AI",
+   "to": "synthetic video",
+   "note": "Title says AI-generated video; not a software exploit."
+  },
+  {
+   "id": "INC-14689",
+   "dim": "ai_role",
+   "from": "reconnaissance / planning / orchestration",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "Autonomous vehicle safety concern; no adversary described."
+  },
+  {
+   "id": "INC-14730",
+   "dim": "ai_role",
+   "from": "reconnaissance / planning / orchestration",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "Regulator warning on agentic AI risks; no adversary described."
+  },
+  {
+   "id": "INC-00042",
+   "dim": "entry_point",
+   "from": "adversarial input to a classifier",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "General fears piece; no attack on an AI system described."
+  },
+  {
+   "id": "INC-00111",
+   "dim": "entry_point",
+   "from": "prompt injection, carrier not stated",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "Sycophancy study; no adversary."
+  },
+  {
+   "id": "INC-00178",
+   "dim": "entry_point",
+   "from": "exploit of a conventional software vulnerability",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "Operator privacy-law breach by plate readers; no adversary described."
+  },
+  {
+   "id": "INC-00335",
+   "dim": "entry_point",
+   "from": "adversarial input to a classifier",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "Deployment news; no adversary described."
+  },
+  {
+   "id": "INC-00490",
+   "dim": "entry_point",
+   "from": "exploit of a conventional software vulnerability",
+   "to": "other",
+   "note": "Scam against people via AI-generated lure; attacker exists, no listed foothold fits."
+  },
+  {
+   "id": "INC-00643",
+   "dim": "entry_point",
+   "from": "stolen or leaked credential",
+   "to": "exploit of a conventional software vulnerability",
+   "note": "'Minimal credentials' means low privilege; vulnerabilities enable lateral movement."
+  },
+  {
+   "id": "INC-00673",
+   "dim": "entry_point",
+   "from": "prompt injection, carrier not stated",
+   "to": "exploit of a conventional software vulnerability",
+   "note": "KQL injection from unsanitised table_name: a code flaw; prompt injection only parenthetical."
+  },
+  {
+   "id": "INC-00735",
+   "dim": "entry_point",
+   "from": "direct prompt by the user",
+   "to": "other",
+   "note": "Multi-theme threat report; jailbreaks are one of several, no single entry point."
+  },
+  {
+   "id": "INC-00746",
+   "dim": "entry_point",
+   "from": "exploit of a conventional software vulnerability",
+   "to": "prompt injection, carrier not stated",
+   "note": "Entry is a single malicious prompt, carrier unstated; runtime is the mechanism."
+  },
+  {
+   "id": "INC-00749",
+   "dim": "entry_point",
+   "from": "poisoned training data or model",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "Chatbot-linked deaths; no adversary described."
+  },
+  {
+   "id": "INC-00788",
+   "dim": "entry_point",
+   "from": "prompt injection, carrier not stated",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "Regulatory restriction amid concerns; a policy story with no attack described."
+  },
+  {
+   "id": "INC-00814",
+   "dim": "entry_point",
+   "from": "stolen or leaked credential",
+   "to": "malicious package / model / skill (supply chain)",
+   "note": "Source leak is not a credential; spreading malware is the entry."
+  },
+  {
+   "id": "INC-01153",
+   "dim": "entry_point",
+   "from": "exposed / misconfigured service",
+   "to": "exploit of a conventional software vulnerability",
+   "note": "SSRF via unvalidated ha_url parameter; code flaw, not exposure."
+  },
+  {
+   "id": "INC-01157",
+   "dim": "entry_point",
+   "from": "via the agent's tools or sandbox",
+   "to": "other",
+   "note": "Attacker-operated agent attacks CI/CD; no victim AI system."
+  },
+  {
+   "id": "INC-01179",
+   "dim": "entry_point",
+   "from": "direct prompt by the user",
+   "to": "indirect carrier (web/email/doc/tool output)",
+   "note": "Instructions embedded in images the model processes, not typed by user."
+  },
+  {
+   "id": "INC-01390",
+   "dim": "entry_point",
+   "from": "exploit of a conventional software vulnerability",
+   "to": "exposed / misconfigured service",
+   "note": "Listens on 0.0.0.0 with no authentication; that is the reach."
+  },
+  {
+   "id": "INC-01471",
+   "dim": "entry_point",
+   "from": "exposed / misconfigured service",
+   "to": "exploit of a conventional software vulnerability",
+   "note": "Content-type confusion RCE is a code flaw, not a misconfiguration."
+  },
+  {
+   "id": "INC-01513",
+   "dim": "entry_point",
+   "from": "stolen or leaked credential",
+   "to": "exploit of a conventional software vulnerability",
+   "note": "Unredacted logging flaw; credential disclosure is the outcome, not the foothold."
+  },
+  {
+   "id": "INC-01671",
+   "dim": "entry_point",
+   "from": "exposed / misconfigured service",
+   "to": "exploit of a conventional software vulnerability",
+   "note": "Shell metacharacter injection in execute_command: a code flaw, not a misconfiguration."
+  },
+  {
+   "id": "INC-01674",
+   "dim": "entry_point",
+   "from": "direct prompt by the user",
+   "to": "exploit of a conventional software vulnerability",
+   "note": "shell command injection via hooks configuration and hooks.json; no prompt or chat input"
+  },
+  {
+   "id": "INC-01748",
+   "dim": "entry_point",
+   "from": "prompt injection, carrier not stated",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "Survey on governance gaps; no attack or adversary described."
+  },
+  {
+   "id": "INC-01888",
+   "dim": "entry_point",
+   "from": "indirect carrier (web/email/doc/tool output)",
+   "to": "exploit of a conventional software vulnerability",
+   "note": "DNS rebinding against local server; site is not content the AI reads."
+  },
+  {
+   "id": "INC-01926",
+   "dim": "entry_point",
+   "from": "poisoned training data or model",
+   "to": "other",
+   "note": "Chip smuggling and theft; no poisoning described."
+  },
+  {
+   "id": "INC-02060",
+   "dim": "entry_point",
+   "from": "exposed / misconfigured service",
+   "to": "exploit of a conventional software vulnerability",
+   "note": "SQL injection; unauthenticated-via-HTTP is CVSS boilerplate, not misconfiguration."
+  },
+  {
+   "id": "INC-02134",
+   "dim": "entry_point",
+   "from": "direct prompt by the user",
+   "to": "exploit of a conventional software vulnerability",
+   "note": "Command injection via unsanitized tool parameters; no prompt described."
+  },
+  {
+   "id": "INC-02232",
+   "dim": "entry_point",
+   "from": "exploit of a conventional software vulnerability",
+   "to": "other",
+   "note": "AI used as surveillance tooling; no attack on an AI system described."
+  },
+  {
+   "id": "INC-02311",
+   "dim": "entry_point",
+   "from": "exploit of a conventional software vulnerability",
+   "to": "exposed / misconfigured service",
+   "note": "Unauthenticated SSE MCP service; supplier says auth is not mandatory."
+  },
+  {
+   "id": "INC-02326",
+   "dim": "entry_point",
+   "from": "malicious package / model / skill (supply chain)",
+   "to": "other",
+   "note": "Risk report naming model theft, supply chain and chatbot attacks; no single entry."
+  },
+  {
+   "id": "INC-02475",
+   "dim": "entry_point",
+   "from": "direct prompt by the user",
+   "to": "prompt injection, carrier not stated",
+   "note": "'attacker who had already achieved prompt injection or other control'; carrier not stated"
+  },
+  {
+   "id": "INC-02552",
+   "dim": "entry_point",
+   "from": "direct prompt by the user",
+   "to": "prompt injection, carrier not stated",
+   "note": "Says prompt injection only; carrier not given in the text."
+  },
+  {
+   "id": "INC-02686",
+   "dim": "entry_point",
+   "from": "direct prompt by the user",
+   "to": "indirect carrier (web/email/doc/tool output)",
+   "note": "prompt hidden in URL fragment is read by victim's AI browser; attacker-crafted link"
+  },
+  {
+   "id": "INC-02693",
+   "dim": "entry_point",
+   "from": "prompt injection, carrier not stated",
+   "to": "direct prompt by the user",
+   "note": "'A single prompt' disguised as policy file; typed jailbreak."
+  },
+  {
+   "id": "INC-02843",
+   "dim": "entry_point",
+   "from": "direct prompt by the user",
+   "to": "exploit of a conventional software vulnerability",
+   "note": "XSS in chat message rendering escalating to RCE."
+  },
+  {
+   "id": "INC-02863",
+   "dim": "entry_point",
+   "from": "prompt injection, carrier not stated",
+   "to": "direct prompt by the user",
+   "note": "Users inject prompts themselves to get policy-violating answers; no outside content."
+  },
+  {
+   "id": "INC-02913",
+   "dim": "entry_point",
+   "from": "prompt injection, carrier not stated",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "benchmark evaluation of hazardous knowledge; no adversary or attack described"
+  },
+  {
+   "id": "INC-03005",
+   "dim": "entry_point",
+   "from": "via the agent's tools or sandbox",
+   "to": "direct prompt by the user",
+   "note": "Accounts asked ChatGPT directly to draft proposals; no tool abuse."
+  },
+  {
+   "id": "INC-03020",
+   "dim": "entry_point",
+   "from": "via the agent's tools or sandbox",
+   "to": "other",
+   "note": "Agent operator alleged to log in disguised as human; adversary exists, no listed foothold fits."
+  },
+  {
+   "id": "INC-03037",
+   "dim": "entry_point",
+   "from": "indirect carrier (web/email/doc/tool output)",
+   "to": "poisoned training data or model",
+   "note": "pre-training poisoning with ~250 poisoned documents; training-data poisoning"
+  },
+  {
+   "id": "INC-03248",
+   "dim": "entry_point",
+   "from": "via the agent's tools or sandbox",
+   "to": "other",
+   "note": "Attacker used LLMs as tooling against AWS; no AI system attacked."
+  },
+  {
+   "id": "INC-03262",
+   "dim": "entry_point",
+   "from": "malicious package / model / skill (supply chain)",
+   "to": "poisoned training data or model",
+   "note": "model backdoored to respond to triggers; poisoning, no distributed malicious artefact stated"
+  },
+  {
+   "id": "INC-03310",
+   "dim": "entry_point",
+   "from": "prompt injection, carrier not stated",
+   "to": "indirect carrier (web/email/doc/tool output)",
+   "note": "Attacker text embedded in an image overrides the user's own instruction."
+  },
+  {
+   "id": "INC-03315",
+   "dim": "entry_point",
+   "from": "via the agent's tools or sandbox",
+   "to": "other",
+   "note": "AI agent is the attacker against cloud environments; no AI system is targeted"
+  },
+  {
+   "id": "INC-03334",
+   "dim": "entry_point",
+   "from": "exposed / misconfigured service",
+   "to": "exploit of a conventional software vulnerability",
+   "note": "Command injection flaw, not an exposed or misconfigured service."
+  },
+  {
+   "id": "INC-03445",
+   "dim": "entry_point",
+   "from": "adversarial input to a classifier",
+   "to": "direct prompt by the user",
+   "note": "Jailbreak suffixes appended to prompts to LLMs, not a classifier."
+  },
+  {
+   "id": "INC-03573",
+   "dim": "entry_point",
+   "from": "via the agent's tools or sandbox",
+   "to": "direct prompt by the user",
+   "note": "Adversaries prompted Claude to build lures; no tool or sandbox abuse."
+  },
+  {
+   "id": "INC-03771",
+   "dim": "entry_point",
+   "from": "malicious package / model / skill (supply chain)",
+   "to": "other",
+   "note": "fake AI sites lure victims to malware; no AI system attacked, not supply chain"
+  },
+  {
+   "id": "INC-03915",
+   "dim": "entry_point",
+   "from": "adversarial input to a classifier",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "Misidentification by deployed system; no adversary."
+  },
+  {
+   "id": "INC-04304",
+   "dim": "entry_point",
+   "from": "query access to the model (extraction / inference)",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "Analysis of user self-disclosure; no adversary or inference attack."
+  },
+  {
+   "id": "INC-04312",
+   "dim": "entry_point",
+   "from": "adversarial input to a classifier",
+   "to": "poisoned training data or model",
+   "note": "Backdoor on a diffusion model is poisoning, not classifier evasion."
+  },
+  {
+   "id": "INC-04366",
+   "dim": "entry_point",
+   "from": "adversarial input to a classifier",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "False positive by live facial recognition; no adversary."
+  },
+  {
+   "id": "INC-04483",
+   "dim": "entry_point",
+   "from": "malicious package / model / skill (supply chain)",
+   "to": "poisoned training data or model",
+   "note": "Poisoning preference data used in RLHF training."
+  },
+  {
+   "id": "INC-04502",
+   "dim": "entry_point",
+   "from": "poisoned training data or model",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "Operator's pirated training corpus; no adversary."
+  },
+  {
+   "id": "INC-04506",
+   "dim": "entry_point",
+   "from": "poisoned training data or model",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "Unfiltered corpus contents; no adversary poisoned anything."
+  },
+  {
+   "id": "INC-04739",
+   "dim": "entry_point",
+   "from": "stolen or leaked credential",
+   "to": "other",
+   "note": "Leaked model weights via a licensee are not a credential."
+  },
+  {
+   "id": "INC-04792",
+   "dim": "entry_point",
+   "from": "adversarial input to a classifier",
+   "to": "malicious package / model / skill (supply chain)",
+   "note": "Fake org accounts let researcher replace uploaded models with malicious versions."
+  },
+  {
+   "id": "INC-04804",
+   "dim": "entry_point",
+   "from": "malicious package / model / skill (supply chain)",
+   "to": "poisoned training data or model",
+   "note": "backdoor implanted by poisoned prompt-tuning optimisation; no distributed package or model stated"
+  },
+  {
+   "id": "INC-04961",
+   "dim": "entry_point",
+   "from": "prompt injection, carrier not stated",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "Benchmark release about a detector domain gap; no adversary described in text."
+  },
+  {
+   "id": "INC-05049",
+   "dim": "entry_point",
+   "from": "adversarial input to a classifier",
+   "to": "indirect carrier (web/email/doc/tool output)",
+   "note": "Malicious code in shared notebook document the victim runs."
+  },
+  {
+   "id": "INC-05072",
+   "dim": "entry_point",
+   "from": "adversarial input to a classifier",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "False facial-recognition match; no adversary."
+  },
+  {
+   "id": "INC-05117",
+   "dim": "entry_point",
+   "from": "adversarial input to a classifier",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "Bias evaluation of completions; no adversary described."
+  },
+  {
+   "id": "INC-05176",
+   "dim": "entry_point",
+   "from": "adversarial input to a classifier",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "bias measurement on Winobias; no adversary, model failure"
+  },
+  {
+   "id": "INC-05370",
+   "dim": "entry_point",
+   "from": "direct prompt by the user",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "Emotion-recognition system criticised; 'prompts' means provokes, no adversary."
+  },
+  {
+   "id": "INC-05496",
+   "dim": "entry_point",
+   "from": "adversarial input to a classifier",
+   "to": "poisoned training data or model",
+   "note": "Backdoor injected into the deployed model, not an input perturbation."
+  },
+  {
+   "id": "INC-06414",
+   "dim": "entry_point",
+   "from": "stolen or leaked credential",
+   "to": "adversarial input to a classifier",
+   "note": "Fake licences and disguised selfies fooled the automated verifier; PII isn't a credential."
+  },
+  {
+   "id": "INC-06470",
+   "dim": "entry_point",
+   "from": "stolen or leaked credential",
+   "to": "exposed / misconfigured service",
+   "note": "Repo misconfigured to allow arbitrary registration; credentials were the find."
+  },
+  {
+   "id": "INC-06518",
+   "dim": "entry_point",
+   "from": "exploit of a conventional software vulnerability",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "Court ruling on welfare fraud system; no adversary."
+  },
+  {
+   "id": "INC-07257",
+   "dim": "entry_point",
+   "from": "adversarial input to a classifier",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "Moderation failure to filter content; no crafted evasion described."
+  },
+  {
+   "id": "INC-07434",
+   "dim": "entry_point",
+   "from": "via the agent's tools or sandbox",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "discriminatory screening tool; no adversary, operator harm"
+  },
+  {
+   "id": "INC-07464",
+   "dim": "entry_point",
+   "from": "exposed / misconfigured service",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "Filter and recommendation failure; no adversary named."
+  },
+  {
+   "id": "INC-07890",
+   "dim": "entry_point",
+   "from": "stolen or leaked credential",
+   "to": "prompt injection, carrier not stated",
+   "note": "Credentials are the loot; stub cites prompt-injection as vector."
+  },
+  {
+   "id": "INC-08076",
+   "dim": "entry_point",
+   "from": "prompt injection, carrier not stated",
+   "to": "indirect carrier (web/email/doc/tool output)",
+   "note": "Title names the carrier: malicious Android notifications read by Gemini."
+  },
+  {
+   "id": "INC-08115",
+   "dim": "entry_point",
+   "from": "poisoned training data or model",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "Misidentification harmed a user; 'poisoning' is literal, no adversary."
+  },
+  {
+   "id": "INC-08203",
+   "dim": "entry_point",
+   "from": "indirect carrier (web/email/doc/tool output)",
+   "to": "exploit of a conventional software vulnerability",
+   "note": "VIEW-access users fetch plaintext secrets from API endpoints; broken access control, no carrier"
+  },
+  {
+   "id": "INC-08231",
+   "dim": "entry_point",
+   "from": "prompt injection, carrier not stated",
+   "to": "exploit of a conventional software vulnerability",
+   "note": "IDOR on agent CRUD endpoints; no prompt injection described."
+  },
+  {
+   "id": "INC-08469",
+   "dim": "entry_point",
+   "from": "direct prompt by the user",
+   "to": "exploit of a conventional software vulnerability",
+   "note": "Title names SSRF from unvalidated URLs: a code flaw by the dimension rule."
+  },
+  {
+   "id": "INC-08511",
+   "dim": "entry_point",
+   "from": "stolen or leaked credential",
+   "to": "exploit of a conventional software vulnerability",
+   "note": "Entry is CWE-78 command injection in a tool call; secrets leak is the impact."
+  },
+  {
+   "id": "INC-08558",
+   "dim": "entry_point",
+   "from": "prompt injection, carrier not stated",
+   "to": "indirect carrier (web/email/doc/tool output)",
+   "note": "injection rides on webhook-triggered cron output mislabelled trusted; carrier is tool/webhook output"
+  },
+  {
+   "id": "INC-08899",
+   "dim": "entry_point",
+   "from": "stolen or leaked credential",
+   "to": "via the agent's tools or sandbox",
+   "note": "secret leak is outcome; entry is a command passed through the agent's shell tool"
+  },
+  {
+   "id": "INC-08903",
+   "dim": "entry_point",
+   "from": "via the agent's tools or sandbox",
+   "to": "exploit of a conventional software vulnerability",
+   "note": "Crafted backup bypasses LXD validation; container platform, not an agent sandbox."
+  },
+  {
+   "id": "INC-08992",
+   "dim": "entry_point",
+   "from": "adversarial input to a classifier",
+   "to": "via the agent's tools or sandbox",
+   "note": "SubprocessSandbox escape in an agent; no classifier involved."
+  },
+  {
+   "id": "INC-09485",
+   "dim": "entry_point",
+   "from": "poisoned training data or model",
+   "to": "exploit of a conventional software vulnerability",
+   "note": "Entry is IDOR in the OAuth callback; index poisoning is the outcome."
+  },
+  {
+   "id": "INC-10078",
+   "dim": "entry_point",
+   "from": "via the agent's tools or sandbox",
+   "to": "exploit of a conventional software vulnerability",
+   "note": "runc mount race; container runtime, not an agent sandbox."
+  },
+  {
+   "id": "INC-10328",
+   "dim": "entry_point",
+   "from": "indirect carrier (web/email/doc/tool output)",
+   "to": "exploit of a conventional software vulnerability",
+   "note": "CSRF from visited site to local dev server; not content an AI reads."
+  },
+  {
+   "id": "INC-10872",
+   "dim": "entry_point",
+   "from": "via the agent's tools or sandbox",
+   "to": "exploit of a conventional software vulnerability",
+   "note": "remote HTTP request to pyload endpoint triggers js2py RCE; not an AI agent sandbox"
+  },
+  {
+   "id": "INC-13198",
+   "dim": "entry_point",
+   "from": "adversarial input to a classifier",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "Legislation news; no adversary or attack."
+  },
+  {
+   "id": "INC-13274",
+   "dim": "entry_point",
+   "from": "poisoned training data or model",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "Warning about misidentification; no adversary."
+  },
+  {
+   "id": "INC-13307",
+   "dim": "entry_point",
+   "from": "direct prompt by the user",
+   "to": "indirect carrier (web/email/doc/tool output)",
+   "note": "Injection embedded in malware sample the AI analyser reads."
+  },
+  {
+   "id": "INC-13521",
+   "dim": "entry_point",
+   "from": "prompt injection, carrier not stated",
+   "to": "exploit of a conventional software vulnerability",
+   "note": "Authorization bypass in tool_access.py; prompt injection only one possible actor."
+  },
+  {
+   "id": "INC-13833",
+   "dim": "entry_point",
+   "from": "adversarial input to a classifier",
+   "to": "via the agent's tools or sandbox",
+   "note": "Sandbox escape in the agent's codeMode tool; no classifier involved."
+  },
+  {
+   "id": "INC-13838",
+   "dim": "entry_point",
+   "from": "indirect carrier (web/email/doc/tool output)",
+   "to": "prompt injection, carrier not stated",
+   "note": "Tool arguments reached via crafted prompts; carrier unstated, no email carrier."
+  },
+  {
+   "id": "INC-14191",
+   "dim": "entry_point",
+   "from": "exposed / misconfigured service",
+   "to": "exploit of a conventional software vulnerability",
+   "note": "Authorization gap for authenticated non-owner; record says no unauthenticated access."
+  },
+  {
+   "id": "INC-14258",
+   "dim": "entry_point",
+   "from": "poisoned training data or model",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "Recommendation-algorithm harm; no adversary described."
+  },
+  {
+   "id": "INC-14748",
+   "dim": "entry_point",
+   "from": "query access to the model (extraction / inference)",
+   "to": "other",
+   "note": "Electromagnetic side channel, not ordinary queries."
+  },
+  {
+   "id": "INC-14775",
+   "dim": "entry_point",
+   "from": "exploit of a conventional software vulnerability",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "AI deployment news; no adversary or attack on AI described."
+  },
+  {
+   "id": "INC-14928",
+   "dim": "entry_point",
+   "from": "poisoned training data or model",
+   "to": "malicious package / model / skill (supply chain)",
+   "note": "Training-free; backdoor rides in the chat template artifact, not data or weights."
+  },
+  {
+   "id": "INC-14930",
+   "dim": "entry_point",
+   "from": "direct prompt by the user",
+   "to": "prompt injection, carrier not stated",
+   "note": "Only says prompt injection and jailbreak; carrier not given."
+  },
+  {
+   "id": "INC-15699",
+   "dim": "entry_point",
+   "from": "stolen or leaked credential",
+   "to": "exploit of a conventional software vulnerability",
+   "note": "Missing secure-URL validation allows cleartext interception; no leaked credential."
+  },
+  {
+   "id": "INC-15793",
+   "dim": "entry_point",
+   "from": "poisoned training data or model",
+   "to": "malicious package / model / skill (supply chain)",
+   "note": "A malicious downloaded package overwrites another's resources; entry is the package."
+  },
+  {
+   "id": "INC-15862",
+   "dim": "entry_point",
+   "from": "exposed / misconfigured service",
+   "to": "exploit of a conventional software vulnerability",
+   "note": "SSRF via crafted header; code flaw, not misconfiguration."
+  },
+  {
+   "id": "INC-15866",
+   "dim": "entry_point",
+   "from": "stolen or leaked credential",
+   "to": "exploit of a conventional software vulnerability",
+   "note": "SSRF via crafted next_token is the entry; credential theft is the impact."
+  },
+  {
+   "id": "INC-15875",
+   "dim": "entry_point",
+   "from": "via the agent's tools or sandbox",
+   "to": "exploit of a conventional software vulnerability",
+   "note": "SGLang is an inference server; RCE via inference requests, not an agent sandbox."
+  },
+  {
+   "id": "INC-15892",
+   "dim": "entry_point",
+   "from": "stolen or leaked credential",
+   "to": "exploit of a conventional software vulnerability",
+   "note": "Server-side cross-tenant token reuse bug; attacker is an ordinary subsequent user."
+  },
+  {
+   "id": "INC-15893",
+   "dim": "entry_point",
+   "from": "stolen or leaked credential",
+   "to": "via the agent's tools or sandbox",
+   "note": "fail-open policy lets actor run AWS operations through MCP server tools; no credential leaked"
+  },
+  {
+   "id": "INC-15894",
+   "dim": "entry_point",
+   "from": "indirect carrier (web/email/doc/tool output)",
+   "to": "via the agent's tools or sandbox",
+   "note": "payload bypasses the AI Assistant's execute_sql_query tool guard; no web/email/doc carrier stated"
+  },
+  {
+   "id": "INC-16240",
+   "dim": "entry_point",
+   "from": "stolen or leaked credential",
+   "to": "exploit of a conventional software vulnerability",
+   "note": "TOCTOU SSRF by authorised role; no credential theft."
+  },
+  {
+   "id": "INC-16322",
+   "dim": "entry_point",
+   "from": "stolen or leaked credential",
+   "to": "exposed / misconfigured service",
+   "note": "Unauthenticated POST /mcp endpoint; no credential involved."
+  },
+  {
+   "id": "INC-16585",
+   "dim": "entry_point",
+   "from": "stolen or leaked credential",
+   "to": "exploit of a conventional software vulnerability",
+   "note": "Missing authorization check mints token; nothing leaked or stolen."
+  },
+  {
+   "id": "INC-16619",
+   "dim": "entry_point",
+   "from": "indirect carrier (web/email/doc/tool output)",
+   "to": "via the agent's tools or sandbox",
+   "note": "Sandbox escape through the codecall:execute tool; no content carrier."
+  },
+  {
+   "id": "INC-16651",
+   "dim": "entry_point",
+   "from": "exposed / misconfigured service",
+   "to": "exploit of a conventional software vulnerability",
+   "note": "Blocklist-bypass RCE in Flowise code, not an operator misconfiguration."
+  },
+  {
+   "id": "INC-16756",
+   "dim": "entry_point",
+   "from": "stolen or leaked credential",
+   "to": "exploit of a conventional software vulnerability",
+   "note": "Path traversal in upload tool; tokens are disclosed outcome."
+  },
+  {
+   "id": "INC-17009",
+   "dim": "entry_point",
+   "from": "via the agent's tools or sandbox",
+   "to": "exploit of a conventional software vulnerability",
+   "note": "Expression-evaluation sandbox bypass by authenticated users; no agent tool or sandbox."
+  },
+  {
+   "id": "INC-17043",
+   "dim": "entry_point",
+   "from": "exposed / misconfigured service",
+   "to": "indirect carrier (web/email/doc/tool output)",
+   "note": "Unauthenticated actor's SQL rides in content an authenticated user submits."
+  },
+  {
+   "id": "INC-00390",
+   "dim": "objective",
+   "from": "political / influence",
+   "to": "defamation / impersonation of a person",
+   "note": "Text frames it as a defamation dispute; no election or opinion aim stated."
+  },
+  {
+   "id": "INC-00424",
+   "dim": "objective",
+   "from": "defamation / impersonation of a person",
+   "to": "financial fraud / extortion",
+   "note": "promoting illegal medicines for sale; impersonated doctor is the sales vehicle"
+  },
+  {
+   "id": "INC-00469",
+   "dim": "objective",
+   "from": "non-consensual / abuse imagery",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "Film's own AI visuals drew controversy; nothing sexual, no adversary described."
+  },
+  {
+   "id": "INC-00914",
+   "dim": "objective",
+   "from": "non-consensual / abuse imagery",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "court ruling on model outputs; no adversary described, policy story"
+  },
+  {
+   "id": "INC-01571",
+   "dim": "objective",
+   "from": "intrusion / cyber operation",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "title attributes breaches to the agents themselves; no adversary described"
+  },
+  {
+   "id": "INC-01968",
+   "dim": "objective",
+   "from": "defamation / impersonation of a person",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "advisor warning about risks; no adversary or operation described"
+  },
+  {
+   "id": "INC-02211",
+   "dim": "objective",
+   "from": "non-consensual / abuse imagery",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "research dataset contained CSAM; data-handling failure, no adversary using AI"
+  },
+  {
+   "id": "INC-02231",
+   "dim": "objective",
+   "from": "defamation / impersonation of a person",
+   "to": "political / influence",
+   "note": "advocacy video to shape opinion on anti-semitism; sector tagged Politics"
+  },
+  {
+   "id": "INC-02773",
+   "dim": "objective",
+   "from": "non-consensual / abuse imagery",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "regulatory investigation into risks; no adversary or incident described"
+  },
+  {
+   "id": "INC-02960",
+   "dim": "objective",
+   "from": "defamation / impersonation of a person",
+   "to": "intrusion / cyber operation",
+   "note": "state phishing of a Web3 employee; executive deepfake is the lure"
+  },
+  {
+   "id": "INC-03070",
+   "dim": "objective",
+   "from": "intrusion / cyber operation",
+   "to": "political / influence",
+   "note": "information-manipulation network pushing secession narratives; an influence operation"
+  },
+  {
+   "id": "INC-03913",
+   "dim": "objective",
+   "from": "intrusion / cyber operation",
+   "to": "political / influence",
+   "note": "broadcast hijack carried deepfake Gaza news; propaganda aim, hack is means"
+  },
+  {
+   "id": "INC-04571",
+   "dim": "objective",
+   "from": "non-consensual / abuse imagery",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "platform accused of generating; no user or adversary described, a policy story"
+  },
+  {
+   "id": "INC-05194",
+   "dim": "objective",
+   "from": "defamation / impersonation of a person",
+   "to": "non-consensual / abuse imagery",
+   "note": "celebrity porn deepfakes are sexualised images of real people"
+  },
+  {
+   "id": "INC-05382",
+   "dim": "objective",
+   "from": "non-consensual / abuse imagery",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "filter/product failure generating content; no adversary described"
+  },
+  {
+   "id": "INC-06532",
+   "dim": "objective",
+   "from": "intrusion / cyber operation",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "lawmaker warning about hazards; no adversary or operation described"
+  },
+  {
+   "id": "INC-08452",
+   "dim": "objective",
+   "from": "defamation / impersonation of a person",
+   "to": "intrusion / cyber operation",
+   "note": "signature bypass steals agent tokens; system intrusion"
+  },
+  {
+   "id": "INC-08960",
+   "dim": "objective",
+   "from": "defamation / impersonation of a person",
+   "to": "intrusion / cyber operation",
+   "note": "open redirect in SSO flow; phishing/credential theft, not a person"
+  },
+  {
+   "id": "INC-09399",
+   "dim": "objective",
+   "from": "defamation / impersonation of a person",
+   "to": "intrusion / cyber operation",
+   "note": "leaked bot token enables bot takeover; system compromise, not a person"
+  },
+  {
+   "id": "INC-10470",
+   "dim": "objective",
+   "from": "defamation / impersonation of a person",
+   "to": "intrusion / cyber operation",
+   "note": "SAML bypass to impersonate any user; account takeover"
+  },
+  {
+   "id": "INC-10903",
+   "dim": "objective",
+   "from": "defamation / impersonation of a person",
+   "to": "intrusion / cyber operation",
+   "note": "Kubernetes privilege escalation; system intrusion"
+  },
+  {
+   "id": "INC-10940",
+   "dim": "objective",
+   "from": "defamation / impersonation of a person",
+   "to": "intrusion / cyber operation",
+   "note": "credential leak lets log readers assume an AWS identity; system compromise"
+  },
+  {
+   "id": "INC-11060",
+   "dim": "objective",
+   "from": "defamation / impersonation of a person",
+   "to": "intrusion / cyber operation",
+   "note": "SAML signature bypass; authentication compromise"
+  },
+  {
+   "id": "INC-12184",
+   "dim": "objective",
+   "from": "political / influence",
+   "to": "intrusion / cyber operation",
+   "note": "certificate validation flaw lets attackers impersonate entities; nothing political"
+  },
+  {
+   "id": "INC-12287",
+   "dim": "objective",
+   "from": "defamation / impersonation of a person",
+   "to": "intrusion / cyber operation",
+   "note": "session fixation hijacks user accounts; system intrusion"
+  },
+  {
+   "id": "INC-13344",
+   "dim": "objective",
+   "from": "defamation / impersonation of a person",
+   "to": "public deception, not political (hoax, fake news, clickbait)",
+   "note": "false rumours about show appearances; clickbait, not damage to a person"
+  },
+  {
+   "id": "INC-13937",
+   "dim": "objective",
+   "from": "political / influence",
+   "to": "intrusion / cyber operation",
+   "note": "secret extraction via database oracle; nothing political"
+  },
+  {
+   "id": "INC-14220",
+   "dim": "objective",
+   "from": "non-consensual / abuse imagery",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "lawsuit over model outputs; no adversary described"
+  },
+  {
+   "id": "INC-14408",
+   "dim": "objective",
+   "from": "defamation / impersonation of a person",
+   "to": "public deception, not political (hoax, fake news, clickbait)",
+   "note": "stated aim is spreading medical misinformation to elderly; impersonation is the means"
+  },
+  {
+   "id": "INC-00042",
+   "dim": "target",
+   "from": "other (tracker stub, no system named)",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "Title reports fears about AI models; no incident, adversary or attacked system."
+  },
+  {
+   "id": "INC-00219",
+   "dim": "target",
+   "from": "other (tracker stub, no system named)",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "KURGAN is the detector, not a target; deployment story with no attack on AI."
+  },
+  {
+   "id": "INC-00536",
+   "dim": "target",
+   "from": "other (tracker stub, no system named)",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "AI cameras used by police; nothing attacked, misplaced record"
+  },
+  {
+   "id": "INC-00863",
+   "dim": "target",
+   "from": "other (tracker stub, no system named)",
+   "to": "agent / copilot / coding assistant / MCP",
+   "note": "title names Google Antigravity AI IDE, a coding assistant"
+  },
+  {
+   "id": "INC-01092",
+   "dim": "target",
+   "from": "consumer chatbot / hosted LLM app",
+   "to": "agent / copilot / coding assistant / MCP",
+   "note": "extensions mimicked AI coding assistant tools; same convention as impersonating packages"
+  },
+  {
+   "id": "INC-01139",
+   "dim": "target",
+   "from": "agent / copilot / coding assistant / MCP",
+   "to": "RAG / vector / memory store",
+   "note": "Graphiti is an agent memory/context-graph store; injection sits in its search filters."
+  },
+  {
+   "id": "INC-01369",
+   "dim": "target",
+   "from": "model hub / training pipeline / weights",
+   "to": "other (tracker stub, no system named)",
+   "note": "AI used to forge documents; no AI system attacked, stub names none"
+  },
+  {
+   "id": "INC-01917",
+   "dim": "target",
+   "from": "other (tracker stub, no system named)",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "product launch announcement; no attack on any AI system"
+  },
+  {
+   "id": "INC-02447",
+   "dim": "target",
+   "from": "consumer chatbot / hosted LLM app",
+   "to": "agent / copilot / coding assistant / MCP",
+   "note": "Claude Desktop extensions are MCP connectors executing injected OS commands; agent tooling"
+  },
+  {
+   "id": "INC-02449",
+   "dim": "target",
+   "from": "agent / copilot / coding assistant / MCP",
+   "to": "consumer chatbot / hosted LLM app",
+   "note": "Claude.ai code-interpreter sandbox leaking chat history; hosted chatbot feature, not agent."
+  },
+  {
+   "id": "INC-02504",
+   "dim": "target",
+   "from": "consumer chatbot / hosted LLM app",
+   "to": "a model itself (vision, speech or text model attacked directly)",
+   "note": "benchmark run directly on the named model DeepSeek-R1, not a chatbot product"
+  },
+  {
+   "id": "INC-02650",
+   "dim": "target",
+   "from": "consumer chatbot / hosted LLM app",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "Benchmark evaluation of hazardous knowledge; no adversary or attack described."
+  },
+  {
+   "id": "INC-02831",
+   "dim": "target",
+   "from": "consumer chatbot / hosted LLM app",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "Benchmark evaluation of hazardous knowledge; no adversary or attack described."
+  },
+  {
+   "id": "INC-02926",
+   "dim": "target",
+   "from": "consumer chatbot / hosted LLM app",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "title says non-adversarial session; model failure, no attacker"
+  },
+  {
+   "id": "INC-03004",
+   "dim": "target",
+   "from": "RAG / vector / memory store",
+   "to": "a model itself (vision, speech or text model attacked directly)",
+   "note": "named reasoning models o1/o3 jailbroken; nothing about RAG or memory"
+  },
+  {
+   "id": "INC-03030",
+   "dim": "target",
+   "from": "RAG / vector / memory store",
+   "to": "model hub / training pipeline / weights",
+   "note": "poisoned GGUF model files on Hugging Face, a model hub; no vector store"
+  },
+  {
+   "id": "INC-03049",
+   "dim": "target",
+   "from": "ML/LLM framework or serving library",
+   "to": "other",
+   "note": "ransomware uses a local LLM via Ollama as a tool; no AI system attacked"
+  },
+  {
+   "id": "INC-03247",
+   "dim": "target",
+   "from": "model hub / training pipeline / weights",
+   "to": "a model itself (vision, speech or text model attacked directly)",
+   "note": "Membership inference against generative models' outputs; model-level privacy attack, no hub or pipeline."
+  },
+  {
+   "id": "INC-03306",
+   "dim": "target",
+   "from": "consumer chatbot / hosted LLM app",
+   "to": "a model itself (vision, speech or text model attacked directly)",
+   "note": "named model DeepSeek-R1 attacked through its reasoning, not a hosted app"
+  },
+  {
+   "id": "INC-03491",
+   "dim": "target",
+   "from": "model hub / training pipeline / weights",
+   "to": "detection / classification model",
+   "note": "safety classifiers/content filters evaded; they are the attacked component"
+  },
+  {
+   "id": "INC-03615",
+   "dim": "target",
+   "from": "consumer chatbot / hosted LLM app",
+   "to": "a model itself (vision, speech or text model attacked directly)",
+   "note": "GPT-4V, a named model, attacked through its API, not a chatbot product"
+  },
+  {
+   "id": "INC-03868",
+   "dim": "target",
+   "from": "consumer chatbot / hosted LLM app",
+   "to": "agent / copilot / coding assistant / MCP",
+   "note": "Gemini for Workspace is the copilot inside Docs/Gmail/Slides, parallel to M365 Copilot"
+  },
+  {
+   "id": "INC-03915",
+   "dim": "target",
+   "from": "detection / classification model",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "Deployer's system misidentified civilians; no adversary described."
+  },
+  {
+   "id": "INC-04075",
+   "dim": "target",
+   "from": "detection / classification model",
+   "to": "other",
+   "note": "vendor data breach of biometric records; recognition model not attacked as such"
+  },
+  {
+   "id": "INC-04232",
+   "dim": "target",
+   "from": "detection / classification model",
+   "to": "other",
+   "note": "Deepfake audio aimed at voters; no AI system attacked (WITH-AI record)."
+  },
+  {
+   "id": "INC-04304",
+   "dim": "target",
+   "from": "consumer chatbot / hosted LLM app",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "analysis of user self-disclosure in ChatGPT; no adversary"
+  },
+  {
+   "id": "INC-04561",
+   "dim": "target",
+   "from": "model hub / training pipeline / weights",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "CSAM found in a scraped dataset; no adversary poisoned it"
+  },
+  {
+   "id": "INC-04705",
+   "dim": "target",
+   "from": "consumer chatbot / hosted LLM app",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "regulatory ban over privacy practices; no adversary attacks ChatGPT"
+  },
+  {
+   "id": "INC-05072",
+   "dim": "target",
+   "from": "detection / classification model",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "Wrongful arrest from a false match; no adversary described."
+  },
+  {
+   "id": "INC-05596",
+   "dim": "target",
+   "from": "model hub / training pipeline / weights",
+   "to": "a model itself (vision, speech or text model attacked directly)",
+   "note": "GPT-2 queried directly to extract memorized data; the model is the target"
+  },
+  {
+   "id": "INC-06343",
+   "dim": "target",
+   "from": "other (tracker stub, no system named)",
+   "to": "consumer chatbot / hosted LLM app",
+   "note": "Alexa named: a consumer voice-assistant service; data exposure points to hosted side."
+  },
+  {
+   "id": "INC-06398",
+   "dim": "target",
+   "from": "other (tracker stub, no system named)",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "biometric systems causing loss of benefits; operator harm, no adversary"
+  },
+  {
+   "id": "INC-06426",
+   "dim": "target",
+   "from": "detection / classification model",
+   "to": "other",
+   "note": "data breach of biometric images; recognition model not attacked as such"
+  },
+  {
+   "id": "INC-06518",
+   "dim": "target",
+   "from": "detection / classification model",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "court ruling on a fraud-detection system's legality; no adversary"
+  },
+  {
+   "id": "INC-06862",
+   "dim": "target",
+   "from": "detection / classification model",
+   "to": "other",
+   "note": "vendor data breach; facial-recognition model not attacked as such"
+  },
+  {
+   "id": "INC-06894",
+   "dim": "target",
+   "from": "detection / classification model",
+   "to": "other",
+   "note": "privacy harms and data leaks from surveillance rollout; model not attacked as such"
+  },
+  {
+   "id": "INC-07380",
+   "dim": "target",
+   "from": "detection / classification model",
+   "to": "model hub / training pipeline / weights",
+   "note": "backdoor inserted through outsourced training/transfer learning; training-supply-chain attack"
+  },
+  {
+   "id": "INC-07434",
+   "dim": "target",
+   "from": "other (tracker stub, no system named)",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "discriminatory effects of a screening tool; no adversary described"
+  },
+  {
+   "id": "INC-07539",
+   "dim": "target",
+   "from": "other (tracker stub, no system named)",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "welfare algorithm controversy; no adversary described"
+  },
+  {
+   "id": "INC-07623",
+   "dim": "target",
+   "from": "other (tracker stub, no system named)",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "algorithm issued false fraud claims; system failure, no adversary"
+  },
+  {
+   "id": "INC-07906",
+   "dim": "target",
+   "from": "other (tracker stub, no system named)",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "AI note-taking privacy harm; no adversary described, operator harm"
+  },
+  {
+   "id": "INC-08115",
+   "dim": "target",
+   "from": "model hub / training pipeline / weights",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "AI misidentified a mushroom; model failure, 'poisoning' is literal"
+  },
+  {
+   "id": "INC-09485",
+   "dim": "target",
+   "from": "model hub / training pipeline / weights",
+   "to": "RAG / vector / memory store",
+   "note": "hijacked Notion integration poisons the victim's Khoj search index, a RAG store"
+  },
+  {
+   "id": "INC-10342",
+   "dim": "target",
+   "from": "model hub / training pipeline / weights",
+   "to": "agent / copilot / coding assistant / MCP",
+   "note": "smolagents is an agent framework; python executor sandbox escape, not a hub"
+  },
+  {
+   "id": "INC-13198",
+   "dim": "target",
+   "from": "other (tracker stub, no system named)",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "Policy news about a chip bill; no adversary or attacked system."
+  },
+  {
+   "id": "INC-13274",
+   "dim": "target",
+   "from": "model hub / training pipeline / weights",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "warning about AI misidentification; no adversary, nothing poisoned"
+  },
+  {
+   "id": "INC-13294",
+   "dim": "target",
+   "from": "consumer chatbot / hosted LLM app",
+   "to": "no attacker: operator harm or model failure (misplaced record)",
+   "note": "chatbots causing breaches and bad advice; no adversary described"
+  },
+  {
+   "id": "INC-13972",
+   "dim": "target",
+   "from": "consumer chatbot / hosted LLM app",
+   "to": "ML/LLM framework or serving library",
+   "note": "malicious npm package posing as a Claude SDK; a library, not the hosted app"
+  },
+  {
+   "id": "INC-14911",
+   "dim": "target",
+   "from": "consumer chatbot / hosted LLM app",
+   "to": "model hub / training pipeline / weights",
+   "note": "Fine-tuning attack on gpt-4/gpt-4o; fine-tuning sits in the training-pipeline label."
+  },
+  {
+   "id": "INC-14999",
+   "dim": "target",
+   "from": "consumer chatbot / hosted LLM app",
+   "to": "a model itself (vision, speech or text model attacked directly)",
+   "note": "Affected names model versions (Command R, Mistral 8B), not chatbot products."
+  },
+  {
+   "id": "INC-15793",
+   "dim": "target",
+   "from": "model hub / training pipeline / weights",
+   "to": "ML/LLM framework or serving library",
+   "note": "flaw is in the nltk library's downloader; nltk is an NLP library"
+  },
+  {
+   "id": "INC-16720",
+   "dim": "target",
+   "from": "agent / copilot / coding assistant / MCP",
+   "to": "a non-AI application with an AI feature (web app, CMS plugin, SaaS)",
+   "note": "Flaw is in n8n's Code-node runner; no agent or MCP component in text."
+  }
+ ]
+}

@@ -124,6 +124,34 @@ label-only values ('prompt injection, carrier not stated', 'deepfake, medium not
 fell from 48.8% to 31.2% (entry point) and from 48.8% to 7.2% (AI medium). `out/methodology.json`
 carries a `_source` per dimension. Pipeline order is now s02 before s01 (section C reads split.json).
 
+## 2026-10-07 (third session, continued)
+
+**Ask: vet `dataset_pre.csv` against GitHub; check every label; use the model where needed to confirm
+labels; reflect any change in the post csv and explain; add the incompleteness, disclosure and pooling
+limitations; a 2026-only csv to see whether the recent record sits closer to the vote.**
+Done. Integrity: the pinned full JSON re-downloaded from GitHub matches the sha256 in `external/PINS.json`
+and the pip package; all 2,799 rows of `dataset_pre.csv` match corpus fields, the split and the rule
+outputs. Labels: a stratified audit of the rule-assigned labels, up to 20 records per (dimension, value,
+assignment step), 620 labels in 36 strata, each read by two independent Claude (claude-fable-5-1)
+reviewers given title, description, affected field and corpus labels; a third adjudicated the 28 splits.
+Mythos 5.1 is not callable from this environment; Fable 5.1 shares its underlying model. Result: 365
+correct, 249 corrected, 6 kept with a dissent (`coded/review.json`; s04 applies the corrections with
+how = "corrected by review", Table 4.0 column, Table 4.0b per stratum, Table 4.0c population-weighted
+residual error: entry point 47% wrong before / 39% still wrong after, target 36 / 31, AI medium 36 / 32,
+objective 15 / 12). Worst rules: "stolen or leaked credential" text rule 3 of 20 (fires on "credentials",
+"token", "exposed" in SSRF/auth-bypass CVEs), WITH-AI "none: conventional exploit" label group 0 of 20
+(OECD "AI-driven attack" commentary and ChatGPT-misuse stories), "defamation / impersonation" 4 of 20
+("deepfake"/"phishing" in CVE text), "consumer chatbot" target 5 of 20 (named models, agents, no-attacker
+stories). Decision: corrections apply to the sampled records only; no rule was re-tuned on the audited
+sample, so Table 4.0b still measures the rules; each distribution table now names the values whose
+sampled labels were mostly wrong. Bug found by the diff: corrected records lost their original source in
+`dataset_pre.csv`; fixed (pre keeps the rule source). Limitations added to s05 and draft §8: the public
+record is a small self-selected sample (8.5% of CVE/GHSA and 24.6% of harm-db records involve an
+adversary; `exploited_in_wild` on 14 of 15,666; IC3 AI-related complaints 2.2% of its total; INTAiC);
+the index pools trackers with different units. 2026-only cut (`out/dataset_post_2026.csv`, 730 ON-AI /
+686 WITH-AI; Table 5.4): the recent record sits further from the vote, not closer (ON-AI ρ +0.29 →
++0.06, WITH-AI −0.57 → −0.94).
+
 ## Standing decisions
 
 1. The corpus is a sampling frame and pointer to primary sources; **no corpus label enters a coded field.**
