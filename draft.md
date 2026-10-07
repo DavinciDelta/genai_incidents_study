@@ -86,7 +86,11 @@ Source: `s01_overview.py` → `out/s01_overview.md` (section 0 is the glossary a
   records and arrives with the feed (Table 1.10); 36.0% of OWASP codes equal the code seeded from the
   attack-vector field; 90.7% of its 31,248 MITRE ATLAS technique labels are what a fixed OWASP→ATLAS
   lookup in its build script produces (§B2). Corpus labels stratify samples here; they never populate a
-  hand-coded field.
+  hand-coded field. The weakness ids inherit NVD's problems: CWE labels agree with code-grounded labels on
+  only half of audited CVEs (Nong et al. 2026), and CWE-1427 (prompt injection, added Nov 2024) is absent
+  from NVD's simplified-mapping view CWE-1003, so analysts file prompt-injection CVEs under code-execution
+  weaknesses; it appears on 3 corpus records (Table 1.12). Vulnerability statistics have long been known to
+  measure the reporting process (Christey & Martin 2013; Massacci & Nguyen 2010).
 - **An independent human check exists.** incident-rank-validation (Lambros 2026) hand-labelled 1,200
   rows of a May 2026 snapshot against the OWASP LLM Top 10 candidate list; 1,123 join current records
   (Table 1.13). The rows were drawn by quota over three LLM pre-labellers' agreement, not at random
@@ -157,9 +161,14 @@ CVE or CWE, 31.5% a model-level vector with none, 23.4% neither.
 10.8%, intrusion 6.5%; 7.1% describe no attacker at all (a product failure filed as an incident).
 
 <!-- TODO: 2 paragraphs interpreting. Points to make: ON-AI is an agent-and-tooling story and half of it
-     is ordinary application security; WITH-AI is a deepfake-fraud story told by harm databases in stubs;
-     LLM-assisted intrusion is nearly invisible in public databases (generated code 0.6%, intrusion 6.5%)
-     even though vendor reports describe it. -->
+     is ordinary application security (Maugeri et al. 2025: two thirds of AI-relevant CVEs are conventional
+     bugs; Shi et al. 2026: 81% of MCP-server vulnerabilities are taint-style injection/traversal); WITH-AI
+     is a deepfake-fraud story told by harm databases in stubs, and the authoritative count agrees: FBI
+     IC3's first "AI related" tally (2025) is 22,364 complaints and $893M, all synthetic profiles, LLM-written
+     BEC and voice cloning, with no intrusion category; LLM-assisted intrusion is nearly invisible in public
+     databases (generated code 0.6%, intrusion 6.5%) while vendor telemetry reports it in small numbers
+     (Microsoft/OpenAI 2024, OpenAI Oct 2025, Google GTIG Nov 2025, Anthropic Nov 2025) and the Paris Peace
+     Forum INTAiC paper (Jul 2026) says no observer sees more than a slice of the AI-enabled attack chain. -->
 
 ## 5. Which categories stand out against the expert vote
 
@@ -170,7 +179,12 @@ by respondents; Tables 5.1–5.2). ON-AI: Improper Output Handling sits +11 plac
 (corpus 2nd, vote 13th; 5% of its records are demonstrations); Supply Chain +4 but it is a channel marker
 (98.2% of CVE records); Prompt Injection, the vote's first, is the corpus's third. WITH-AI: Misinformation
 +12 (83.8% of records, also a channel marker). Neither is a corrected Top 10: the corpus column ranks
-keyword rules.
+keyword rules. OWASP's own 2026 process weighted the community vote (about 29 respondents, per Lambros &
+Wilson) at 75% and incident data at 25%, and kept Prompt Injection first although incidents placed it near
+twelfth (CSA research note, Aug 2026): the list is a judgement about defence, not a count. Improper Output
+Handling shows how three signals pull apart: the corpus's keyword rule ranks it 2nd in ON-AI, rank-
+validation's model-based data rank puts it 10th (interval 3–16, Table 1.15), and the person's hand labels
+put it 5th (Table 5.3).
 
 **The hand labels disagree with both (Table 5.3).** The person's most-used ON-AI label, Data and Model
 Poisoning (22), is the corpus's 7th; three labels with no corpus code hold 70 hand labels (MCP Tool
@@ -198,7 +212,10 @@ Two coders on 20%, κ per field, rulebook frozen after a 30-incident pilot.
   checked against the 339 hand-labelled rows in the frame (Table 2.13).
 - Percentile bootstrap (2,000 resamples) 95% CIs on every proportion; none on hand-labelled shares.
 - Reclassification of unstated values: rules first, then two LLM coders and an adjudicator; agreement
-  reported per dimension; a human review of the coded subset before any value is cited.
+  reported per dimension; a human review of the coded subset before any value is cited, following the
+  validation standard for LLM annotation (Pangakis & Wolken ICWSM 2025; Törnberg 2024) and the alternative
+  annotator test (Calderon, Reichart & Dror ACL 2025); the negative result for security codes (Camporese,
+  Massacci & Gong 2026) is the reason the review is not optional.
 - Cohen's κ per hand-coded field (quadratic-weighted for ordered fields), pre-adjudication value reported.
 - χ² / Fisher exact for ON-vs-WITH comparisons within channel, Cramér's V, Benjamini–Hochberg at 5% FDR.
 - Temporal claims on primary-source disclosure date only (corpus dates are month-only for CVE records).
@@ -217,7 +234,8 @@ Full list with numbers: `out/s05_techniques.md`, section "Limitations of the dat
   current record of their own (Tables 1.13–1.14).
 - Demonstration inflation (22.9% of ON-AI) and deepfake dominance (80.8% of WITH-AI).
 - Ingestion-driven years, month-only CVE dates, tracker stubs (67 of the 74 WITH-AI no-entry rows), empty
-  exploitation and attribution fields (Tables 1.5–1.7, 4.0).
+  exploitation and attribution fields (Tables 1.5–1.7, 4.0). CVE descriptions are no better upstream: 85%
+  lack a root cause and 56% a vulnerability type (Guo, Xing & Li TOSEM 2022).
 - LLM-coded pre-labels for the formerly unstated rows await human review.
 <!-- TODO: one sentence of mitigation per item. -->
 
@@ -258,6 +276,34 @@ Full list with numbers: `out/s05_techniques.md`, section "Limitations of the dat
   doi:10.1609/aaai.v38i21.30349. · Raza (2026). The deepfakes we missed. arXiv:2605.12075.
 - Brodt, Feldman, Schneier & Nassi (2026). The promptware kill chain. arXiv:2601.09625. — 21 ON-AI
   incidents staged on a kill chain.
+<!-- Supporting evidence by claim (verified 2026-10-07): -->
+- Channel bias, CVE side: Christey & Martin (2013). Buying into the bias: why vulnerability statistics suck.
+  Black Hat USA. · Massacci & Nguyen (2010). Which is the right source for vulnerability studies? MetriSec.
+  · Imtiaz, Khanom & Williams (2021). Open or sneaky? arXiv:2112.06804 (advisories lag releases by a median
+  25 days). Harm-database side: OECD AIM methodology page (news-derived, LLM-classified, unverified); Dixon &
+  Frase (CSET, 2024). An argument for hybrid AI incident reporting.
+- CVEs in AI tooling are conventional bugs: Shi et al. (2026). Mitigating taint-style vulnerabilities in MCP
+  servers. arXiv:2607.07461 (81% taint-style). · Zhou, Gong & Ma (2025). TensorFlow supply-chain
+  vulnerabilities. Internetware 2025. · MITRE CWE-1427 page and the 2024 CWE Top 25 methodology (31% of CWE
+  labels flagged for re-mapping).
+- Deepfake fraud and the invisibility of LLM intrusion: FBI IC3 (2026). 2025 Internet Crime Report. · Europol
+  Innovation Lab (2022). Facing reality? · Raza (2026). arXiv:2605.12075. · Abraham et al. (2026) (296 AIID
+  deepfake incidents). · Microsoft/OpenAI (Feb 2024), OpenAI (Oct 2025), Google GTIG (Nov 2025), Anthropic
+  (Nov 2025) threat reports; UK NCSC (Jan 2024). · Paris Peace Forum INTAiC white paper (Jul 2026). ·
+  Deloitte (2024) and Sumsub (2025) only with their methodology caveats.
+- Label quality: MIT AI Incident Tracker June 2026 update (human–human κ 0.31–0.56). · Abercrombie et al.
+  (2024). AIAAIC harms taxonomy. arXiv:2407.01294. · CSET AI Harm Taxonomy (two annotators per incident). ·
+  Ogbanufe & Agrawal (2026). AMCIS (52 ATLAS case studies vs OWASP: uneven alignment). · OWASP 2026
+  announcement and CSA research note (15 Aug 2026) on the 75/25 weighting.
+- Vote vs data in classic security: MITRE CWE Top 25 methodology; Jacobs et al. (2023). EPSS v3.
+  arXiv:2302.14172; HackerOne (2019) and Signal Sciences (2018) on the web OWASP Top 10 (vendor).
+- Record quality: Guo, Xing & Li (2022). TOSEM 31(3). · Khanmohammadi & Khoury (2022). Half-day
+  vulnerabilities. CAMLIS. · Kühn et al. (2021). OVANA. ARES. · Wunder et al. (2024). DTRAP. · OECD (2025).
+  Towards a common reporting framework for AI incidents. · Ezell, Roberts-Gaal & Chan (2025). AIES.
+- LLM annotation: Pangakis, Wolken & Fasching (2023) and Pangakis & Wolken (2025, ICWSM). · Gilardi,
+  Alizadeh & Kubli (2023). PNAS. · Calderon, Reichart & Dror (2025). ACL. · Törnberg (2024). Sociologica. ·
+  Ziems et al. (2024). Computational Linguistics. · Xiao et al. (2025). AIES (1,060 AIAAIC incidents, LLM
+  validated on 200 by three coders).
 <!-- Already verified on 2026-10-05: -->
 Marchal et al. 2024 arXiv · Bieringer et al. 2026 SaTML (arXiv:2412.14855 v5 is the full taxonomy) ·
 Paeth et al. 2025 AAAI · Hadan et al. 2025 IJHCI · Shifat et al. 2026 FSE-LLMSC · Harzevili et al. 2023
