@@ -1,0 +1,1903 @@
+{
+ "B1. Unit of count": {
+  "baseline": {
+   "table": {
+    "cve/ghsa": {
+     "NONE": 7376,
+     "ON-AI": 604,
+     "UNRESOLVED": 1,
+     "WITH-AI": 80,
+     "BOTH": 2
+    },
+    "harm-db": {
+     "WITH-AI": 1370,
+     "UNRESOLVED": 168,
+     "ON-AI": 370,
+     "NONE": 5191,
+     "BOTH": 13
+    },
+    "research/other": {
+     "NONE": 88,
+     "ON-AI": 365,
+     "BOTH": 18,
+     "UNRESOLVED": 10,
+     "WITH-AI": 10
+    }
+   },
+   "frame_n": {
+    "cve/ghsa": 686,
+    "harm-db": 1753,
+    "research/other": 393
+   },
+   "cve_on": 0.880466472303207,
+   "hdb_with": 0.7815173987450086,
+   "res_on": 0.9287531806615776,
+   "ON": 1339,
+   "WITH": 1460,
+   "pooled_on": 0.4783851375491247,
+   "ratio": 0.9171232876712329,
+   "V": 0.6839721936794686
+  },
+  "source id, record's channel": {
+   "table": {
+    "cve/ghsa": {
+     "NONE": 9313,
+     "ON-AI": 958,
+     "UNRESOLVED": 2,
+     "WITH-AI": 96,
+     "BOTH": 2
+    },
+    "harm-db": {
+     "WITH-AI": 1522,
+     "UNRESOLVED": 177,
+     "ON-AI": 398,
+     "NONE": 5431,
+     "BOTH": 18
+    },
+    "research/other": {
+     "NONE": 141,
+     "ON-AI": 634,
+     "BOTH": 31,
+     "UNRESOLVED": 19,
+     "WITH-AI": 23
+    }
+   },
+   "frame_n": {
+    "cve/ghsa": 1056,
+    "harm-db": 1938,
+    "research/other": 688
+   },
+   "cve_on": 0.9071969696969697,
+   "hdb_with": 0.7853457172342622,
+   "res_on": 0.9215116279069767,
+   "ON": 1990,
+   "WITH": 1641,
+   "pooled_on": 0.5480583861195263,
+   "ratio": 1.2126751980499695,
+   "V": 0.726292329214486
+  },
+  "source id, own tracker's channel": {
+   "table": {
+    "cve/ghsa": {
+     "NONE": 9169,
+     "ON-AI": 888,
+     "WITH-AI": 95,
+     "BOTH": 2
+    },
+    "harm-db": {
+     "ON-AI": 393,
+     "WITH-AI": 1506,
+     "UNRESOLVED": 177,
+     "NONE": 5540,
+     "BOTH": 16
+    },
+    "research/other": {
+     "NONE": 176,
+     "ON-AI": 709,
+     "BOTH": 33,
+     "UNRESOLVED": 21,
+     "WITH-AI": 40
+    }
+   },
+   "frame_n": {
+    "cve/ghsa": 985,
+    "harm-db": 1915,
+    "research/other": 782
+   },
+   "cve_on": 0.9015228426395939,
+   "hdb_with": 0.7864229765013054,
+   "res_on": 0.9066496163682864,
+   "ON": 1990,
+   "WITH": 1641,
+   "pooled_on": 0.5480583861195263,
+   "ratio": 1.2126751980499695,
+   "V": 0.7182858117467606
+  },
+  "templated series collapsed": {
+   "table": {
+    "cve/ghsa": {
+     "NONE": 7376,
+     "ON-AI": 587.0,
+     "UNRESOLVED": 1,
+     "WITH-AI": 80,
+     "BOTH": 2
+    },
+    "harm-db": {
+     "WITH-AI": 1370,
+     "UNRESOLVED": 168,
+     "ON-AI": 323.0000000000006,
+     "NONE": 5191,
+     "BOTH": 13
+    },
+    "research/other": {
+     "NONE": 88,
+     "ON-AI": 365,
+     "BOTH": 18,
+     "UNRESOLVED": 10,
+     "WITH-AI": 10
+    }
+   },
+   "frame_n": {
+    "cve/ghsa": 669.0,
+    "harm-db": 1706.0000000000007,
+    "research/other": 393
+   },
+   "cve_on": 0.8774289985052317,
+   "hdb_with": 0.8030480656506445,
+   "res_on": 0.9287531806615776,
+   "ON": 1275.0000000000007,
+   "WITH": 1460,
+   "pooled_on": 0.46617915904936025,
+   "ratio": 0.8732876712328772,
+   "V": 0.7058552375969157
+  }
+ },
+ "B2. Correction": {
+  "baseline": {
+   "table": {
+    "cve/ghsa": {
+     "NONE": 7376,
+     "ON-AI": 604,
+     "UNRESOLVED": 1,
+     "WITH-AI": 80,
+     "BOTH": 2
+    },
+    "harm-db": {
+     "WITH-AI": 1370,
+     "UNRESOLVED": 168,
+     "ON-AI": 370,
+     "NONE": 5191,
+     "BOTH": 13
+    },
+    "research/other": {
+     "NONE": 88,
+     "ON-AI": 365,
+     "BOTH": 18,
+     "UNRESOLVED": 10,
+     "WITH-AI": 10
+    }
+   },
+   "frame_n": {
+    "cve/ghsa": 686,
+    "harm-db": 1753,
+    "research/other": 393
+   },
+   "cve_on": 0.880466472303207,
+   "hdb_with": 0.7815173987450086,
+   "res_on": 0.9287531806615776,
+   "ON": 1339,
+   "WITH": 1460,
+   "pooled_on": 0.4783851375491247,
+   "ratio": 0.9171232876712329,
+   "V": 0.6839721936794686
+  },
+  "text only (vector blanked)": {
+   "table": {
+    "cve/ghsa": {
+     "NONE": 7523,
+     "ON-AI": 425,
+     "UNRESOLVED": 110,
+     "WITH-AI": 5
+    },
+    "harm-db": {
+     "WITH-AI": 1323,
+     "UNRESOLVED": 363,
+     "ON-AI": 124,
+     "NONE": 5302
+    },
+    "research/other": {
+     "NONE": 154,
+     "ON-AI": 188,
+     "UNRESOLVED": 125,
+     "BOTH": 2,
+     "WITH-AI": 22
+    }
+   },
+   "frame_n": {
+    "cve/ghsa": 430,
+    "harm-db": 1447,
+    "research/other": 212
+   },
+   "cve_on": 0.9883720930232558,
+   "hdb_with": 0.9143054595715273,
+   "res_on": 0.8867924528301887,
+   "ON": 737,
+   "WITH": 1350,
+   "pooled_on": 0.3531384762817441,
+   "ratio": 0.5459259259259259,
+   "V": 0.8429170571994606
+  },
+  "reviewed (step 4)": {
+   "table": {
+    "cve/ghsa": {
+     "NONE": 7376,
+     "ON-AI": 602,
+     "UNRESOLVED": 1,
+     "CVE misplaced (review)": 80,
+     "NONE (review)": 2,
+     "BOTH": 2
+    },
+    "harm-db": {
+     "WITH-AI": 1197,
+     "UNRESOLVED": 168,
+     "ON-AI": 253,
+     "NONE": 5191,
+     "NONE (review)": 289,
+     "BOTH": 13,
+     "CVE misplaced (review)": 1
+    },
+    "research/other": {
+     "NONE": 88,
+     "ON-AI": 355,
+     "BOTH": 18,
+     "UNRESOLVED": 10,
+     "WITH-AI": 9,
+     "NONE (review)": 11
+    }
+   },
+   "frame_n": {
+    "cve/ghsa": 604,
+    "harm-db": 1463,
+    "research/other": 382
+   },
+   "cve_on": 0.9966887417218543,
+   "hdb_with": 0.8181818181818182,
+   "res_on": 0.9293193717277487,
+   "ON": 1210,
+   "WITH": 1206,
+   "pooled_on": 0.5008278145695364,
+   "ratio": 1.0033167495854063,
+   "V": 0.79979930103096
+  },
+  "reviewed + leak to WITH": {
+   "table": {
+    "cve/ghsa": {
+     "NONE": 7376,
+     "ON-AI": 602,
+     "UNRESOLVED": 1,
+     "CVE misplaced (review)": 80,
+     "NONE (review)": 2,
+     "BOTH": 2
+    },
+    "harm-db": {
+     "WITH-AI": 1248,
+     "UNRESOLVED": 168,
+     "ON-AI": 202,
+     "NONE": 5191,
+     "NONE (review)": 289,
+     "BOTH": 13,
+     "CVE misplaced (review)": 1
+    },
+    "research/other": {
+     "NONE": 88,
+     "ON-AI": 342,
+     "BOTH": 18,
+     "UNRESOLVED": 10,
+     "WITH-AI": 22,
+     "NONE (review)": 11
+    }
+   },
+   "frame_n": {
+    "cve/ghsa": 604,
+    "harm-db": 1463,
+    "research/other": 382
+   },
+   "cve_on": 0.9966887417218543,
+   "hdb_with": 0.8530416951469583,
+   "res_on": 0.8952879581151832,
+   "ON": 1146,
+   "WITH": 1270,
+   "pooled_on": 0.47433774834437087,
+   "ratio": 0.9023622047244094,
+   "V": 0.822848967508799
+  },
+  "hand-labelled frame records only (339), step-2 populations": {
+   "table": {
+    "cve/ghsa": {
+     "ON-AI": 44,
+     "WITH-AI": 3
+    },
+    "harm-db": {
+     "WITH-AI": 170,
+     "BOTH": 2,
+     "ON-AI": 43
+    },
+    "research/other": {
+     "ON-AI": 74,
+     "WITH-AI": 1,
+     "BOTH": 2
+    }
+   },
+   "frame_n": {
+    "cve/ghsa": 47,
+    "harm-db": 215,
+    "research/other": 77
+   },
+   "cve_on": 0.9361702127659575,
+   "hdb_with": 0.7906976744186046,
+   "res_on": 0.961038961038961,
+   "ON": 161,
+   "WITH": 174,
+   "pooled_on": 0.48059701492537316,
+   "ratio": 0.9252873563218391,
+   "V": 0.737709975482003
+  },
+  "same, the human's 'no entry fits' records dropped (98)": {
+   "table": {
+    "cve/ghsa": {
+     "ON-AI": 41,
+     "WITH-AI": 2
+    },
+    "harm-db": {
+     "WITH-AI": 97,
+     "ON-AI": 30,
+     "BOTH": 1
+    },
+    "research/other": {
+     "ON-AI": 67,
+     "WITH-AI": 1,
+     "BOTH": 2
+    }
+   },
+   "frame_n": {
+    "cve/ghsa": 43,
+    "harm-db": 128,
+    "research/other": 70
+   },
+   "cve_on": 0.9534883720930233,
+   "hdb_with": 0.7578125,
+   "res_on": 0.9571428571428572,
+   "ON": 138,
+   "WITH": 100,
+   "pooled_on": 0.5798319327731093,
+   "ratio": 1.38,
+   "V": 0.7449469248729643
+  }
+ },
+ "B2_keep": {
+  "table": {
+   "cve/ghsa": {
+    "NONE": 7376,
+    "ON-AI": 602,
+    "UNRESOLVED": 1,
+    "CVE misplaced (review)": 80,
+    "NONE (review)": 2,
+    "BOTH": 2
+   },
+   "harm-db": {
+    "WITH-AI": 1197,
+    "UNRESOLVED": 168,
+    "ON-AI": 253,
+    "NONE": 5191,
+    "NONE (review)": 289,
+    "BOTH": 13,
+    "CVE misplaced (review)": 1
+   },
+   "research/other": {
+    "NONE": 88,
+    "ON-AI": 355,
+    "BOTH": 18,
+    "UNRESOLVED": 10,
+    "WITH-AI": 9,
+    "NONE (review)": 11
+   }
+  },
+  "frame_n": {
+   "cve/ghsa": 686,
+   "harm-db": 1753,
+   "research/other": 393
+  },
+  "cve_on": 0.8775510204081632,
+  "hdb_with": 0.6828294352538505,
+  "res_on": 0.9033078880407125,
+  "ON": 1210,
+  "WITH": 1206,
+  "pooled_on": 0.5008278145695364,
+  "ratio": 1.0033167495854063,
+  "V": 0.79979930103096
+ },
+ "B3. Record type": {
+  "baseline": {
+   "table": {
+    "cve/ghsa": {
+     "NONE": 7376,
+     "ON-AI": 604,
+     "UNRESOLVED": 1,
+     "WITH-AI": 80,
+     "BOTH": 2
+    },
+    "harm-db": {
+     "WITH-AI": 1370,
+     "UNRESOLVED": 168,
+     "ON-AI": 370,
+     "NONE": 5191,
+     "BOTH": 13
+    },
+    "research/other": {
+     "NONE": 88,
+     "ON-AI": 365,
+     "BOTH": 18,
+     "UNRESOLVED": 10,
+     "WITH-AI": 10
+    }
+   },
+   "frame_n": {
+    "cve/ghsa": 686,
+    "harm-db": 1753,
+    "research/other": 393
+   },
+   "cve_on": 0.880466472303207,
+   "hdb_with": 0.7815173987450086,
+   "res_on": 0.9287531806615776,
+   "ON": 1339,
+   "WITH": 1460,
+   "pooled_on": 0.4783851375491247,
+   "ratio": 0.9171232876712329,
+   "V": 0.6839721936794686
+  },
+  "no demonstrations": {
+   "table": {
+    "cve/ghsa": {
+     "ON-AI": 600,
+     "NONE": 7375,
+     "WITH-AI": 80,
+     "BOTH": 2
+    },
+    "harm-db": {
+     "WITH-AI": 1370,
+     "UNRESOLVED": 167,
+     "ON-AI": 340,
+     "NONE": 5189,
+     "BOTH": 13
+    },
+    "research/other": {
+     "NONE": 47,
+     "ON-AI": 92,
+     "BOTH": 15,
+     "UNRESOLVED": 7,
+     "WITH-AI": 9
+    }
+   },
+   "frame_n": {
+    "cve/ghsa": 682,
+    "harm-db": 1723,
+    "research/other": 116
+   },
+   "cve_on": 0.8797653958944281,
+   "hdb_with": 0.7951247823563552,
+   "res_on": 0.7931034482758621,
+   "ON": 1032,
+   "WITH": 1459,
+   "pooled_on": 0.41429144921718186,
+   "ratio": 0.7073337902673064,
+   "V": 0.6473049628142544
+  },
+  "realized (real-world + disclosure)": {
+   "table": {
+    "cve/ghsa": {
+     "ON-AI": 521,
+     "NONE": 7375,
+     "WITH-AI": 80,
+     "BOTH": 2
+    },
+    "harm-db": {
+     "WITH-AI": 1370,
+     "UNRESOLVED": 167,
+     "ON-AI": 340,
+     "NONE": 5189,
+     "BOTH": 13
+    },
+    "research/other": {
+     "NONE": 47,
+     "ON-AI": 77,
+     "BOTH": 5,
+     "UNRESOLVED": 3,
+     "WITH-AI": 6
+    }
+   },
+   "frame_n": {
+    "cve/ghsa": 603,
+    "harm-db": 1723,
+    "research/other": 88
+   },
+   "cve_on": 0.8640132669983416,
+   "hdb_with": 0.7951247823563552,
+   "res_on": 0.875,
+   "ON": 938,
+   "WITH": 1456,
+   "pooled_on": 0.391812865497076,
+   "ratio": 0.6442307692307693,
+   "V": 0.6254499260713895
+  },
+  "observed (real-world only)": {
+   "table": {
+    "cve/ghsa": {
+     "ON-AI": 50,
+     "NONE": 29
+    },
+    "harm-db": {
+     "WITH-AI": 1370,
+     "UNRESOLVED": 167,
+     "ON-AI": 263,
+     "NONE": 5131,
+     "BOTH": 13
+    },
+    "research/other": {
+     "NONE": 47,
+     "ON-AI": 77,
+     "BOTH": 5,
+     "UNRESOLVED": 3,
+     "WITH-AI": 6
+    }
+   },
+   "frame_n": {
+    "cve/ghsa": 50,
+    "harm-db": 1646,
+    "research/other": 88
+   },
+   "cve_on": 1.0,
+   "hdb_with": 0.8323207776427703,
+   "res_on": 0.875,
+   "ON": 390,
+   "WITH": 1376,
+   "pooled_on": 0.22083805209513024,
+   "ratio": 0.28343023255813954,
+   "V": 0.5055492196730085
+  }
+ },
+ "B4": {
+  "record weights (as published)": 0.4783851375491247,
+  "equal channel weights (1/3 each)": 0.6896726490555891,
+  "CVE/GHSA and harm-db equal, research 0": 0.5478423069167171,
+  "channel's share of all 15,666 records": 0.581526080050722,
+  "range": [
+   0.21264367816091953,
+   0.9733333333333334
+  ]
+ },
+ "B4_year": {
+  "2020": {
+   "N": 102,
+   "pooled": 0.3627450980392157,
+   "std": null,
+   "within": {
+    "cve/ghsa": null,
+    "harm-db": 0.29347826086956524,
+    "research/other": 1.0
+   },
+   "mix": {
+    "cve/ghsa": 0,
+    "harm-db": 92,
+    "research/other": 10
+   }
+  },
+  "2021": {
+   "N": 69,
+   "pooled": 0.2753623188405797,
+   "std": 0.27212099559366437,
+   "within": {
+    "cve/ghsa": 0.0,
+    "harm-db": 0.2222222222222222,
+    "research/other": 1.0
+   },
+   "mix": {
+    "cve/ghsa": 1,
+    "harm-db": 63,
+    "research/other": 5
+   }
+  },
+  "2022": {
+   "N": 53,
+   "pooled": 0.5094339622641509,
+   "std": 0.5251875669882101,
+   "within": {
+    "cve/ghsa": 0.5833333333333334,
+    "harm-db": 0.4,
+    "research/other": 1.0
+   },
+   "mix": {
+    "cve/ghsa": 12,
+    "harm-db": 35,
+    "research/other": 6
+   }
+  },
+  "2023": {
+   "N": 201,
+   "pooled": 0.3482587064676617,
+   "std": 0.3515619050894254,
+   "within": {
+    "cve/ghsa": 0.5882352941176471,
+    "harm-db": 0.12857142857142856,
+    "research/other": 0.9545454545454546
+   },
+   "mix": {
+    "cve/ghsa": 17,
+    "harm-db": 140,
+    "research/other": 44
+   }
+  },
+  "2024": {
+   "N": 346,
+   "pooled": 0.40173410404624277,
+   "std": 0.35142558256405926,
+   "within": {
+    "cve/ghsa": 0.7368421052631579,
+    "harm-db": 0.07281553398058252,
+    "research/other": 0.9411764705882353
+   },
+   "mix": {
+    "cve/ghsa": 38,
+    "harm-db": 206,
+    "research/other": 102
+   }
+  },
+  "2025": {
+   "N": 553,
+   "pooled": 0.5081374321880651,
+   "std": 0.4196427882676621,
+   "within": {
+    "cve/ghsa": 0.8394160583941606,
+    "harm-db": 0.13286713286713286,
+    "research/other": 0.9846153846153847
+   },
+   "mix": {
+    "cve/ghsa": 137,
+    "harm-db": 286,
+    "research/other": 130
+   }
+  },
+  "2026": {
+   "N": 1416,
+   "pooled": 0.5155367231638418,
+   "std": 0.522748426104275,
+   "within": {
+    "cve/ghsa": 0.9267782426778243,
+    "harm-db": 0.26106696935300794,
+    "research/other": 1.0
+   },
+   "mix": {
+    "cve/ghsa": 478,
+    "harm-db": 881,
+    "research/other": 57
+   }
+  }
+ },
+ "B5": [
+  {
+   "coding": "published (step 2)",
+   "unit": "merged record (published)",
+   "rtype": "all record types",
+   "cve_on": 0.880466472303207,
+   "hdb_with": 0.7815173987450086,
+   "res_on": 0.9287531806615776,
+   "V": 0.6839721936794686,
+   "pooled": {
+    "record weights (as published)": 0.4783851375491247,
+    "equal channel weights (1/3 each)": 0.6896726490555891,
+    "CVE/GHSA and harm-db equal, research 0": 0.5478423069167171
+   },
+   "frame_n": {
+    "cve/ghsa": 686,
+    "harm-db": 1753,
+    "research/other": 393
+   }
+  },
+  {
+   "coding": "published (step 2)",
+   "unit": "merged record (published)",
+   "rtype": "no demonstrations",
+   "cve_on": 0.8797653958944281,
+   "hdb_with": 0.7951247823563552,
+   "res_on": 0.7931034482758621,
+   "V": 0.6473049628142544,
+   "pooled": {
+    "record weights (as published)": 0.41429144921718186,
+    "equal channel weights (1/3 each)": 0.6640248132140355,
+    "CVE/GHSA and harm-db equal, research 0": 0.5405916752665978
+   },
+   "frame_n": {
+    "cve/ghsa": 682,
+    "harm-db": 1723,
+    "research/other": 116
+   }
+  },
+  {
+   "coding": "published (step 2)",
+   "unit": "merged record (published)",
+   "rtype": "realized (real-world + disclosure)",
+   "cve_on": 0.8640132669983416,
+   "hdb_with": 0.7951247823563552,
+   "res_on": 0.875,
+   "V": 0.6254499260713895,
+   "pooled": {
+    "record weights (as published)": 0.39181286549707606,
+    "equal channel weights (1/3 each)": 0.6644765906216648,
+    "CVE/GHSA and harm-db equal, research 0": 0.5328594642457503
+   },
+   "frame_n": {
+    "cve/ghsa": 603,
+    "harm-db": 1723,
+    "research/other": 88
+   }
+  },
+  {
+   "coding": "published (step 2)",
+   "unit": "merged record (published)",
+   "rtype": "observed (real-world only)",
+   "cve_on": 1.0,
+   "hdb_with": 0.8323207776427703,
+   "res_on": 0.875,
+   "V": 0.5055492196730085,
+   "pooled": {
+    "record weights (as published)": 0.22083805209513024,
+    "equal channel weights (1/3 each)": 0.6962547065174352,
+    "CVE/GHSA and harm-db equal, research 0": 0.580526638089406
+   },
+   "frame_n": {
+    "cve/ghsa": 50,
+    "harm-db": 1646,
+    "research/other": 88
+   }
+  },
+  {
+   "coding": "published (step 2)",
+   "unit": "source id, record's channel",
+   "rtype": "all record types",
+   "cve_on": 0.9071969696969697,
+   "hdb_with": 0.7853457172342622,
+   "res_on": 0.9215116279069767,
+   "V": 0.726292329214486,
+   "pooled": {
+    "record weights (as published)": 0.5480583861195263,
+    "equal channel weights (1/3 each)": 0.6937341541295656,
+    "CVE/GHSA and harm-db equal, research 0": 0.5581050363693865
+   },
+   "frame_n": {
+    "cve/ghsa": 1056,
+    "harm-db": 1938,
+    "research/other": 688
+   }
+  },
+  {
+   "coding": "published (step 2)",
+   "unit": "source id, record's channel",
+   "rtype": "no demonstrations",
+   "cve_on": 0.905587668593449,
+   "hdb_with": 0.8002103049421662,
+   "res_on": 0.7365591397849462,
+   "V": 0.6928770509886482,
+   "pooled": {
+    "record weights (as published)": 0.4673595323156869,
+    "equal channel weights (1/3 each)": 0.6537051670449099,
+    "CVE/GHSA and harm-db equal, research 0": 0.5497401405044717
+   },
+   "frame_n": {
+    "cve/ghsa": 1038,
+    "harm-db": 1902,
+    "research/other": 186
+   }
+  },
+  {
+   "coding": "published (step 2)",
+   "unit": "source id, record's channel",
+   "rtype": "realized (real-world + disclosure)",
+   "cve_on": 0.8978102189781022,
+   "hdb_with": 0.8002103049421662,
+   "res_on": 0.9083333333333333,
+   "V": 0.6888936302259615,
+   "pooled": {
+    "record weights (as published)": 0.45060893098782134,
+    "equal channel weights (1/3 each)": 0.6798856603352444,
+    "CVE/GHSA and harm-db equal, research 0": 0.5459154470246058
+   },
+   "frame_n": {
+    "cve/ghsa": 959,
+    "harm-db": 1902,
+    "research/other": 120
+   }
+  },
+  {
+   "coding": "published (step 2)",
+   "unit": "source id, record's channel",
+   "rtype": "observed (real-world only)",
+   "cve_on": 1.0,
+   "hdb_with": 0.8367234744365035,
+   "res_on": 0.9083333333333333,
+   "V": 0.646222501380394,
+   "pooled": {
+    "record weights (as published)": 0.2713400095374344,
+    "equal channel weights (1/3 each)": 0.7009133412194513,
+    "CVE/GHSA and harm-db equal, research 0": 0.5774569683509162
+   },
+   "frame_n": {
+    "cve/ghsa": 181,
+    "harm-db": 1819,
+    "research/other": 120
+   }
+  },
+  {
+   "coding": "published (step 2)",
+   "unit": "source id, own tracker's channel",
+   "rtype": "all record types",
+   "cve_on": 0.9015228426395939,
+   "hdb_with": 0.7864229765013054,
+   "res_on": 0.9066496163682864,
+   "V": 0.7182858117467606,
+   "pooled": {
+    "record weights (as published)": 0.5480583861195263,
+    "equal channel weights (1/3 each)": 0.6856345192212261,
+    "CVE/GHSA and harm-db equal, research 0": 0.555154048524763
+   },
+   "frame_n": {
+    "cve/ghsa": 985,
+    "harm-db": 1915,
+    "research/other": 782
+   }
+  },
+  {
+   "coding": "published (step 2)",
+   "unit": "source id, own tracker's channel",
+   "rtype": "no demonstrations",
+   "cve_on": 0.9012219959266803,
+   "hdb_with": 0.7989389920424403,
+   "res_on": 0.7374517374517374,
+   "V": 0.6813213478962342,
+   "pooled": {
+    "record weights (as published)": 0.46735953231568694,
+    "equal channel weights (1/3 each)": 0.642572505308914,
+    "CVE/GHSA and harm-db equal, research 0": 0.5486413666590231
+   },
+   "frame_n": {
+    "cve/ghsa": 982,
+    "harm-db": 1885,
+    "research/other": 259
+   }
+  },
+  {
+   "coding": "published (step 2)",
+   "unit": "source id, own tracker's channel",
+   "rtype": "realized (real-world + disclosure)",
+   "cve_on": 0.8925802879291251,
+   "hdb_with": 0.7989389920424403,
+   "res_on": 0.844559585492228,
+   "V": 0.6757392604895418,
+   "pooled": {
+    "record weights (as published)": 0.4506089309878214,
+    "equal channel weights (1/3 each)": 0.655042397691317,
+    "CVE/GHSA and harm-db equal, research 0": 0.5443915535262229
+   },
+   "frame_n": {
+    "cve/ghsa": 903,
+    "harm-db": 1885,
+    "research/other": 193
+   }
+  },
+  {
+   "coding": "published (step 2)",
+   "unit": "source id, own tracker's channel",
+   "rtype": "observed (real-world only)",
+   "cve_on": 1.0,
+   "hdb_with": 0.83564686285397,
+   "res_on": 0.8314606741573034,
+   "V": 0.6185346497716189,
+   "pooled": {
+    "record weights (as published)": 0.2713400095374344,
+    "equal channel weights (1/3 each)": 0.6741199403738103,
+    "CVE/GHSA and harm-db equal, research 0": 0.5784313725490196
+   },
+   "frame_n": {
+    "cve/ghsa": 141,
+    "harm-db": 1801,
+    "research/other": 178
+   }
+  },
+  {
+   "coding": "published (step 2)",
+   "unit": "templated series collapsed",
+   "rtype": "all record types",
+   "cve_on": 0.8774289985052317,
+   "hdb_with": 0.8030480656506445,
+   "res_on": 0.9287531806615776,
+   "V": 0.7058552375969157,
+   "pooled": {
+    "record weights (as published)": 0.46617915904936025,
+    "equal channel weights (1/3 each)": 0.6813929636874809,
+    "CVE/GHSA and harm-db equal, research 0": 0.5354227788645549
+   },
+   "frame_n": {
+    "cve/ghsa": 669.0,
+    "harm-db": 1706.0000000000007,
+    "research/other": 393
+   }
+  },
+  {
+   "coding": "published (step 2)",
+   "unit": "templated series collapsed",
+   "rtype": "no demonstrations",
+   "cve_on": 0.8766917293233083,
+   "hdb_with": 0.8174224343675415,
+   "res_on": 0.7931034482758621,
+   "V": 0.6709897866409926,
+   "pooled": {
+    "record weights (as published)": 0.39884631231973644,
+    "equal channel weights (1/3 each)": 0.6554716839271806,
+    "CVE/GHSA and harm-db equal, research 0": 0.5277619813363156
+   },
+   "frame_n": {
+    "cve/ghsa": 665.0,
+    "harm-db": 1676.0000000000007,
+    "research/other": 116
+   }
+  },
+  {
+   "coding": "published (step 2)",
+   "unit": "templated series collapsed",
+   "rtype": "realized (real-world + disclosure)",
+   "cve_on": 0.8600682593856654,
+   "hdb_with": 0.8174224343675415,
+   "res_on": 0.875,
+   "V": 0.6491837564964381,
+   "pooled": {
+    "record weights (as published)": 0.3751072961373392,
+    "equal channel weights (1/3 each)": 0.6556373849172256,
+    "CVE/GHSA and harm-db equal, research 0": 0.5196006556890914
+   },
+   "frame_n": {
+    "cve/ghsa": 586.0,
+    "harm-db": 1676.0000000000007,
+    "research/other": 88
+   }
+  },
+  {
+   "coding": "published (step 2)",
+   "unit": "templated series collapsed",
+   "rtype": "observed (real-world only)",
+   "cve_on": 1.0,
+   "hdb_with": 0.8323207776427703,
+   "res_on": 0.875,
+   "V": 0.5055492196730085,
+   "pooled": {
+    "record weights (as published)": 0.22083805209513024,
+    "equal channel weights (1/3 each)": 0.6962547065174352,
+    "CVE/GHSA and harm-db equal, research 0": 0.580526638089406
+   },
+   "frame_n": {
+    "cve/ghsa": 50,
+    "harm-db": 1646,
+    "research/other": 88
+   }
+  },
+  {
+   "coding": "text only (vector blanked)",
+   "unit": "merged record (published)",
+   "rtype": "all record types",
+   "cve_on": 0.9883720930232558,
+   "hdb_with": 0.9143054595715273,
+   "res_on": 0.8867924528301887,
+   "V": 0.8429170571994606,
+   "pooled": {
+    "record weights (as published)": 0.3531384762817441,
+    "equal channel weights (1/3 each)": 0.6564349095632745,
+    "CVE/GHSA and harm-db equal, research 0": 0.5370333167258643
+   },
+   "frame_n": {
+    "cve/ghsa": 430,
+    "harm-db": 1447,
+    "research/other": 212
+   }
+  },
+  {
+   "coding": "text only (vector blanked)",
+   "unit": "merged record (published)",
+   "rtype": "no demonstrations",
+   "cve_on": 0.9882903981264637,
+   "hdb_with": 0.9162049861495845,
+   "res_on": 0.6666666666666666,
+   "V": 0.8268856655708445,
+   "pooled": {
+    "record weights (as published)": 0.3020725388601036,
+    "equal channel weights (1/3 each)": 0.5833505045572648,
+    "CVE/GHSA and harm-db equal, research 0": 0.5360427059884396
+   },
+   "frame_n": {
+    "cve/ghsa": 427,
+    "harm-db": 1444,
+    "research/other": 60
+   }
+  },
+  {
+   "coding": "text only (vector blanked)",
+   "unit": "merged record (published)",
+   "rtype": "realized (real-world + disclosure)",
+   "cve_on": 0.9882903981264637,
+   "hdb_with": 0.9162049861495845,
+   "res_on": 0.8085106382978723,
+   "V": 0.8352753628396948,
+   "pooled": {
+    "record weights (as published)": 0.3030777256129369,
+    "equal channel weights (1/3 each)": 0.6327241228328727,
+    "CVE/GHSA and harm-db equal, research 0": 0.5360427059884396
+   },
+   "frame_n": {
+    "cve/ghsa": 427,
+    "harm-db": 1444,
+    "research/other": 47
+   }
+  },
+  {
+   "coding": "text only (vector blanked)",
+   "unit": "merged record (published)",
+   "rtype": "observed (real-world only)",
+   "cve_on": 1.0,
+   "hdb_with": 0.9621818181818181,
+   "res_on": 0.8085106382978723,
+   "V": 0.6652182168592294,
+   "pooled": {
+    "record weights (as published)": 0.07633587786259542,
+    "equal channel weights (1/3 each)": 0.6213017127799736,
+    "CVE/GHSA and harm-db equal, research 0": 0.5189090909090909
+   },
+   "frame_n": {
+    "cve/ghsa": 20,
+    "harm-db": 1375,
+    "research/other": 47
+   }
+  },
+  {
+   "coding": "text only (vector blanked)",
+   "unit": "source id, record's channel",
+   "rtype": "all record types",
+   "cve_on": 0.9912587412587412,
+   "hdb_with": 0.9114002478314746,
+   "res_on": 0.8482758620689655,
+   "V": 0.8415498280196105,
+   "pooled": {
+    "record weights (as published)": 0.38641875505254647,
+    "equal channel weights (1/3 each)": 0.6446750533646445,
+    "CVE/GHSA and harm-db equal, research 0": 0.5399292467136333
+   },
+   "frame_n": {
+    "cve/ghsa": 572,
+    "harm-db": 1614,
+    "research/other": 290
+   }
+  },
+  {
+   "coding": "text only (vector blanked)",
+   "unit": "source id, record's channel",
+   "rtype": "no demonstrations",
+   "cve_on": 0.9910071942446043,
+   "hdb_with": 0.9165109034267913,
+   "res_on": 0.6176470588235294,
+   "V": 0.8351364148576471,
+   "pooled": {
+    "record weights (as published)": 0.3306808134394341,
+    "equal channel weights (1/3 each)": 0.5660862223518123,
+    "CVE/GHSA and harm-db equal, research 0": 0.5372481454089065
+   },
+   "frame_n": {
+    "cve/ghsa": 556,
+    "harm-db": 1605,
+    "research/other": 102
+   }
+  },
+  {
+   "coding": "text only (vector blanked)",
+   "unit": "source id, record's channel",
+   "rtype": "realized (real-world + disclosure)",
+   "cve_on": 0.9910071942446043,
+   "hdb_with": 0.9165109034267913,
+   "res_on": 0.8695652173913043,
+   "V": 0.8533298057216441,
+   "pooled": {
+    "record weights (as published)": 0.3342305966801256,
+    "equal channel weights (1/3 each)": 0.6522830773314279,
+    "CVE/GHSA and harm-db equal, research 0": 0.5372481454089065
+   },
+   "frame_n": {
+    "cve/ghsa": 556,
+    "harm-db": 1605,
+    "research/other": 69
+   }
+  },
+  {
+   "coding": "text only (vector blanked)",
+   "unit": "source id, record's channel",
+   "rtype": "observed (real-world only)",
+   "cve_on": 1.0,
+   "hdb_with": 0.961437908496732,
+   "res_on": 0.8695652173913043,
+   "V": 0.7823664434061162,
+   "pooled": {
+    "record weights (as published)": 0.11117788461538461,
+    "equal channel weights (1/3 each)": 0.6403050108932462,
+    "CVE/GHSA and harm-db equal, research 0": 0.519281045751634
+   },
+   "frame_n": {
+    "cve/ghsa": 66,
+    "harm-db": 1530,
+    "research/other": 69
+   }
+  },
+  {
+   "coding": "text only (vector blanked)",
+   "unit": "source id, own tracker's channel",
+   "rtype": "all record types",
+   "cve_on": 0.9905660377358491,
+   "hdb_with": 0.9132075471698113,
+   "res_on": 0.8230337078651685,
+   "V": 0.8310489183979008,
+   "pooled": {
+    "record weights (as published)": 0.38641875505254647,
+    "equal channel weights (1/3 each)": 0.635014035461749,
+    "CVE/GHSA and harm-db equal, research 0": 0.5386792452830189
+   },
+   "frame_n": {
+    "cve/ghsa": 530,
+    "harm-db": 1590,
+    "research/other": 356
+   }
+  },
+  {
+   "coding": "text only (vector blanked)",
+   "unit": "source id, own tracker's channel",
+   "rtype": "no demonstrations",
+   "cve_on": 0.990530303030303,
+   "hdb_with": 0.9149338374291115,
+   "res_on": 0.6081081081081081,
+   "V": 0.8207870212392373,
+   "pooled": {
+    "record weights (as published)": 0.3306808134394341,
+    "equal channel weights (1/3 each)": 0.5626137878534584,
+    "CVE/GHSA and harm-db equal, research 0": 0.5377982328005957
+   },
+   "frame_n": {
+    "cve/ghsa": 528,
+    "harm-db": 1587,
+    "research/other": 148
+   }
+  },
+  {
+   "coding": "text only (vector blanked)",
+   "unit": "source id, own tracker's channel",
+   "rtype": "realized (real-world + disclosure)",
+   "cve_on": 0.990530303030303,
+   "hdb_with": 0.9149338374291115,
+   "res_on": 0.7565217391304347,
+   "V": 0.8363291983843156,
+   "pooled": {
+    "record weights (as published)": 0.3342305966801256,
+    "equal channel weights (1/3 each)": 0.6129181201126779,
+    "CVE/GHSA and harm-db equal, research 0": 0.5377982328005957
+   },
+   "frame_n": {
+    "cve/ghsa": 528,
+    "harm-db": 1587,
+    "research/other": 115
+   }
+  },
+  {
+   "coding": "text only (vector blanked)",
+   "unit": "source id, own tracker's channel",
+   "rtype": "observed (real-world only)",
+   "cve_on": 1.0,
+   "hdb_with": 0.9603174603174603,
+   "res_on": 0.7307692307692307,
+   "V": 0.726931338214311,
+   "pooled": {
+    "record weights (as published)": 0.11117788461538461,
+    "equal channel weights (1/3 each)": 0.5925155391174808,
+    "CVE/GHSA and harm-db equal, research 0": 0.5198412698412699
+   },
+   "frame_n": {
+    "cve/ghsa": 49,
+    "harm-db": 1512,
+    "research/other": 104
+   }
+  },
+  {
+   "coding": "text only (vector blanked)",
+   "unit": "templated series collapsed",
+   "rtype": "all record types",
+   "cve_on": 0.9879903923138511,
+   "hdb_with": 0.945,
+   "res_on": 0.8867924528301887,
+   "V": 0.8853471644341186,
+   "pooled": {
+    "record weights (as published)": 0.3337720019740089,
+    "equal channel weights (1/3 each)": 0.6460761625173154,
+    "CVE/GHSA and harm-db equal, research 0": 0.5214951961569255
+   },
+   "frame_n": {
+    "cve/ghsa": 416.3333333333333,
+    "harm-db": 1400.0,
+    "research/other": 212
+   }
+  },
+  {
+   "coding": "text only (vector blanked)",
+   "unit": "templated series collapsed",
+   "rtype": "no demonstrations",
+   "cve_on": 0.9879032258064516,
+   "hdb_with": 0.9470293486041518,
+   "res_on": 0.6666666666666666,
+   "V": 0.8754757323347697,
+   "pooled": {
+    "record weights (as published)": 0.2794222539229672,
+    "equal channel weights (1/3 each)": 0.572946659632405,
+    "CVE/GHSA and harm-db equal, research 0": 0.5204369386011499
+   },
+   "frame_n": {
+    "cve/ghsa": 413.3333333333333,
+    "harm-db": 1397.0,
+    "research/other": 60
+   }
+  },
+  {
+   "coding": "text only (vector blanked)",
+   "unit": "templated series collapsed",
+   "rtype": "realized (real-world + disclosure)",
+   "cve_on": 0.9879032258064516,
+   "hdb_with": 0.9470293486041518,
+   "res_on": 0.8085106382978723,
+   "V": 0.8843211023216823,
+   "pooled": {
+    "record weights (as published)": 0.28030166995869993,
+    "equal channel weights (1/3 each)": 0.6223202779080129,
+    "CVE/GHSA and harm-db equal, research 0": 0.5204369386011499
+   },
+   "frame_n": {
+    "cve/ghsa": 413.3333333333333,
+    "harm-db": 1397.0,
+    "research/other": 47
+   }
+  },
+  {
+   "coding": "text only (vector blanked)",
+   "unit": "templated series collapsed",
+   "rtype": "observed (real-world only)",
+   "cve_on": 1.0,
+   "hdb_with": 0.9621818181818181,
+   "res_on": 0.8085106382978723,
+   "V": 0.6652182168592294,
+   "pooled": {
+    "record weights (as published)": 0.07633587786259542,
+    "equal channel weights (1/3 each)": 0.6213017127799736,
+    "CVE/GHSA and harm-db equal, research 0": 0.5189090909090909
+   },
+   "frame_n": {
+    "cve/ghsa": 20,
+    "harm-db": 1375,
+    "research/other": 47
+   }
+  },
+  {
+   "coding": "reviewed (step 4)",
+   "unit": "merged record (published)",
+   "rtype": "all record types",
+   "cve_on": 0.9966887417218543,
+   "hdb_with": 0.8181818181818182,
+   "res_on": 0.9293193717277487,
+   "V": 0.79979930103096,
+   "pooled": {
+    "record weights (as published)": 0.5008278145695364,
+    "equal channel weights (1/3 each)": 0.7165858279651383,
+    "CVE/GHSA and harm-db equal, research 0": 0.5872413793103448
+   },
+   "frame_n": {
+    "cve/ghsa": 604,
+    "harm-db": 1463,
+    "research/other": 382
+   }
+  },
+  {
+   "coding": "reviewed (step 4)",
+   "unit": "merged record (published)",
+   "rtype": "no demonstrations",
+   "cve_on": 0.9966666666666667,
+   "hdb_with": 0.8255172413793104,
+   "res_on": 0.7946428571428571,
+   "V": 0.7774476542358023,
+   "pooled": {
+    "record weights (as published)": 0.4348030018761726,
+    "equal channel weights (1/3 each)": 0.694846795658194,
+    "CVE/GHSA and harm-db equal, research 0": 0.5835073068893528
+   },
+   "frame_n": {
+    "cve/ghsa": 600,
+    "harm-db": 1450,
+    "research/other": 112
+   }
+  },
+  {
+   "coding": "reviewed (step 4)",
+   "unit": "merged record (published)",
+   "rtype": "realized (real-world + disclosure)",
+   "cve_on": 0.9961612284069098,
+   "hdb_with": 0.8255172413793104,
+   "res_on": 0.8809523809523809,
+   "V": 0.7643071184747409,
+   "pooled": {
+    "record weights (as published)": 0.4093366093366093,
+    "equal channel weights (1/3 each)": 0.7012411581793997,
+    "CVE/GHSA and harm-db equal, research 0": 0.5835073068893528
+   },
+   "frame_n": {
+    "cve/ghsa": 521,
+    "harm-db": 1450,
+    "research/other": 84
+   }
+  },
+  {
+   "coding": "reviewed (step 4)",
+   "unit": "merged record (published)",
+   "rtype": "observed (real-world only)",
+   "cve_on": 1.0,
+   "hdb_with": 0.8718135469774217,
+   "res_on": 0.8809523809523809,
+   "V": 0.6004629247374976,
+   "pooled": {
+    "record weights (as published)": 0.19274680993955673,
+    "equal channel weights (1/3 each)": 0.6855206006453213,
+    "CVE/GHSA and harm-db equal, research 0": 0.5599264705882353
+   },
+   "frame_n": {
+    "cve/ghsa": 50,
+    "harm-db": 1373,
+    "research/other": 84
+   }
+  },
+  {
+   "coding": "reviewed (step 4)",
+   "unit": "source id, record's channel",
+   "rtype": "all record types",
+   "cve_on": 0.997907949790795,
+   "hdb_with": 0.8208409506398537,
+   "res_on": 0.9217134416543574,
+   "V": 0.8259181422186205,
+   "pooled": {
+    "record weights (as published)": 0.5752404591995035,
+    "equal channel weights (1/3 each)": 0.7119999084369617,
+    "CVE/GHSA and harm-db equal, research 0": 0.5850277264325323
+   },
+   "frame_n": {
+    "cve/ghsa": 956,
+    "harm-db": 1641,
+    "research/other": 677
+   }
+  },
+  {
+   "coding": "reviewed (step 4)",
+   "unit": "source id, record's channel",
+   "rtype": "no demonstrations",
+   "cve_on": 0.997867803837953,
+   "hdb_with": 0.8304562268803946,
+   "res_on": 0.7362637362637363,
+   "V": 0.8078636491181046,
+   "pooled": {
+    "record weights (as published)": 0.4923933209647495,
+    "equal channel weights (1/3 each)": 0.6749135226450004,
+    "CVE/GHSA and harm-db equal, research 0": 0.5801122194513716
+   },
+   "frame_n": {
+    "cve/ghsa": 938,
+    "harm-db": 1622,
+    "research/other": 182
+   }
+  },
+  {
+   "coding": "reviewed (step 4)",
+   "unit": "source id, record's channel",
+   "rtype": "realized (real-world + disclosure)",
+   "cve_on": 0.9976717112922002,
+   "hdb_with": 0.8304562268803946,
+   "res_on": 0.9137931034482759,
+   "V": 0.809950108838316,
+   "pooled": {
+    "record weights (as published)": 0.47433903576982894,
+    "equal channel weights (1/3 each)": 0.7050597979525659,
+    "CVE/GHSA and harm-db equal, research 0": 0.5801122194513716
+   },
+   "frame_n": {
+    "cve/ghsa": 859,
+    "harm-db": 1622,
+    "research/other": 116
+   }
+  },
+  {
+   "coding": "reviewed (step 4)",
+   "unit": "source id, record's channel",
+   "rtype": "observed (real-world only)",
+   "cve_on": 1.0,
+   "hdb_with": 0.8752436647173489,
+   "res_on": 0.9137931034482759,
+   "V": 0.7333988102690905,
+   "pooled": {
+    "record weights (as published)": 0.25427468284611143,
+    "equal channel weights (1/3 each)": 0.6897844590152281,
+    "CVE/GHSA and harm-db equal, research 0": 0.5571992110453649
+   },
+   "frame_n": {
+    "cve/ghsa": 181,
+    "harm-db": 1539,
+    "research/other": 116
+   }
+  },
+  {
+   "coding": "reviewed (step 4)",
+   "unit": "source id, own tracker's channel",
+   "rtype": "all record types",
+   "cve_on": 0.9977426636568849,
+   "hdb_with": 0.8225108225108225,
+   "res_on": 0.9066147859922179,
+   "V": 0.8168342487280738,
+   "pooled": {
+    "record weights (as published)": 0.5752404591995036,
+    "equal channel weights (1/3 each)": 0.7054745594301665,
+    "CVE/GHSA and harm-db equal, research 0": 0.584634603372892
+   },
+   "frame_n": {
+    "cve/ghsa": 886,
+    "harm-db": 1617,
+    "research/other": 771
+   }
+  },
+  {
+   "coding": "reviewed (step 4)",
+   "unit": "source id, own tracker's channel",
+   "rtype": "no demonstrations",
+   "cve_on": 0.9977349943374858,
+   "hdb_with": 0.8291770573566085,
+   "res_on": 0.7372549019607844,
+   "V": 0.7951606094798399,
+   "pooled": {
+    "record weights (as published)": 0.4923933209647495,
+    "equal channel weights (1/3 each)": 0.6647756403111834,
+    "CVE/GHSA and harm-db equal, research 0": 0.5812342569269522
+   },
+   "frame_n": {
+    "cve/ghsa": 883,
+    "harm-db": 1604,
+    "research/other": 255
+   }
+  },
+  {
+   "coding": "reviewed (step 4)",
+   "unit": "source id, own tracker's channel",
+   "rtype": "realized (real-world + disclosure)",
+   "cve_on": 0.9975124378109452,
+   "hdb_with": 0.8291770573566085,
+   "res_on": 0.8465608465608465,
+   "V": 0.7955499163585342,
+   "pooled": {
+    "record weights (as published)": 0.47433903576982894,
+    "equal channel weights (1/3 each)": 0.680529797658261,
+    "CVE/GHSA and harm-db equal, research 0": 0.5812342569269522
+   },
+   "frame_n": {
+    "cve/ghsa": 804,
+    "harm-db": 1604,
+    "research/other": 189
+   }
+  },
+  {
+   "coding": "reviewed (step 4)",
+   "unit": "source id, own tracker's channel",
+   "rtype": "observed (real-world only)",
+   "cve_on": 1.0,
+   "hdb_with": 0.8744247205785667,
+   "res_on": 0.8333333333333334,
+   "V": 0.703263841547405,
+   "pooled": {
+    "record weights (as published)": 0.25427468284611143,
+    "equal channel weights (1/3 each)": 0.6615141809404447,
+    "CVE/GHSA and harm-db equal, research 0": 0.5581395348837209
+   },
+   "frame_n": {
+    "cve/ghsa": 141,
+    "harm-db": 1521,
+    "research/other": 174
+   }
+  },
+  {
+   "coding": "reviewed (step 4)",
+   "unit": "templated series collapsed",
+   "rtype": "all record types",
+   "cve_on": 0.996596710153148,
+   "hdb_with": 0.8453389830508478,
+   "res_on": 0.9293193717277487,
+   "V": 0.8282881529096634,
+   "pooled": {
+    "record weights (as published)": 0.48739019552281093,
+    "equal channel weights (1/3 each)": 0.7073676501687904,
+    "CVE/GHSA and harm-db equal, research 0": 0.5734141126158231
+   },
+   "frame_n": {
+    "cve/ghsa": 587.6666666666666,
+    "harm-db": 1415.9999999999995,
+    "research/other": 382
+   }
+  },
+  {
+   "coding": "reviewed (step 4)",
+   "unit": "templated series collapsed",
+   "rtype": "no demonstrations",
+   "cve_on": 0.9965733866362079,
+   "hdb_with": 0.8531717747683538,
+   "res_on": 0.7946428571428571,
+   "V": 0.809348318259086,
+   "pooled": {
+    "record weights (as published)": 0.4174991943280695,
+    "equal channel weights (1/3 each)": 0.6854582313530617,
+    "CVE/GHSA and harm-db equal, research 0": 0.5694244604316545
+   },
+   "frame_n": {
+    "cve/ghsa": 583.6666666666666,
+    "harm-db": 1402.9999999999995,
+    "research/other": 112
+   }
+  },
+  {
+   "coding": "reviewed (step 4)",
+   "unit": "templated series collapsed",
+   "rtype": "realized (real-world + disclosure)",
+   "cve_on": 0.9960369881109643,
+   "hdb_with": 0.8531717747683538,
+   "res_on": 0.8809523809523809,
+   "V": 0.7973748148462169,
+   "pooled": {
+    "record weights (as published)": 0.3903634826711748,
+    "equal channel weights (1/3 each)": 0.6918525938742676,
+    "CVE/GHSA and harm-db equal, research 0": 0.5694244604316545
+   },
+   "frame_n": {
+    "cve/ghsa": 504.66666666666663,
+    "harm-db": 1402.9999999999995,
+    "research/other": 84
+   }
+  },
+  {
+   "coding": "reviewed (step 4)",
+   "unit": "templated series collapsed",
+   "rtype": "observed (real-world only)",
+   "cve_on": 1.0,
+   "hdb_with": 0.8718135469774217,
+   "res_on": 0.8809523809523809,
+   "V": 0.6004629247374976,
+   "pooled": {
+    "record weights (as published)": 0.19274680993955673,
+    "equal channel weights (1/3 each)": 0.6855206006453213,
+    "CVE/GHSA and harm-db equal, research 0": 0.5599264705882353
+   },
+   "frame_n": {
+    "cve/ghsa": 50,
+    "harm-db": 1373,
+    "research/other": 84
+   }
+  },
+  {
+   "coding": "reviewed + leak to WITH",
+   "unit": "merged record (published)",
+   "rtype": "all record types",
+   "cve_on": 0.9966887417218543,
+   "hdb_with": 0.8530416951469583,
+   "res_on": 0.8952879581151832,
+   "V": 0.822848967508799,
+   "pooled": {
+    "record weights (as published)": 0.47433774834437087,
+    "equal channel weights (1/3 each)": 0.692956928129342,
+    "CVE/GHSA and harm-db equal, research 0": 0.569655172413793
+   },
+   "frame_n": {
+    "cve/ghsa": 604,
+    "harm-db": 1463,
+    "research/other": 382
+   }
+  },
+  {
+   "coding": "reviewed + leak to WITH",
+   "unit": "merged record (published)",
+   "rtype": "no demonstrations",
+   "cve_on": 0.9966666666666667,
+   "hdb_with": 0.8606896551724138,
+   "res_on": 0.6964285714285714,
+   "V": 0.8068254602513196,
+   "pooled": {
+    "record weights (as published)": 0.4057223264540338,
+    "equal channel weights (1/3 each)": 0.6452159065636456,
+    "CVE/GHSA and harm-db equal, research 0": 0.5657620041753654
+   },
+   "frame_n": {
+    "cve/ghsa": 600,
+    "harm-db": 1450,
+    "research/other": 112
+   }
+  },
+  {
+   "coding": "reviewed + leak to WITH",
+   "unit": "merged record (published)",
+   "rtype": "realized (real-world + disclosure)",
+   "cve_on": 0.9961612284069098,
+   "hdb_with": 0.8606896551724138,
+   "res_on": 0.8214285714285714,
+   "V": 0.8000542301242888,
+   "pooled": {
+    "record weights (as published)": 0.38181818181818183,
+    "equal channel weights (1/3 each)": 0.6683139099565727,
+    "CVE/GHSA and harm-db equal, research 0": 0.5657620041753654
+   },
+   "frame_n": {
+    "cve/ghsa": 521,
+    "harm-db": 1450,
+    "research/other": 84
+   }
+  },
+  {
+   "coding": "reviewed + leak to WITH",
+   "unit": "merged record (published)",
+   "rtype": "observed (real-world only)",
+   "cve_on": 1.0,
+   "hdb_with": 0.9089584850691915,
+   "res_on": 0.8214285714285714,
+   "V": 0.6546974174828888,
+   "pooled": {
+    "record weights (as published)": 0.15513767629281394,
+    "equal channel weights (1/3 each)": 0.6519235542318192,
+    "CVE/GHSA and harm-db equal, research 0": 0.5411764705882353
+   },
+   "frame_n": {
+    "cve/ghsa": 50,
+    "harm-db": 1373,
+    "research/other": 84
+   }
+  },
+  {
+   "coding": "reviewed + leak to WITH",
+   "unit": "source id, record's channel",
+   "rtype": "all record types",
+   "cve_on": 0.997907949790795,
+   "hdb_with": 0.8525289457647776,
+   "res_on": 0.8995568685376661,
+   "V": 0.8447965301722927,
+   "pooled": {
+    "record weights (as published)": 0.5544523735650015,
+    "equal channel weights (1/3 each)": 0.6935801593069695,
+    "CVE/GHSA and harm-db equal, research 0": 0.5690080098582871
+   },
+   "frame_n": {
+    "cve/ghsa": 956,
+    "harm-db": 1641,
+    "research/other": 677
+   }
+  },
+  {
+   "coding": "reviewed + leak to WITH",
+   "unit": "source id, record's channel",
+   "rtype": "no demonstrations",
+   "cve_on": 0.997867803837953,
+   "hdb_with": 0.8625154130702836,
+   "res_on": 0.6648351648351648,
+   "V": 0.8330627395899509,
+   "pooled": {
+    "record weights (as published)": 0.4682745825602968,
+    "equal channel weights (1/3 each)": 0.6361502158582039,
+    "CVE/GHSA and harm-db equal, research 0": 0.5639027431421446
+   },
+   "frame_n": {
+    "cve/ghsa": 938,
+    "harm-db": 1622,
+    "research/other": 182
+   }
+  },
+  {
+   "coding": "reviewed + leak to WITH",
+   "unit": "source id, record's channel",
+   "rtype": "realized (real-world + disclosure)",
+   "cve_on": 0.9976717112922002,
+   "hdb_with": 0.8625154130702836,
+   "res_on": 0.8620689655172413,
+   "V": 0.8389054923084652,
+   "pooled": {
+    "record weights (as published)": 0.45178849144634525,
+    "equal channel weights (1/3 each)": 0.6762354623950633,
+    "CVE/GHSA and harm-db equal, research 0": 0.5639027431421446
+   },
+   "frame_n": {
+    "cve/ghsa": 859,
+    "harm-db": 1622,
+    "research/other": 116
+   }
+  },
+  {
+   "coding": "reviewed + leak to WITH",
+   "unit": "source id, record's channel",
+   "rtype": "observed (real-world only)",
+   "cve_on": 1.0,
+   "hdb_with": 0.9090318388564003,
+   "res_on": 0.8620689655172413,
+   "V": 0.7812485130881202,
+   "pooled": {
+    "record weights (as published)": 0.22228350799779373,
+    "equal channel weights (1/3 each)": 0.6603704296011987,
+    "CVE/GHSA and harm-db equal, research 0": 0.5401051939513478
+   },
+   "frame_n": {
+    "cve/ghsa": 181,
+    "harm-db": 1539,
+    "research/other": 116
+   }
+  },
+  {
+   "coding": "reviewed + leak to WITH",
+   "unit": "source id, own tracker's channel",
+   "rtype": "all record types",
+   "cve_on": 0.9977426636568849,
+   "hdb_with": 0.8546691403834261,
+   "res_on": 0.8871595330739299,
+   "V": 0.8364845233649022,
+   "pooled": {
+    "record weights (as published)": 0.5544523735650015,
+    "equal channel weights (1/3 each)": 0.6878729249503613,
+    "CVE/GHSA and harm-db equal, research 0": 0.5683947532792005
+   },
+   "frame_n": {
+    "cve/ghsa": 886,
+    "harm-db": 1617,
+    "research/other": 771
+   }
+  },
+  {
+   "coding": "reviewed + leak to WITH",
+   "unit": "source id, own tracker's channel",
+   "rtype": "no demonstrations",
+   "cve_on": 0.9977349943374858,
+   "hdb_with": 0.8615960099750624,
+   "res_on": 0.6862745098039216,
+   "V": 0.8209659439820751,
+   "pooled": {
+    "record weights (as published)": 0.46827458256029686,
+    "equal channel weights (1/3 each)": 0.6346864017000661,
+    "CVE/GHSA and harm-db equal, research 0": 0.5648614609571788
+   },
+   "frame_n": {
+    "cve/ghsa": 883,
+    "harm-db": 1604,
+    "research/other": 255
+   }
+  },
+  {
+   "coding": "reviewed + leak to WITH",
+   "unit": "source id, own tracker's channel",
+   "rtype": "realized (real-world + disclosure)",
+   "cve_on": 0.9975124378109452,
+   "hdb_with": 0.8615960099750624,
+   "res_on": 0.8148148148148148,
+   "V": 0.8254560145605371,
+   "pooled": {
+    "record weights (as published)": 0.45178849144634525,
+    "equal channel weights (1/3 each)": 0.658625589356068,
+    "CVE/GHSA and harm-db equal, research 0": 0.5648614609571788
+   },
+   "frame_n": {
+    "cve/ghsa": 804,
+    "harm-db": 1604,
+    "research/other": 189
+   }
+  },
+  {
+   "coding": "reviewed + leak to WITH",
+   "unit": "source id, own tracker's channel",
+   "rtype": "observed (real-world only)",
+   "cve_on": 1.0,
+   "hdb_with": 0.908612754766601,
+   "res_on": 0.7988505747126436,
+   "V": 0.7518445447190435,
+   "pooled": {
+    "record weights (as published)": 0.22228350799779373,
+    "equal channel weights (1/3 each)": 0.638020968030716,
+    "CVE/GHSA and harm-db equal, research 0": 0.5408637873754153
+   },
+   "frame_n": {
+    "cve/ghsa": 141,
+    "harm-db": 1521,
+    "research/other": 174
+   }
+  },
+  {
+   "coding": "reviewed + leak to WITH",
+   "unit": "templated series collapsed",
+   "rtype": "all record types",
+   "cve_on": 0.996596710153148,
+   "hdb_with": 0.8813559322033901,
+   "res_on": 0.8952879581151832,
+   "V": 0.8536508824172033,
+   "pooled": {
+    "record weights (as published)": 0.46018702181921217,
+    "equal channel weights (1/3 each)": 0.6833459958905431,
+    "CVE/GHSA and harm-db equal, research 0": 0.555238774055595
+   },
+   "frame_n": {
+    "cve/ghsa": 587.6666666666666,
+    "harm-db": 1415.9999999999995,
+    "research/other": 382
+   }
+  },
+  {
+   "coding": "reviewed + leak to WITH",
+   "unit": "templated series collapsed",
+   "rtype": "no demonstrations",
+   "cve_on": 0.9965733866362079,
+   "hdb_with": 0.8895224518888099,
+   "res_on": 0.6964285714285714,
+   "V": 0.842152717385849,
+   "pooled": {
+    "record weights (as published)": 0.3875281985175636,
+    "equal channel weights (1/3 each)": 0.6354273282405003,
+    "CVE/GHSA and harm-db equal, research 0": 0.5510791366906473
+   },
+   "frame_n": {
+    "cve/ghsa": 583.6666666666666,
+    "harm-db": 1402.9999999999998,
+    "research/other": 112
+   }
+  },
+  {
+   "coding": "reviewed + leak to WITH",
+   "unit": "templated series collapsed",
+   "rtype": "realized (real-world + disclosure)",
+   "cve_on": 0.9960369881109643,
+   "hdb_with": 0.8895224518888099,
+   "res_on": 0.8214285714285714,
+   "V": 0.8371539118093252,
+   "pooled": {
+    "record weights (as published)": 0.36196111580726953,
+    "equal channel weights (1/3 each)": 0.6585253316334274,
+    "CVE/GHSA and harm-db equal, research 0": 0.5510791366906473
+   },
+   "frame_n": {
+    "cve/ghsa": 504.66666666666663,
+    "harm-db": 1402.9999999999998,
+    "research/other": 84
+   }
+  },
+  {
+   "coding": "reviewed + leak to WITH",
+   "unit": "templated series collapsed",
+   "rtype": "observed (real-world only)",
+   "cve_on": 1.0,
+   "hdb_with": 0.9089584850691915,
+   "res_on": 0.8214285714285714,
+   "V": 0.6546974174828888,
+   "pooled": {
+    "record weights (as published)": 0.15513767629281394,
+    "equal channel weights (1/3 each)": 0.6519235542318192,
+    "CVE/GHSA and harm-db equal, research 0": 0.5411764705882353
+   },
+   "frame_n": {
+    "cve/ghsa": 50,
+    "harm-db": 1373,
+    "research/other": 84
+   }
+  }
+ ]
+}

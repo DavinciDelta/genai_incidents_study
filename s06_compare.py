@@ -43,8 +43,8 @@ L = ["# Step 6 — Pre vs current vs 2026: what the review changed", "",
      "Three views of the same labels. *Pre* = the first value, from step 4's keyword rules or the corpus attack-vector label, 'unstated' where neither gave one (`out/dataset_pre.csv`). "
      "*Current* = the reviewed value reported in step 4 (`out/dataset_post.csv`). "
      f"*{YEAR}* = the current value for the {sum(r['year'] == YEAR for r in POST.values()):,} records dated {YEAR} (`out/dataset_post_{YEAR}.csv`; the corpus year is often the ingestion year, Table 1.5). "
-     f"These tables keep every ON-AI and WITH-AI record, so n is {n_pop['ON-AI']:,} and {n_pop['WITH-AI']:,}; step 5 leaves out the no-attacker records and the conventional-exploit records "
-     f"misplaced in WITH-AI ({drop5['ON-AI']} ON-AI, {drop5['WITH-AI']} WITH-AI).", "",
+     f"These tables keep every ON-AI and WITH-AI record (n = {n_pop['ON-AI']:,} and {n_pop['WITH-AI']:,}), as step 5 does; {drop5['ON-AI']} ON-AI and {drop5['WITH-AI']} WITH-AI records are ones "
+     f"the review could not place as attacks (no attacker, or a conventional-exploit record misplaced in WITH-AI).", "",
      "Per-record values and how each was set: `out/dataset_post.csv` (columns in the README).", "", READ]
 
 # ---------------------------------------------------------------- one table per population
@@ -111,7 +111,7 @@ def moves(pop):
         dlt = {v: sh_(dr, v, 3) - sh_(dr, v, 2) for v in vs}; up = max(vs, key=dlt.get); dn = min(vs, key=dlt.get)
         part = (f"{up}, a value the first rules never give, now holds {sh_(dr, up, 3):.1f}%" if not c0[up] else f"{up} rose {dlt[up]:.1f} points")
         from_drop = round(100 * (sum(x[1] in DROPPED and x[3] == up for x in dr) - sum(x[1] in DROPPED and x[2] == up for x in dr)) / len(dr), 1)
-        if from_drop >= dlt[up] / 2: part += f" ({from_drop:.1f} points of it from records step 5 leaves out)"
+        if from_drop >= dlt[up] / 2: part += f" ({from_drop:.1f} points of it from records the review could not place as attacks)"
         part += f"; {dn} fell {abs(dlt[dn]):.1f} points"
         out.append(f"{NAME[d]}: {part}")
     return ". ".join(out)

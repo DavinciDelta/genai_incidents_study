@@ -1,0 +1,7 @@
+snapshot: 24806f1a4f09… (7,714 records); gold rows: 1,200
+
+| channel | gold rows | blind first read: out of scope | final label: no entry |
+|---|---|---|---|
+| cve/ghsa | 289 | 51 (18%) | 25 (9%) |
+| harm-db | 810 | 512 (63%) | 408 (50%) |
+| research/other | 101 | 37 (37%) | 11 (11%) |

@@ -1,0 +1,89 @@
+# B1. Unit of count (deduplication)
+
+Frame records 2,832 carry 3,682 source ids; 276 records merge 2+ ids; largest: INC-04106 174 ids (research/other, ON-AI), INC-01015 120 ids (cve/ghsa, ON-AI), INC-02984 32 ids (cve/ghsa, ON-AI), INC-01291 28 ids (cve/ghsa, ON-AI).
+Residual duplicate keys after the corpus merge: CVE ids on 2+ records 0 of 9,169; source ids on 2+ records 0 of 18,765.
+Templated title series (3+ frame records sharing a title once quoted phrases, CVE/GHSA ids and numbers are removed): 10 series, 74 records; largest: 38 x 'Multiple Model Guardrail Jailbreak via "Incremental Table Co' (harm-db, ON-AI); 8 x 'Cursor — Prompt Injection (CVE-2026-31854)' (cve/ghsa, ON-AI); 7 x 'NSFW OpenAI DALL-E3 Guardrail Jailbreak via "Classical Art R' (harm-db, ON-AI)
+Title-similarity check (token Jaccard >= 0.6, stop words out): 92 record pairs among 2,832 frame records ({('harm-db', 'harm-db'): 54, ('cve/ghsa', 'cve/ghsa'): 31, ('research/other', 'research/other'): 3, ('research/other', 'cve/ghsa'): 1, ('harm-db', 'research/other'): 2, ('research/other', 'harm-db'): 1}); these are mostly templated series of distinct items, not the same event (read a sample: feas_B prints none, proto in proto_dup.py).
+
+## B1. Unit of count
+
+| cut | CVE/GHSA: ON-AI share of frame | harm-db: WITH-AI share of frame | research/other: ON-AI share | pooled ON / (ON+WITH) | ON:WITH ratio | Cramér's V (ON vs WITH) |
+|---|---|---|---|---|---|---|
+| baseline: published, merged records, all types | 88.0% (604/686) | 78.2% (1,370/1,753) | 92.9% (365/393) | 47.8% (1,339/2,799) | 0.92 | 0.68 |
+| source id, record's channel | 90.7% (958/1,056) | 78.5% (1,522/1,938) | 92.2% (634/688) | 54.8% (1,990/3,631) | 1.21 | 0.73 |
+| source id, own tracker's channel | 90.2% (888/985) | 78.6% (1,506/1,915) | 90.7% (709/782) | 54.8% (1,990/3,631) | 1.21 | 0.72 |
+| templated series collapsed | 87.7% (587/669) | 80.3% (1,370/1,706) | 92.9% (365/393) | 46.6% (1,275/2,735) | 0.87 | 0.71 |
+
+# B2. Human (LLM-reviewer) correction
+
+## B2. Correction
+
+| cut | CVE/GHSA: ON-AI share of frame | harm-db: WITH-AI share of frame | research/other: ON-AI share | pooled ON / (ON+WITH) | ON:WITH ratio | Cramér's V (ON vs WITH) |
+|---|---|---|---|---|---|---|
+| baseline: published, merged records, all types | 88.0% (604/686) | 78.2% (1,370/1,753) | 92.9% (365/393) | 47.8% (1,339/2,799) | 0.92 | 0.68 |
+| text only (vector blanked) | 98.8% (425/430) | 91.4% (1,323/1,447) | 88.7% (188/212) | 35.3% (737/2,087) | 0.55 | 0.84 |
+| reviewed (step 4) | 99.7% (602/604) | 81.8% (1,197/1,463) | 92.9% (355/382) | 50.1% (1,210/2,416) | 1.00 | 0.80 |
+| reviewed + leak to WITH | 99.7% (602/604) | 85.3% (1,248/1,463) | 89.5% (342/382) | 47.4% (1,146/2,416) | 0.90 | 0.82 |
+| hand-labelled frame records only (339), step-2 populations | 93.6% (44/47) | 79.1% (170/215) | 96.1% (74/77) | 48.1% (161/335) | 0.93 | 0.74 |
+| same, the human's 'no entry fits' records dropped (98) | 95.3% (41/43) | 75.8% (97/128) | 95.7% (67/70) | 58.0% (138/238) | 1.38 | 0.74 |
+
+(The hand-labelled rows were drawn by quota, so the last two rows describe that sample only.)
+
+Keeping the records the review took out in the denominator (as their own categories, not dropped):
+
+| cut | CVE/GHSA: ON-AI share of frame | harm-db: WITH-AI share of frame | research/other: ON-AI share | pooled ON / (ON+WITH) | ON:WITH ratio | Cramér's V (ON vs WITH) |
+|---|---|---|---|---|---|---|
+| reviewed, removed records kept as 'no attacker (review)' / 'CVE misplaced (review)' | 87.8% (602/686) | 68.3% (1,197/1,753) | 90.3% (355/393) | 50.1% (1,210/2,416) | 1.00 | 0.80 |
+- cve/ghsa: ON-AI 602 (87.8%), WITH-AI 0 (0.0%), BOTH 2 (0.3%), NONE (review) 2 (0.3%), CVE misplaced (review) 80 (11.7%) of 686
+- harm-db: ON-AI 253 (14.4%), WITH-AI 1,197 (68.3%), BOTH 13 (0.7%), NONE (review) 289 (16.5%), CVE misplaced (review) 1 (0.1%) of 1,753
+- research/other: ON-AI 355 (90.3%), WITH-AI 9 (2.3%), BOTH 18 (4.6%), NONE (review) 11 (2.8%), CVE misplaced (review) 0 (0.0%) of 393
+
+# B3. Demonstrations vs observed attacks
+
+Frame records by channel and record type: cve/ghsa: vulnerability-disclosure 553, threat-report 79, real-world 50, research-demonstrated 3, research 1; harm-db: real-world 1646, vulnerability-disclosure 77, research 26, red-team 4; research/other: research 238, real-world 88, research-demonstrated 31, threat-report 28, red-team 8
+exploited_in_wild set: 3 frame records, 14 corpus-wide.
+
+## B3. Record type
+
+| cut | CVE/GHSA: ON-AI share of frame | harm-db: WITH-AI share of frame | research/other: ON-AI share | pooled ON / (ON+WITH) | ON:WITH ratio | Cramér's V (ON vs WITH) |
+|---|---|---|---|---|---|---|
+| baseline: published, merged records, all types | 88.0% (604/686) | 78.2% (1,370/1,753) | 92.9% (365/393) | 47.8% (1,339/2,799) | 0.92 | 0.68 |
+| no demonstrations | 88.0% (600/682) | 79.5% (1,370/1,723) | 79.3% (92/116) | 41.4% (1,032/2,491) | 0.71 | 0.65 |
+| realized (real-world + disclosure) | 86.4% (521/603) | 79.5% (1,370/1,723) | 87.5% (77/88) | 39.2% (938/2,394) | 0.64 | 0.63 |
+| observed (real-world only) | 100.0% (50/50) | 83.2% (1,370/1,646) | 87.5% (77/88) | 22.1% (390/1,766) | 0.28 | 0.51 |
+
+# B4. Channel weights for the pooled ON share
+
+| weighting | pooled ON / (ON+WITH) | ON:WITH |
+|---|---|---|
+| record weights (as published) | 47.8% | 0.92 |
+| equal channel weights (1/3 each) | 69.0% | 2.22 |
+| CVE/GHSA and harm-db equal, research 0 | 54.8% | 1.21 |
+| channel's share of all 15,666 records | 58.2% | 1.39 |
+| attainable range (any channel weights) | 21.3% – 97.3% | 0.27 – 36.50 |
+
+**Pooled ON share by record year: as published, and with the channel mix held at the all-years mix**
+
+| year | ON+WITH | channel mix (cve/ghsa, harm-db, research) | pooled ON share | ON share at all-years mix | within-channel ON share (cve, harm-db, research) |
+|---|---|---|---|---|---|
+| 2020 | 102 | 0.0%, 90.2%, 9.8% | 36.3% | — (a channel has no records) | —, 29.3% (27/92), 100.0% (10/10) |
+| 2021 | 69 | 1.4%, 91.3%, 7.2% | 27.5% | 27.2% | 0.0% (0/1), 22.2% (14/63), 100.0% (5/5) |
+| 2022 | 53 | 22.6%, 66.0%, 11.3% | 50.9% | 52.5% | 58.3% (7/12), 40.0% (14/35), 100.0% (6/6) |
+| 2023 | 201 | 8.5%, 69.7%, 21.9% | 34.8% | 35.2% | 58.8% (10/17), 12.9% (18/140), 95.5% (42/44) |
+| 2024 | 346 | 11.0%, 59.5%, 29.5% | 40.2% | 35.1% | 73.7% (28/38), 7.3% (15/206), 94.1% (96/102) |
+| 2025 | 553 | 24.8%, 51.7%, 23.5% | 50.8% | 42.0% | 83.9% (115/137), 13.3% (38/286), 98.5% (128/130) |
+| 2026 | 1,416 | 33.8%, 62.2%, 4.0% | 51.6% | 52.3% | 92.7% (443/478), 26.1% (230/881), 100.0% (57/57) |
+
+# B5. Every combination (4 codings x 4 units x 4 record-type cuts = 64 cells; pooled share also x 3 weightings)
+
+| headline | min (cell) | max (cell) |
+|---|---|---|
+| CVE/GHSA ON-AI share | 86.0% (published (step 2); templated series collapsed; realized (real-world + disclosure); n cve 586, hdb 1,676) | 100.0% (published (step 2); merged record (published); observed (real-world only); n cve 50, hdb 1,646) |
+| harm-db WITH-AI share | 78.2% (published (step 2); merged record (published); all record types; n cve 686, hdb 1,753) | 96.2% (text only (vector blanked); merged record (published); observed (real-world only); n cve 20, hdb 1,375) |
+| research ON-AI share | 60.8% (text only (vector blanked); source id, own tracker's channel; no demonstrations; n cve 528, hdb 1,587) | 92.9% (reviewed (step 4); merged record (published); all record types; n cve 604, hdb 1,463) |
+| Cramér's V | 0.51 (published (step 2); merged record (published); observed (real-world only); n cve 50, hdb 1,646) | 0.89 (text only (vector blanked); templated series collapsed; all record types; n cve 416.3, hdb 1,400) |
+| pooled ON share, record weights | 7.6% (text only (vector blanked); merged record (published); observed (real-world only); n cve 20, hdb 1,375) | 57.5% (reviewed (step 4); source id, own tracker's channel; all record types; n cve 886, hdb 1,617) |
+| pooled ON share, equal channel weights | 56.3% (text only (vector blanked); source id, own tracker's channel; no demonstrations; n cve 528, hdb 1,587) | 71.7% (reviewed (step 4); merged record (published); all record types; n cve 604, hdb 1,463) |
+
+Cells where CVE/GHSA is majority ON-AI AND harm-db majority WITH-AI: 64 of 64.
+Cells where the pooled ON share (record weights) is above 50%: 7 of 64 (the pooled majority flips with the choices).

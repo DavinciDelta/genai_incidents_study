@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """s05_techniques.py — Step 5. One question: which OWASP LLM Top 10 categories stand out in each population against the OWASP
 community vote. Two sources: the corpus's OWASP codes (keyword labels) and rank-validation's report of the community vote. The
-populations are the cleaned ones from step 4's review (records with no adversary, and WITH-AI CVE records with no AI medium, are left
-out). One annotator's hand labels (from incident-rank-validation) show attacks the OWASP list cannot name: a limitation, one table per
+populations keep every record; those step 4's review could not place as attacks are counted separately in each category. One annotator's hand labels (from incident-rank-validation) show attacks the OWASP list cannot name: a limitation, one table per
 population. It also hosts the study's Use cases and Limitations of the data. Step 4 answers HOW attacks happened; this file does not repeat it.
 
 Everything here is a corpus keyword label or a read of another project's artifacts; nothing is coded from reports yet.
@@ -18,11 +17,11 @@ NM = owasp_names(rv); RV2C, C2RV, RVN = NM["rv2corpus"], NM["corpus2rv"], NM["rv
 POPS = ("ON-AI", "WITH-AI")
 METH = json.load(open(OUT / "methodology.json"))      # step 4's reviewed labels: they clean the populations, and the WITH-AI 'No entry fits' kinds are its objective
 NO_ATT, NONE_W = "no attacker: operator harm or model failure (misplaced record)", "none: conventional exploit record misplaced in WITH-AI"
-def kept(i, p):
-    """Step 4's review cleans the populations: a record with no adversary, or a WITH-AI CVE record with no AI medium, is left out of every table here."""
-    m = METH.get(i, {}); return m.get("entry_point") != NO_ATT if p == "ON-AI" else m.get("ai_role") not in (NO_ATT, NONE_W)
+def unplaced(i, p):
+    """Step 4's review found no adversary (both populations), or a conventional-exploit record with no AI medium (WITH-AI). Such records stay in every table and are counted separately."""
+    m = METH.get(i, {}); return m.get("entry_point") == NO_ATT if p == "ON-AI" else m.get("ai_role") in (NO_ATT, NONE_W)
 RAW = {p: [i for i, s in S.items() if s["population"] == p] for p in POPS}
-P = {p: [C[i] for i in RAW[p] if kept(i, p)] for p in POPS}; OUTN = {p: len(RAW[p]) - len(P[p]) for p in POPS}
+P = {p: [C[i] for i in RAW[p]] for p in POPS}; OUTN = {p: sum(unplaced(i, p) for i in RAW[p]) for p in POPS}
 DEMO = ("research", "research-demonstrated", "red-team")
 MIN_RECORDS = 30     # below this many corpus records a category is marked § and left out of the titles and 'What stands out' bullets
 SMALL = "§"
@@ -68,7 +67,7 @@ def words(s): return len(re.sub(r"[*_`]", "", s).split())
 VCI = vote_ci(); VR = {e: rv["ranks"][e]["vote_rank"] for e in rv["ranks"]}
 
 # hand-labelled rows per population: (id, record, label list in rank-validation ids; [] = no entry fits)
-GOLD = {p: [(i, C[i], J[i]["gold_labels"]) for i, s in S.items() if s["population"] == p and kept(i, p) and i in J and J[i]["gold_labels"] is not None] for p in POPS}
+GOLD = {p: [(i, C[i], J[i]["gold_labels"]) for i, s in S.items() if s["population"] == p and i in J and J[i]["gold_labels"] is not None] for p in POPS}
 HUM = {p: collections.Counter(e for _, _, gl in GOLD[p] for e in gl) for p in POPS}
 HRANK = {p: ranks(HUM[p]) for p in POPS}                 # hand-label rank within the population's hand-labelled sample
 NONE = {p: [(i, r) for i, r, gl in GOLD[p] if gl == []] for p in POPS}
@@ -117,22 +116,24 @@ L = ["# Step 5 — Which attack categories stand out against the community vote"
      f"Which OWASP LLM Top 10 categories does each population rank higher or lower than the community vote? Two sources: the corpus's OWASP categories "
      f"and the community vote with its 90% interval as rank-validation reports ({len(ENTRIES)} candidates ranked by respondents; its data rank is Table 1.15). "
      f"Hand labels from one annotator of incident-rank-validation (a separate project that tests the OWASP ranking) show attacks the list cannot name: a limitation below (Tables 5.4a–b).", "",
-     f"The populations are the cleaned ones from step 4's review: {len(P['ON-AI']):,} ON-AI and {len(P['WITH-AI']):,} WITH-AI records. Left out are {OUTN['ON-AI']} ON-AI and "
-     f"{OUTN['WITH-AI']} WITH-AI records that the review found describe no adversary, or are conventional-exploit records misplaced in WITH-AI. "
+     f"Every record stays in: {len(P['ON-AI']):,} ON-AI and {len(P['WITH-AI']):,} WITH-AI. Step 4's review could not place {OUTN['ON-AI']} ON-AI and {OUTN['WITH-AI']} WITH-AI records "
+     f"as attacks (no adversary described, or a conventional-exploit record misplaced in WITH-AI); they are counted like the rest, and Tables 5.1–5.2 show how many of each category's records they are. "
      f"The OWASP categories themselves are the corpus's, set by keyword rules (Limitations of the data); step 4's reviewed labels answer how the attacks happened."]
 
 # ---------------------------------------------------------------- Tables 5.1 / 5.2
+UNP = {p: collections.Counter(c for i in RAW[p] if unplaced(i, p) for c in set(llm(C[i]))) for p in POPS}   # per code: records the review could not place
 def category_table(p, num):
     rows, n, on = P[p], len(P[p]), p == "ON-AI"; cnt, crank, places = CNT[p], CRANK[p], PLACES[p]
     big = [e for e in places if cnt[RV2C[e]] >= MIN_RECORDS]
     top, bot = max(places[e] for e in big), min(places[e] for e in big)
     his = [e for e in big if places[e] == top]; los = [e for e in big if places[e] == bot]; hi = his[0]
     nm = lambda es: andlist(ename(RV2C[e]) for e in es)
-    cols = ["category [corpus code]", "vote rank (90% interval)", "corpus records n (%)", "corpus rank", "places above the vote"] + (["demonstrated, % of its records"] if on else [])
+    cols = ["category [corpus code]", "vote rank (90% interval)", "corpus records n (%)", "corpus rank", "places above the vote", "of which not placed as attacks by the review"] + (["demonstrated, % of its records"] if on else [])
     if on:
         desc = (f"Rows: the ten categories in vote order; codes are the corpus's, not OWASP's (Table 1.0). *Corpus rank* orders them by {p} records carrying the code; "
                 f"*places above the vote* = vote rank − corpus rank (+ = the corpus ranks it higher); {SMALL} = under {MIN_RECORDS} corpus records, outside title and "
-                f"bullets; *demonstrated* = research, research-demonstrated or red-team. {MARKER_DEF}.")
+                f"bullets; *not placed as attacks* = records step 4's review found describe no adversary (or, in WITH-AI, are conventional-exploit records misplaced there), kept in the counts; "
+                f"*demonstrated* = research, research-demonstrated or red-team. {MARKER_DEF}.")
     else:
         wd = sum(r["category"] in DEMO for r in rows)
         desc = (f"The OWASP list scopes LLM applications; records where the AI is the attacker's instrument fall outside it by design. Columns as in Table 5.1 "
@@ -141,7 +142,7 @@ def category_table(p, num):
     for e in TEN:
         c = RV2C[e]; lo_, hi_ = VCI[e]; d, b = demo_share(p, c)
         L.append(f"| {code(c)}{mark(p, c)} | {VR[e]:g} ({lo_:g}–{hi_:g}) | {npc(cnt[c], n)}{SMALL if cnt[c] < MIN_RECORDS else ''} | {crank.get(c, '—')} | "
-                 f"{signed(places[e]) if e in places else '—'} |" + (f" {pc(d, b, 0)} |" if on else ""))
+                 f"{signed(places[e]) if e in places else '—'} | {UNP[p][c]} |" + (f" {pc(d, b, 0)} |" if on else ""))
     def why(e):
         c = RV2C[e]; d, b = demo_share(p, c)
         if mark(p, c): return " (channel marker ‡)"
@@ -151,7 +152,6 @@ def category_table(p, num):
     ch = {x: [r for r in rows if source_class(r) == x] for x in CHANNELS}
     def mark_line(c):
         sh = {x: (sum(c in llm(r) for r in ch[x]), len(ch[x])) for x in CHANNELS if ch[x]}; mx = MARKER[c][2]
-        if mx not in sh: return f"{ename(c)} (rank {crank[c]}): no {mx} records remain in this population, so its rank here comes from the other channels"
         ox = max((x for x in sh if x != mx), key=lambda x: sh[x][0] / sh[x][1])
         return f"{ename(c)} (rank {crank[c]}): {pc(*sh[mx])}% of {mx} vs {pc(*sh[ox])}% of {ox}"
     L.extend(["", "What stands out:", "",
@@ -213,7 +213,7 @@ cvesh = lambda rows: 100 * sum(source_class(r) == "cve/ghsa" for r in rows) / le
 L += ["", f"The {YEAR} column is not a test of the vote: the vote ranks expected risk, not disclosed records; {YEAR} ON-AI records are {cvesh(P26['ON-AI']):.0f}% cve/ghsa against "
           f"{cvesh(P['ON-AI']):.0f}% for all years, so the ‡ rows move with the channel mix; "
           f"and the record year is often the ingestion year (Table 1.5). `out/dataset_post_{YEAR}.csv` lists all {N26_ALL:,} records dated {YEAR}; "
-          f"these tables use the {sum(len(P26[p]) for p in POPS):,} that step 5 keeps ({len(P26['ON-AI']):,} ON-AI, {len(P26['WITH-AI']):,} WITH-AI)."]
+          f"of these, {len(P26['ON-AI']):,} are ON-AI and {len(P26['WITH-AI']):,} WITH-AI."]
 
 # ---------------------------------------------------------------- Limitation: the hand labels (Tables 5.4a–b)
 TIERS = (("disagree", "disagreement rows"), ("split", "where two pre-labellers agreed"), ("agree", "where three did"))
@@ -222,7 +222,7 @@ none_t = {t: (sum(gl == [] for i, _, gl in GW if tier_of(i) == t), sum(tier_of(i
 top_hand = max(TEN, key=lambda e: (HUM["ON-AI"][e], -VR[e]))
 heads = {p: sorted((e for e in ADDS if HUM[p][e] >= MIN_HEAD), key=lambda e: -HUM[p][e]) for p in POPS}
 def ord_(k): return f"{k}{'th' if 10 <= k % 100 <= 20 else {1: 'st', 2: 'nd', 3: 'rd'}.get(k % 10, 'th')}"
-LIM = (f"One annotator of incident-rank-validation hand-labelled {NG['ON-AI']} ON-AI and {NG['WITH-AI']} WITH-AI records of the cleaned populations. The records were drawn by quota "
+LIM = (f"One annotator of incident-rank-validation hand-labelled {NG['ON-AI']} ON-AI and {NG['WITH-AI']} WITH-AI records. The records were drawn by quota "
        f"(every record the project's three LLM pre-labellers disagreed on, then {q3} unanimous and {q2} majority records per category), so the counts describe the sample, not prevalence. "
        f"Tables 5.4a–b show, for each category the annotator used, how often the corpus files the same record under it.")
 L += ["", "## Limitation: hand labels show attacks the OWASP categories cannot name", "", LIM]
@@ -266,7 +266,7 @@ for p, sub in (("ON-AI", "a"), ("WITH-AI", "b")):
     for e in shown:
         L.append(f"| {lab(e)} | {nfmt(p, HUM[p][e])} | {agree_cell(p, e)} |")
     if rest: L.append(f"| {len(rest)} other proposed categor{'y' if len(rest) == 1 else 'ies'} | {nfmt(p, sum(HUM[p][e] for e in rest))} | no corpus code |")
-    L.append(f"| *No category fits* | {nfmt(p, NN[p])} | — |")
+    L.append(f"| *No category fits* | {nfmt(p, NN[p])} | — ({sum(unplaced(i, p) for i, _ in NONE[p])} of them not placed as attacks by step 4's review) |")
 def kind_list(p, k):
     return andlist(f"{kd} ({len(rs)} of {NN[p]})" for kd, rs in list(kinds_of(p).items())[:k])
 kept_ = [(RVN[e], *carries("ON-AI", e, RV2C[e])) for e in TEN if HUM["ON-AI"][e] >= MIN_HEAD]
@@ -308,11 +308,11 @@ LIMS = [f"- The corpus's labels are keyword rules: when a source gives no attack
         f"that matches the title and description (for example 'impersonat' → deepfake); records that arrive without OWASP codes get them from the attack vector by a fixed table "
         f"({pc(*seed_share(R))}% of OWASP codes equal that seed), and ATLAS codes follow from the OWASP codes by lookup (Tables 1.10, 5.1, 5.2).",
         f"- {ename('LLM04')} marks the CVE channel and {frame['cve/ghsa']['ON-AI']:,} of {sum(frame['cve/ghsa'].values()):,} cve/ghsa frame records are ON-AI, so pooled comparisons compare channels (Tables 1.10, 2.2).",
-        f"- One annotator hand-labelled a quota sample: {NG['ON-AI']} ON-AI and {NG['WITH-AI']} WITH-AI records of the cleaned populations (Tables 1.14, 5.4a–b).",
+        f"- One annotator hand-labelled a quota sample: {NG['ON-AI']} ON-AI and {NG['WITH-AI']} WITH-AI records (Tables 1.14, 5.4a–b).",
         f"- Step 2's split is rule-based; Table 2.5 lists its weak spots. Step 4's review of every record found "
         f"{LEAK['on_na']} ON-AI ({pc(LEAK['on_na'], LEAK['on'])}%) and {LEAK['wi_na']} WITH-AI ({pc(LEAK['wi_na'], LEAK['wi'])}%) records that describe no adversary, "
-        f"{LEAK['on_other']} ON-AI records whose entry point fits no value (such as an AI-assisted scam on people) and {LEAK['wi_cve']} conventional-exploit records misplaced in WITH-AI; this step leaves out the "
-        f"no-adversary and misplaced records ({OUTN['ON-AI']} ON-AI, {OUTN['WITH-AI']} WITH-AI) and keeps the rest (Tables 4.1, 4.4).",
+        f"{LEAK['on_other']} ON-AI records whose entry point fits no value (such as an AI-assisted scam on people) and {LEAK['wi_cve']} conventional-exploit records misplaced in WITH-AI; this step keeps "
+        f"all of them in its counts and shows them per category (Tables 4.1, 4.4, 5.1, 5.2).",
         f"- Join losses: {g_lost} of {len(gold_ids):,} hand-labelled rows have no current record of their own (Table 1.13).",
         f"- Vote–data concordance is weak: weighted κ {KAPPA:.2f} ({sg(KCI[0])} to {sg(KCI[1])}) (s01 section 0, 'data rank'; Table 1.15).",
         f"- The two OWASP numberings differ on {diff_codes} of ten entries, so joins use names (Table 1.0).",

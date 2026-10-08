@@ -153,7 +153,7 @@ L = ["# Step 4 — Entry point, target, AI medium and objective (reviewed data)"
         "and corpus labels but not how the label had been set. Each judged the label correct or proposed another value from the same list. When the two disagreed, an adjudicator decided; "
         "a final pass made each record's two labels agree on whether any adversary is described. Table 4.0 gives the agreement; `coded/review.json` holds every decision and "
         "`coded/review_verdicts.json` every reviewer's verdict and note. Step 6 compares these labels with the first values (keyword rule or corpus attack-vector label)."] if REVIEW else []), "",
-     f"**Values that mark a misplaced or unplaceable record.** They stay visible in Tables 4.1, 4.2, 4.4 and 4.5. Only the first two mark a misplaced record, and step 5 leaves those out "
+     f"**Values that mark a misplaced or unplaceable record.** They stay visible in Tables 4.1, 4.2, 4.4 and 4.5. Only the first two mark a misplaced record; step 5 keeps those records and counts them separately "
      f"({DROP5['ON-AI']} ON-AI and {DROP5['WITH-AI']} WITH-AI records):", "",
      f"- *{NO_ATT}*: no adversary is described (a product failure, policy, court, lawsuit, deployment or benchmark story).",
      f"- *{NONE_W}*: a conventional-exploit or malicious-package record placed in WITH-AI ({', '.join(f'{n} {x}' for x, n in NW_CH.most_common())}); no AI medium is involved. In Table 4.5 these records carry the objective 'intrusion / cyber operation' "

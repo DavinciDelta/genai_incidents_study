@@ -213,6 +213,23 @@ has records in the population; hand-label titles lead with proposed-category and
 columns computed from printed shares; dataset_post column glossary moved to the README; a dozen draft
 figures re-cited or rephrased so each traces to `out/`.
 
+**Ask: is arXiv:2608.19266 similar, same data, how did it collect and process data, how does this study
+stand out; can the data show (A) independent validation of the channel association, (B) that measurement
+choices change conclusions, (C) that it holds beyond one index; a simpler framing; keep 'no entry fits'
+and unplaceable records in the data.** Done 2026-10-08: `docs/POSITIONING.md`, `explore/feas_*.py`.
+The paper (Lambros & Wilson) uses an earlier snapshot of the same index (genai_incidents v2.0.0, 7,714
+records, 20 May 2026), never names it, ranks OWASP categories against the vote, and has no channel,
+ON/WITH or attacker variable; its blind gold labels saw no corpus codes, and they show the channel effect
+unreported (blind out-of-scope 63% of harm-db rows vs 18% of CVE/GHSA). Feasibility: A partly (CVE half
+199/199; harm-db half needs a side added to 555 hand labels or new blind coding); B mostly (64-cell grid:
+within-channel pattern holds in 64 of 64, pooled ON share 7.6–57.5%); C partly (holds per tracker; AVID and
+vendor reports are the instructive exceptions; no outside sample). Recommended title: "Where you look
+decides what you find". **Decision reversed:** step 5 keeps every record (the 129 ON-AI and 254 WITH-AI the
+review could not place are shown per category, not removed); the hand-label tables keep every 'no category
+fits' record; the draft's coding plan no longer excludes 'no entry fits' rows. Dropping them would bias
+toward ON-AI (hand-labelled pooled ON share 48.1% → 58.0%). With every record, 2026 is still no closer to
+the vote (ρ +0.17 both cuts ON-AI, −0.95 both WITH-AI).
+
 ## Standing decisions
 
 1. The corpus is a sampling frame and pointer to primary sources; **no corpus label enters a coded field.**

@@ -6,7 +6,7 @@ Each ON-AI record has an entry point (Table 4.1) and a target (4.2); each WITH-A
 
 **How the labels were reviewed.** Every one of the 5,598 labels was then read by two independent reviewers who saw the record's title, description, affected field and corpus labels but not how the label had been set. Each judged the label correct or proposed another value from the same list. When the two disagreed, an adjudicator decided; a final pass made each record's two labels agree on whether any adversary is described. Table 4.0 gives the agreement; `coded/review.json` holds every decision and `coded/review_verdicts.json` every reviewer's verdict and note. Step 6 compares these labels with the first values (keyword rule or corpus attack-vector label).
 
-**Values that mark a misplaced or unplaceable record.** They stay visible in Tables 4.1, 4.2, 4.4 and 4.5. Only the first two mark a misplaced record, and step 5 leaves those out (129 ON-AI and 254 WITH-AI records):
+**Values that mark a misplaced or unplaceable record.** They stay visible in Tables 4.1, 4.2, 4.4 and 4.5. Only the first two mark a misplaced record; step 5 keeps those records and counts them separately (129 ON-AI and 254 WITH-AI records):
 
 - *no attacker: operator harm or model failure (misplaced record)*: no adversary is described (a product failure, policy, court, lawsuit, deployment or benchmark story).
 - *none: conventional exploit record misplaced in WITH-AI*: a conventional-exploit or malicious-package record placed in WITH-AI (80 cve/ghsa, 1 harm-db); no AI medium is involved. In Table 4.5 these records carry the objective 'intrusion / cyber operation' (81 of that row's 159).

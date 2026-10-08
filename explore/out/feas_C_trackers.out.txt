@@ -1,0 +1,57 @@
+# C1. ON / WITH split within each underlying tracker (a record counts under every tracker it lists)
+
+| tracker | channel | records | in frame | ON-AI | WITH-AI | BOTH | ON share of ON+WITH: published | text only | reviewed | sole-tracker records: ON share (published) | majority |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| CVE | cve/ghsa | 7,443 | 559 (7.5%) | 482 | 75 | 2 | 86.5% (482/557) | 99.0% (394/398) | 100.0% (480/480) | 86.1% (439/510) | ON-AI |
+| GHSA | cve/ghsa | 828 | 142 (17.1%) | 134 | 8 | 0 | 94.4% (134/142) | 97.6% (41/42) | 100.0% (134/134) | 95.9% (116/121) | ON-AI |
+| MAL | research/other | 1 | 0 (0.0%) | 0 | 0 | 0 | — (0/0) | — (0/0) | — (0/0) | — (0/0) | — |
+| OECD | harm-db | 4,104 | 906 (22.1%) | 204 | 695 | 7 | 22.7% (204/899) | 4.9% (35/712) | 18.3% (129/705) | 23.1% (195/845) | WITH-AI |
+| AIID | harm-db | 1,471 | 520 (35.4%) | 35 | 481 | 4 | 6.8% (35/516) | 1.9% (9/479) | 5.7% (28/492) | 6.5% (30/464) | WITH-AI |
+| AIAAIC | harm-db | 1,517 | 268 (17.7%) | 27 | 239 | 2 | 10.2% (27/266) | 5.2% (12/233) | 5.6% (12/213) | 10.2% (27/266) | WITH-AI |
+| AVID | harm-db | 313 | 113 (36.1%) | 111 | 1 | 1 | 99.1% (111/112) | 98.6% (71/72) | 100.0% (91/91) | 100.0% (111/111) | ON-AI |
+| VTR | research/other | 29 | 26 (89.7%) | 12 | 3 | 11 | 80.0% (12/15) | 7.1% (1/14) | 80.0% (12/15) | 100.0% (12/12) | ON-AI |
+| ATLAS | research/other | 64 | 59 (92.2%) | 54 | 1 | 4 | 98.2% (54/55) | 82.6% (19/23) | 98.2% (54/55) | 100.0% (34/34) | ON-AI |
+| ARXIV | research/other | 170 | 146 (85.9%) | 146 | 0 | 0 | 100.0% (146/146) | 100.0% (80/80) | 100.0% (142/142) | 100.0% (133/133) | ON-AI |
+| academic venue (USENIX/CCS/NDSS) | research/other | 7 | 7 (100.0%) | 7 | 0 | 0 | 100.0% (7/7) | 100.0% (1/1) | 100.0% (7/7) | 100.0% (6/6) | — |
+| RES | research/other | 116 | 91 (78.4%) | 86 | 4 | 1 | 95.6% (86/90) | 94.3% (50/53) | 95.5% (84/88) | 98.5% (67/68) | ON-AI |
+| EXT | research/other | 47 | 33 (70.2%) | 27 | 3 | 3 | 90.0% (27/30) | 70.0% (14/20) | 89.3% (25/28) | 87.5% (14/16) | ON-AI |
+| OWASP | research/other | 6 | 5 (83.3%) | 5 | 0 | 0 | 100.0% (5/5) | 100.0% (4/4) | 100.0% (5/5) | 100.0% (2/2) | — |
+| PROMPTFOO | research/other | 1 | 1 (100.0%) | 1 | 0 | 0 | 100.0% (1/1) | — (0/0) | 100.0% (1/1) | 100.0% (1/1) | — |
+| GARAK | research/other | 1 | 0 (0.0%) | 0 | 0 | 0 | — (0/0) | — (0/0) | — (0/0) | — (0/0) | — |
+| REDTEAM | research/other | 10 | 10 (100.0%) | 10 | 0 | 0 | 100.0% (10/10) | 100.0% (8/8) | 100.0% (10/10) | 100.0% (5/5) | ON-AI |
+| curated legacy (INC/LEGACY) | research/other | 176 | 118 (67.0%) | 110 | 6 | 2 | 94.8% (110/116) | 93.2% (68/73) | 95.6% (108/113) | 92.6% (63/68) | ON-AI |
+
+majority = which population is larger among the tracker's ON+WITH records (— if fewer than 10).
+
+AVID ON-AI records (111): record types {'research': 25, 'vulnerability-disclosure': 77, 'red-team': 4, 'real-world': 5}; attack vectors {'prompt-injection': 74, 'evasion': 11, 'jailbreak': 10, 'adversarial-input': 9}; titles containing 'Guardrail Jailbreak' 61.
+OECD ON-AI records (204): record types {'real-world': 204}; channel {'harm-db': 201, 'cve/ghsa': 3}; reviewed: still ON-AI 129, no attacker 75; 'other/other' leak (AI was the tool) 43.
+VTR (vendor threat-intel reports: OpenAI, Anthropic, Google, Microsoft, ...) frame records (26): published {'ON-AI': 12, 'BOTH': 11, 'WITH-AI': 3}; rules {'on-vector': 11, 'on+with signals': 11, 'with-vector': 1, 'on-vocabulary': 1, 'with-vocabulary': 2}; corpus vectors {'tool-abuse': 19, 'adversarial-input': 1, 'phishing': 1}; text only {'UNRESOLVED': 6, 'WITH-AI': 13, 'NONE': 6, 'ON-AI': 1}; the ON-AI ones after review: {'other': 4, 'direct prompt by the user': 7, 'stolen or leaked credential': 1}.
+
+# C2. ON share of ON+WITH by tracker and record year (published split)
+
+| tracker | 2022 | 2023 | 2024 | 2025 | 2026 |
+|---|---|---|---|---|---|
+| CVE | 54.5% (6/11) | 62.5% (10/16) | 72.2% (26/36) | 77.3% (75/97) | 92.2% (364/395) |
+| GHSA | 100.0% (1/1) | 50.0% (1/2) | 66.7% (2/3) | 95.5% (42/44) | 95.7% (88/92) |
+| OECD | 0.0% (0/1) | — | 0.0% (0/5) | 17.6% (3/17) | 21.5% (169/785) |
+| AIID | 33.3% (4/12) | 5.6% (3/54) | 3.0% (4/134) | 6.0% (14/234) | 6.8% (4/59) |
+| AIAAIC | 7.1% (1/14) | 9.0% (7/78) | 12.9% (9/70) | 3.4% (1/29) | 0.0% (0/1) |
+| AVID | 100.0% (9/9) | 100.0% (8/8) | 100.0% (2/2) | 95.5% (21/22) | 100.0% (63/63) |
+
+harm-db 2026 ON-AI records (230) by tracker listed: {'OECD': 166, 'AVID': 63, 'AIID': 4, 'RES': 1}; reviewed still ON-AI 169.
+
+# C3. Cross-listing
+
+Records listed by both a vulnerability tracker (CVE/GHSA) and a harm tracker: 106; populations {'ON-AI': 2, 'NONE': 103, 'WITH-AI': 1}.
+Records listed by 2+ harm trackers: 165; populations {'NONE': 109, 'WITH-AI': 45, 'UNRESOLVED': 6, 'BOTH': 1, 'ON-AI': 4}. A tracker-by-tracker replication therefore runs on almost disjoint record sets.
+
+# C4. Sizing a separately assembled primary-source sample (expectation-setting from step 2; not a finding)
+
+| channel | frame-entry rate in the index (step 2) | ON share (published) | records with an adversary needed for ±5 pts | ±7 pts | records to screen for ±7 pts at that entry rate |
+|---|---|---|---|---|---|
+| cve/ghsa | 8.5% (686/8,063) | 88.3% | 159 | 81 | 953 |
+| harm-db | 24.6% (1,753/7,112) | 21.3% | 258 | 132 | 536 |
+| research/other | 80.0% (393/491) | 97.3% | 40 | 21 | 27 |
+
+To detect the published contrast (CVE/GHSA ON 88.3% vs harm-db ON 21.3%) at alpha .05, power .8: 8 adversary records per channel; a much weaker contrast (70% vs 40%): 42 per channel; (60% vs 45%): 173 per channel.
+Inter-coder agreement on ON/WITH: a two-coder kappa with a 95% CI half-width of about 0.1 needs roughly 100–150 double-coded records (rule of thumb for kappa near 0.7–0.8 and balanced classes).

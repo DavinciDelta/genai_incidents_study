@@ -1,0 +1,417 @@
+{
+ "C1": {
+  "CVE": {
+   "channel": "cve/ghsa",
+   "records": 7443,
+   "frame": 559,
+   "on": 482,
+   "with": 75,
+   "both": 2,
+   "text_only": [
+    394,
+    4
+   ],
+   "reviewed": [
+    480,
+    0
+   ],
+   "sole": [
+    439,
+    71
+   ]
+  },
+  "GHSA": {
+   "channel": "cve/ghsa",
+   "records": 828,
+   "frame": 142,
+   "on": 134,
+   "with": 8,
+   "both": 0,
+   "text_only": [
+    41,
+    1
+   ],
+   "reviewed": [
+    134,
+    0
+   ],
+   "sole": [
+    116,
+    5
+   ]
+  },
+  "MAL": {
+   "channel": "research/other",
+   "records": 1,
+   "frame": 0,
+   "on": 0,
+   "with": 0,
+   "both": 0,
+   "text_only": [
+    0,
+    0
+   ],
+   "reviewed": [
+    0,
+    0
+   ],
+   "sole": [
+    0,
+    0
+   ]
+  },
+  "OECD": {
+   "channel": "harm-db",
+   "records": 4104,
+   "frame": 906,
+   "on": 204,
+   "with": 695,
+   "both": 7,
+   "text_only": [
+    35,
+    677
+   ],
+   "reviewed": [
+    129,
+    576
+   ],
+   "sole": [
+    195,
+    650
+   ]
+  },
+  "AIID": {
+   "channel": "harm-db",
+   "records": 1471,
+   "frame": 520,
+   "on": 35,
+   "with": 481,
+   "both": 4,
+   "text_only": [
+    9,
+    470
+   ],
+   "reviewed": [
+    28,
+    464
+   ],
+   "sole": [
+    30,
+    434
+   ]
+  },
+  "AIAAIC": {
+   "channel": "harm-db",
+   "records": 1517,
+   "frame": 268,
+   "on": 27,
+   "with": 239,
+   "both": 2,
+   "text_only": [
+    12,
+    221
+   ],
+   "reviewed": [
+    12,
+    201
+   ],
+   "sole": [
+    27,
+    239
+   ]
+  },
+  "AVID": {
+   "channel": "harm-db",
+   "records": 313,
+   "frame": 113,
+   "on": 111,
+   "with": 1,
+   "both": 1,
+   "text_only": [
+    71,
+    1
+   ],
+   "reviewed": [
+    91,
+    0
+   ],
+   "sole": [
+    111,
+    0
+   ]
+  },
+  "VTR": {
+   "channel": "research/other",
+   "records": 29,
+   "frame": 26,
+   "on": 12,
+   "with": 3,
+   "both": 11,
+   "text_only": [
+    1,
+    13
+   ],
+   "reviewed": [
+    12,
+    3
+   ],
+   "sole": [
+    12,
+    0
+   ]
+  },
+  "ATLAS": {
+   "channel": "research/other",
+   "records": 64,
+   "frame": 59,
+   "on": 54,
+   "with": 1,
+   "both": 4,
+   "text_only": [
+    19,
+    4
+   ],
+   "reviewed": [
+    54,
+    1
+   ],
+   "sole": [
+    34,
+    0
+   ]
+  },
+  "ARXIV": {
+   "channel": "research/other",
+   "records": 170,
+   "frame": 146,
+   "on": 146,
+   "with": 0,
+   "both": 0,
+   "text_only": [
+    80,
+    0
+   ],
+   "reviewed": [
+    142,
+    0
+   ],
+   "sole": [
+    133,
+    0
+   ]
+  },
+  "academic venue (USENIX/CCS/NDSS)": {
+   "channel": "research/other",
+   "records": 7,
+   "frame": 7,
+   "on": 7,
+   "with": 0,
+   "both": 0,
+   "text_only": [
+    1,
+    0
+   ],
+   "reviewed": [
+    7,
+    0
+   ],
+   "sole": [
+    6,
+    0
+   ]
+  },
+  "RES": {
+   "channel": "research/other",
+   "records": 116,
+   "frame": 91,
+   "on": 86,
+   "with": 4,
+   "both": 1,
+   "text_only": [
+    50,
+    3
+   ],
+   "reviewed": [
+    84,
+    4
+   ],
+   "sole": [
+    67,
+    1
+   ]
+  },
+  "EXT": {
+   "channel": "research/other",
+   "records": 47,
+   "frame": 33,
+   "on": 27,
+   "with": 3,
+   "both": 3,
+   "text_only": [
+    14,
+    6
+   ],
+   "reviewed": [
+    25,
+    3
+   ],
+   "sole": [
+    14,
+    2
+   ]
+  },
+  "OWASP": {
+   "channel": "research/other",
+   "records": 6,
+   "frame": 5,
+   "on": 5,
+   "with": 0,
+   "both": 0,
+   "text_only": [
+    4,
+    0
+   ],
+   "reviewed": [
+    5,
+    0
+   ],
+   "sole": [
+    2,
+    0
+   ]
+  },
+  "PROMPTFOO": {
+   "channel": "research/other",
+   "records": 1,
+   "frame": 1,
+   "on": 1,
+   "with": 0,
+   "both": 0,
+   "text_only": [
+    0,
+    0
+   ],
+   "reviewed": [
+    1,
+    0
+   ],
+   "sole": [
+    1,
+    0
+   ]
+  },
+  "GARAK": {
+   "channel": "research/other",
+   "records": 1,
+   "frame": 0,
+   "on": 0,
+   "with": 0,
+   "both": 0,
+   "text_only": [
+    0,
+    0
+   ],
+   "reviewed": [
+    0,
+    0
+   ],
+   "sole": [
+    0,
+    0
+   ]
+  },
+  "REDTEAM": {
+   "channel": "research/other",
+   "records": 10,
+   "frame": 10,
+   "on": 10,
+   "with": 0,
+   "both": 0,
+   "text_only": [
+    8,
+    0
+   ],
+   "reviewed": [
+    10,
+    0
+   ],
+   "sole": [
+    5,
+    0
+   ]
+  },
+  "curated legacy (INC/LEGACY)": {
+   "channel": "research/other",
+   "records": 176,
+   "frame": 118,
+   "on": 110,
+   "with": 6,
+   "both": 2,
+   "text_only": [
+    68,
+    5
+   ],
+   "reviewed": [
+    108,
+    5
+   ],
+   "sole": [
+    63,
+    5
+   ]
+  }
+ },
+ "C2": {
+  "CVE": [
+   "54.5% (6/11)",
+   "62.5% (10/16)",
+   "72.2% (26/36)",
+   "77.3% (75/97)",
+   "92.2% (364/395)"
+  ],
+  "GHSA": [
+   "100.0% (1/1)",
+   "50.0% (1/2)",
+   "66.7% (2/3)",
+   "95.5% (42/44)",
+   "95.7% (88/92)"
+  ],
+  "OECD": [
+   "0.0% (0/1)",
+   "\u2014",
+   "0.0% (0/5)",
+   "17.6% (3/17)",
+   "21.5% (169/785)"
+  ],
+  "AIID": [
+   "33.3% (4/12)",
+   "5.6% (3/54)",
+   "3.0% (4/134)",
+   "6.0% (14/234)",
+   "6.8% (4/59)"
+  ],
+  "AIAAIC": [
+   "7.1% (1/14)",
+   "9.0% (7/78)",
+   "12.9% (9/70)",
+   "3.4% (1/29)",
+   "0.0% (0/1)"
+  ],
+  "AVID": [
+   "100.0% (9/9)",
+   "100.0% (8/8)",
+   "100.0% (2/2)",
+   "95.5% (21/22)",
+   "100.0% (63/63)"
+  ]
+ },
+ "C3": {
+  "vuln_x_harm": 106,
+  "multi_harm": 165
+ },
+ "C4": {
+  "n2_published": 8,
+  "n2_70_40": 42,
+  "n2_60_45": 173
+ }
+}

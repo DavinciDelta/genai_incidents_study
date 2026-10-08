@@ -1,0 +1,390 @@
+{
+ "A1": {
+  "prelabel_rows": 5972,
+  "gold_rows": 1200,
+  "label_tokens_in_gold_text": 4,
+  "cve_id_visible": {
+   "cve/ghsa": [
+    112,
+    226
+   ],
+   "harm-db": [
+    7,
+    796
+   ],
+   "research/other": [
+    1,
+    101
+   ]
+  }
+ },
+ "A2": {
+  "A2a. Final hand labels, unweighted": {
+   "cve/ghsa": {
+    "ON side": 199,
+    "no entry fits": 25,
+    "model behaviour (no side)": 2
+   },
+   "harm-db": {
+    "WITH side": 64,
+    "no entry fits": 405,
+    "model behaviour (no side)": 58,
+    "Misinformation (side unknown)": 112,
+    "ON side": 157
+   },
+   "research/other": {
+    "ON side": 80,
+    "no entry fits": 11,
+    "Misinformation (side unknown)": 2,
+    "WITH side": 2,
+    "model behaviour (no side)": 6
+   },
+   "V": 0.41569349811481654
+  },
+  "A2b. Final hand labels, quota-weighted (each row stands for its pre-label stratum)": {
+   "cve/ghsa": {
+    "ON side": 620.3059071729954,
+    "no entry fits": 241.99493670886082,
+    "model behaviour (no side)": 2.0
+   },
+   "harm-db": {
+    "WITH side": 792.7278481012662,
+    "no entry fits": 2407.8316455696195,
+    "model behaviour (no side)": 93.66666666666669,
+    "Misinformation (side unknown)": 836.0666666666666,
+    "ON side": 467.1556962025313
+   },
+   "research/other": {
+    "ON side": 127.90000000000006,
+    "no entry fits": 51.38902953586498,
+    "Misinformation (side unknown)": 19.033333333333335,
+    "WITH side": 19.233333333333334,
+    "model behaviour (no side)": 6.0
+   },
+   "V": 0.6014904175775502
+  },
+  "A2c. Blind first-read labels (before the LLM votes were shown), unweighted": {
+   "cve/ghsa": {
+    "ON side": 178,
+    "no entry fits": 45,
+    "Misinformation (side unknown)": 3
+   },
+   "harm-db": {
+    "WITH side": 39,
+    "no entry fits": 505,
+    "model behaviour (no side)": 18,
+    "Misinformation (side unknown)": 127,
+    "ON side": 107
+   },
+   "research/other": {
+    "ON side": 55,
+    "no entry fits": 37,
+    "WITH side": 2,
+    "model behaviour (no side)": 4,
+    "Misinformation (side unknown)": 3
+   },
+   "V": 0.407508594905628
+  },
+  "A2d. Final hand labels, broad mapping (Misinformation counted WITH side), unweighted": {
+   "cve/ghsa": {
+    "ON side": 199,
+    "no entry fits": 25,
+    "model behaviour (no side)": 2
+   },
+   "harm-db": {
+    "WITH side": 176,
+    "no entry fits": 405,
+    "model behaviour (no side)": 58,
+    "ON side": 157
+   },
+   "research/other": {
+    "ON side": 80,
+    "no entry fits": 11,
+    "WITH side": 4,
+    "model behaviour (no side)": 6
+   },
+   "V": 0.5646108855829698
+  }
+ },
+ "A3": {
+  "A3a. Final hand labels, frame records only": {
+   "cve/ghsa": {
+    "ON side": 43,
+    "no entry fits": 4
+   },
+   "harm-db": {
+    "WITH side": 47,
+    "Misinformation (side unknown)": 47,
+    "no entry fits": 87,
+    "ON side": 30,
+    "model behaviour (no side)": 4
+   },
+   "research/other": {
+    "ON side": 65,
+    "WITH side": 2,
+    "no entry fits": 7,
+    "model behaviour (no side)": 2,
+    "Misinformation (side unknown)": 1
+   },
+   "V": 0.6632801963521385
+  },
+  "agreement": {
+   "ON-AI": {
+    "ON side": 127,
+    "WITH side": 5,
+    "no entry fits": 23,
+    "model behaviour (no side)": 5,
+    "Misinformation (side unknown)": 1
+   },
+   "NONE": {
+    "ON side": 291,
+    "no entry fits": 330,
+    "model behaviour (no side)": 60,
+    "Misinformation (side unknown)": 64,
+    "WITH side": 14
+   },
+   "WITH-AI": {
+    "WITH side": 43,
+    "Misinformation (side unknown)": 47,
+    "no entry fits": 74,
+    "ON side": 9,
+    "model behaviour (no side)": 1
+   },
+   "UNRESOLVED": {
+    "no entry fits": 13,
+    "WITH side": 3,
+    "ON side": 7,
+    "Misinformation (side unknown)": 2
+   },
+   "BOTH": {
+    "ON side": 2,
+    "WITH side": 1,
+    "no entry fits": 1
+   }
+  },
+  "kappa": {
+   "final": [
+    0.8078758949880668,
+    184
+   ],
+   "blind": [
+    0.6600903256477298,
+    143
+   ]
+  }
+ },
+ "A4": {
+  "cross": {
+   "NONE->NONE": 12655,
+   "ON-AI->ON-AI": 733,
+   "ON-AI->UNRESOLVED": 392,
+   "BOTH->BOTH": 2,
+   "UNRESOLVED->UNRESOLVED": 179,
+   "ON-AI->NONE": 214,
+   "WITH-AI->WITH-AI": 1323,
+   "WITH-AI->NONE": 110,
+   "BOTH->ON-AI": 4,
+   "WITH-AI->UNRESOLVED": 27,
+   "BOTH->WITH-AI": 27
+  },
+  "published": {
+   "table": {
+    "cve/ghsa": {
+     "NONE": 7376,
+     "ON-AI": 604,
+     "UNRESOLVED": 1,
+     "WITH-AI": 80,
+     "BOTH": 2
+    },
+    "harm-db": {
+     "WITH-AI": 1370,
+     "UNRESOLVED": 168,
+     "ON-AI": 370,
+     "NONE": 5191,
+     "BOTH": 13
+    },
+    "research/other": {
+     "NONE": 88,
+     "ON-AI": 365,
+     "BOTH": 18,
+     "UNRESOLVED": 10,
+     "WITH-AI": 10
+    }
+   },
+   "frame_n": {
+    "cve/ghsa": 686,
+    "harm-db": 1753,
+    "research/other": 393
+   },
+   "cve_on": 0.880466472303207,
+   "hdb_with": 0.7815173987450086,
+   "res_on": 0.9287531806615776,
+   "ON": 1339,
+   "WITH": 1460,
+   "pooled_on": 0.4783851375491247,
+   "ratio": 0.9171232876712329,
+   "V": 0.6839721936794686
+  },
+  "text_only": {
+   "table": {
+    "cve/ghsa": {
+     "NONE": 7523,
+     "ON-AI": 425,
+     "UNRESOLVED": 110,
+     "WITH-AI": 5
+    },
+    "harm-db": {
+     "WITH-AI": 1323,
+     "UNRESOLVED": 363,
+     "ON-AI": 124,
+     "NONE": 5302
+    },
+    "research/other": {
+     "NONE": 154,
+     "ON-AI": 188,
+     "UNRESOLVED": 125,
+     "BOTH": 2,
+     "WITH-AI": 22
+    }
+   },
+   "frame_n": {
+    "cve/ghsa": 430,
+    "harm-db": 1447,
+    "research/other": 212
+   },
+   "cve_on": 0.9883720930232558,
+   "hdb_with": 0.9143054595715273,
+   "res_on": 0.8867924528301887,
+   "ON": 737,
+   "WITH": 1350,
+   "pooled_on": 0.3531384762817441,
+   "ratio": 0.5459259259259259,
+   "V": 0.8429170571994606
+  },
+  "agree_only": {
+   "table": {
+    "cve/ghsa": {
+     "NONE": 7376,
+     "ON-AI": 423,
+     "UNRESOLVED": 1,
+     "dropped": 258,
+     "WITH-AI": 5
+    },
+    "harm-db": {
+     "WITH-AI": 1311,
+     "dropped": 319,
+     "UNRESOLVED": 168,
+     "ON-AI": 123,
+     "NONE": 5191
+    },
+    "research/other": {
+     "NONE": 88,
+     "ON-AI": 187,
+     "dropped": 197,
+     "BOTH": 2,
+     "UNRESOLVED": 10,
+     "WITH-AI": 7
+    }
+   },
+   "frame_n": {
+    "cve/ghsa": 428,
+    "harm-db": 1434,
+    "research/other": 196
+   },
+   "cve_on": 0.9883177570093458,
+   "hdb_with": 0.9142259414225942,
+   "res_on": 0.9540816326530612,
+   "ON": 733,
+   "WITH": 1323,
+   "pooled_on": 0.35651750972762647,
+   "ratio": 0.5540438397581254,
+   "V": 0.8583772715677441
+  }
+ },
+ "A5": {
+  "reviewed": {
+   "table": {
+    "cve/ghsa": {
+     "NONE": 7376,
+     "ON-AI": 602,
+     "UNRESOLVED": 1,
+     "CVE misplaced (review)": 80,
+     "NONE (review)": 2,
+     "BOTH": 2
+    },
+    "harm-db": {
+     "WITH-AI": 1197,
+     "UNRESOLVED": 168,
+     "ON-AI": 253,
+     "NONE": 5191,
+     "NONE (review)": 289,
+     "BOTH": 13,
+     "CVE misplaced (review)": 1
+    },
+    "research/other": {
+     "NONE": 88,
+     "ON-AI": 355,
+     "BOTH": 18,
+     "UNRESOLVED": 10,
+     "WITH-AI": 9,
+     "NONE (review)": 11
+    }
+   },
+   "frame_n": {
+    "cve/ghsa": 604,
+    "harm-db": 1463,
+    "research/other": 382
+   },
+   "cve_on": 0.9966887417218543,
+   "hdb_with": 0.8181818181818182,
+   "res_on": 0.9293193717277487,
+   "ON": 1210,
+   "WITH": 1206,
+   "pooled_on": 0.5008278145695364,
+   "ratio": 1.0033167495854063,
+   "V": 0.79979930103096
+  },
+  "reviewed_leak": {
+   "table": {
+    "cve/ghsa": {
+     "NONE": 7376,
+     "ON-AI": 602,
+     "UNRESOLVED": 1,
+     "CVE misplaced (review)": 80,
+     "NONE (review)": 2,
+     "BOTH": 2
+    },
+    "harm-db": {
+     "WITH-AI": 1248,
+     "UNRESOLVED": 168,
+     "ON-AI": 202,
+     "NONE": 5191,
+     "NONE (review)": 289,
+     "BOTH": 13,
+     "CVE misplaced (review)": 1
+    },
+    "research/other": {
+     "NONE": 88,
+     "ON-AI": 342,
+     "BOTH": 18,
+     "UNRESOLVED": 10,
+     "WITH-AI": 22,
+     "NONE (review)": 11
+    }
+   },
+   "frame_n": {
+    "cve/ghsa": 604,
+    "harm-db": 1463,
+    "research/other": 382
+   },
+   "cve_on": 0.9966887417218543,
+   "hdb_with": 0.8530416951469583,
+   "res_on": 0.8952879581151832,
+   "ON": 1146,
+   "WITH": 1270,
+   "pooled_on": 0.47433774834437087,
+   "ratio": 0.9023622047244094,
+   "V": 0.822848967508799
+  }
+ }
+}
