@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
-"""s04_methodology.py — Step 4. Entry point, target, AI medium and objective for ON-AI and WITH-AI, after reclassifying the unstated records.
-Per record and dimension the value is assigned in a fixed order, first hit wins: text rule (ENTRY/TARGET/AIROLE/OBJECTIVE, keyword patterns
+"""s04_methodology.py — Step 4. Entry point, target, AI medium and objective for ON-AI and WITH-AI: the reviewed (cleaned) labels.
+Per record and dimension a first value is assigned in a fixed order, first hit wins: text rule (ENTRY/TARGET/AIROLE/OBJECTIVE, keyword patterns
 over title+description+affected) → corpus-label fallback (FALLBACK, attack-vector label → value where unambiguous) → label-group rule
 (RECLASS, a group of attack-vector labels or a tracker-stub description → value) → coded label (coded/relabels.json: two independent coders,
-a third adjudicating) → 'other' (a safety net, asserted never to fire). The 'pre' value is the one after the first two steps, 'unstated' kept.
-Outputs: out/methodology.json (id → post values, _pre, _how, _match (words a text rule matched), dependency; s05 reads 'objective'), out/dataset_pre.csv, out/dataset_post.csv,
-out/s04_methodology.md
+a third adjudicating) → 'other' (a safety net, asserted never to fire). The review of every label (coded/review.json) then replaces the
+values two reviewers or the adjudicator rejected. The md reports only the reviewed values; step 6 compares them with the first keyword
+values ('pre': the value after the first two steps, 'unstated' kept), which this script also writes.
+Outputs: out/methodology.json (id → reviewed values, _pre, _how, _match (words a text rule matched), dependency; s05 reads it to clean its
+populations), out/dataset_pre.csv, out/dataset_post.csv, out/dataset_post_2026.csv, out/s04_methodology.md
 """
 import collections, csv, json, re
 from common import load_full, source_class, text, table, write, READ, ROOT, OUT, CHANNELS
@@ -92,14 +94,10 @@ for pop, rows in POPS:
             if how == HOW[0]: m[d + "_match"] = next(h.group(0) for _, rx in DIMS[d] if (h := rx.search(text(r))))   # the words the winning text rule matched (step 6 quotes them)
             if c: used[d].add(r["id"]); notes += [f"{d}: {c['note']}"] if c["note"] else []
         M[r["id"]] = m; NOTE[r["id"]] = "; ".join(notes)
-STRATUM_N = collections.Counter((d, M[r["id"]][d], M[r["id"]][d + "_how"]) for d in DIM4 for r in POP[d])   # rule-assigned population per (dim, value, how), before any correction
-STRATUM_N_HOW = collections.Counter((d, M[r["id"]][d + "_how"]) for d in DIM4 for r in POP[d])
-ASG = {}   # (id, dim) -> the value before review, for labels the review corrected
 if REVIEW:   # corrections from the two-reviewer sample audit override the rule value; the pre value and the audit trail stay
     for c in REVIEW["corrections"]:
         m = M[c["id"]]; assert m[c["dim"]] == c["from"], c
         m[c["dim"] + "_pre_how"] = m[c["dim"] + "_how"]   # the rule source stays with the pre value in dataset_pre.csv
-        ASG[(c["id"], c["dim"])] = c["from"]
         m[c["dim"]], m[c["dim"] + "_how"] = c["to"], HOW[5]; NOTE[c["id"]] = (NOTE[c["id"]] + "; " if NOTE[c["id"]] else "") + f"{c['dim']}: review: {c['note']}"
 left = {d: sum(M[r["id"]][d + "_how"] == HOW[4] for r in POP[d]) for d in DIM4}
 print("still unstated after the coded labels, set to 'other':", left); assert not any(left.values()), left  # the count is printed before the assert
@@ -128,133 +126,66 @@ post3 = lambda r, d: [g(r, d + "_pre"), g(r, d), g(r, d + "_how"), rstat(r, d)]
 POST_H = IDENT + [f"{d}_{x}" for d in DIM4[:2] for x in ("pre", "post", "how", "review")] + ["dependency"] + [f"{d}_{x}" for d in DIM4[2:] for x in ("pre", "post", "how", "review")] + ["coded_note"]
 POST_R = lambda r: [x for d in DIM4[:2] for x in post3(r, d)] + [g(r, "dependency")] + [x for d in DIM4[2:] for x in post3(r, d)] + [NOTE[r["id"]]]
 dataset("dataset_post.csv", POST_H, POST_R)
-dataset("dataset_post_2026.csv", POST_H, POST_R, keep=lambda r: r["year"] == 2026)   # the 2026-only cut read by step 5's Table 5.4
+dataset("dataset_post_2026.csv", POST_H, POST_R, keep=lambda r: r["year"] == 2026)   # the 2026-only cut (every 2026 record, misplaced ones included)
 
 # ---------------------------------------------------------------- markdown
 pct = lambda a, b: f"{100*a/b:.1f}" if b else "—"
 ch = lambda rows: collections.Counter(source_class(r) for r in rows)
 val = lambda dim: (lambda r: M[r["id"]][dim])
 NO_ATT = "no attacker: operator harm or model failure (misplaced record)"; NONE_W = RECLASS["ai_role"][0][1]
-# Residue values: the dimension does not fit the record. Kept as rows, counted in Table 4.0's last column and in each table's title.
+# Residue values: the dimension does not fit the record. Kept as rows and counted in each table's title.
 res_kind = lambda v: "'other'" if v == "other" or v.startswith("other (") else "'no attacker'" if v.startswith("no attacker") else "'none'" if v.startswith("none:") else None
 res_phrase = lambda vals: (lambda k: " or ".join([", ".join(k[:-1]), k[-1]]) if len(k) > 1 else k[0])([x for x in ("'other'", "'no attacker'", "'none'") if x in {res_kind(v) for v in vals}])
 AG = CODED["meta"]["agreement"]
-fb_clause = lambda d: "; ".join(f"{', '.join(k for k, x in FALLBACK[d].items() if x == v)} → {v} ({NAME[d]})" for v in dict.fromkeys(FALLBACK[d].values()))
-seen = set()
-def gname(g):      # a group's labels are spelled out the first time the group is named, then only its name is used
-    s = f"{g} ({', '.join(sorted(GNAME[g]))})" if g not in seen else g; seen.add(g); return s
-rc_clause = lambda d: "; ".join(f"{' or '.join(gname(g) for g in gs)} → {v} ({NAME[d]})" for gs, v in RECLASS[d])
 chan_n = lambda P: ", ".join(f"{x} {ch(P)[x]:,}" for x in CHANNELS)
-L = ["# Step 4 — Entry point, target, AI medium and objective, after reclassifying the unstated records", "",
-     "Each ON-AI record gets an entry point (Table 4.1) and a target (4.2), each WITH-AI record an AI medium (4.4) and an attacker objective (4.5). "
-     "Four assignment steps run in order, first hit wins" + (", and every label is then reviewed:" if REVIEW else ":"), "",
-     "1. **Text rule.** Ordered keyword patterns over title + description + affected (the lists ENTRY, TARGET, AIROLE and OBJECTIVE in `s04_methodology.py`).",
-     f"2. **Corpus label.** The attack-vector label, where it maps to exactly one value of the dimension: {'; '.join(fb_clause(d) for d in DIM4 if FALLBACK[d])}.",
-     f"3. **Label-group rule.** A group of attack-vector labels fixes the value: {'; '.join(rc_clause(d) for d in DIM4 if RECLASS[d])}. "
-     "For the target, which no label names, this step is instead a tracker-stub test (a description starting " + " or ".join(f"'{s}'" for s in STUB) + f" → {T_STUB}), placed after the keyword rules so that a system named in the text wins.",
-     f"4. **Coded from text.** Records still unstated were labelled by {CODED['meta']['coders']}; coders agreed on "
-     + ", ".join(f"{AG[d]['coders_agreed']} of {AG[d]['records']} {PLURAL[d]}" for d in DIM4) + f" (`coded/relabels.json`; `meta.codebook` is the value menu). "
-     f"The script checks that the file covers exactly the records steps 1–3 leave unstated; a final 'other' safety net fired {sum(left.values())} times (the script stops if it fires).",
-     *([f"5. **Review.** Two independent reviewers read every label from the record text without seeing which step set it; an adjudicator settled splits, and a last pass made each record's two labels agree on whether an adversary is described. "
-        f"A correction replaces the value (how = 'corrected by review'); Tables 4.0b–4.0d report it (`coded/review.json`, every verdict in `coded/review_verdicts.json`)."] if REVIEW else []), "",
-     f"Four values mark records the dimension does not fit. They stay visible as rows, and none is moved or dropped (step 5 reads `objective` from `out/methodology.json`):", "",
-     f"- *{NO_ATT}*: no adversary is described (a product failure, policy, court, lawsuit, deployment or benchmark story), so the record belongs in neither population.",
-     f"- *{NONE_W}*: a software-vulnerability record (CVE/GHSA) that step 2 placed in WITH-AI; no AI medium is involved.",
+NW_CH = collections.Counter(source_class(r) for r in WI if M[r["id"]]["ai_role"] == NONE_W)
+NW_INTR = sum(M[r["id"]]["ai_role"] == NONE_W and M[r["id"]]["objective"] == "intrusion / cyber operation" for r in WI)
+DROP5 = {"ON-AI": sum(M[r["id"]]["entry_point"] == NO_ATT for r in ON),
+         "WITH-AI": sum(M[r["id"]]["ai_role"] in (NO_ATT, NONE_W) for r in WI)}   # records step 5 leaves out (no adversary; a CVE with no AI medium)
+L = ["# Step 4 — Entry point, target, AI medium and objective (reviewed data)", "",
+     "Each ON-AI record has an entry point (Table 4.1) and a target (4.2); each WITH-AI record has an AI medium (4.4) and an attacker objective (4.5). "
+     "These are the cleaned labels that every later step uses.", "",
+     "**How the labels were made.** Keyword rules on the title, description and affected field set a first value (the lists ENTRY, TARGET, AIROLE and OBJECTIVE in `s04_methodology.py`); "
+     "where none matched, the corpus attack-vector label set it if that label maps to a single value, then a label-group rule (a group of attack-vector labels, or for the target a tracker-stub description), "
+     f"and the records still without a value were labelled from the text by two independent coders with an adjudicator (`coded/relabels.json`; the coders agreed on "
+     + ", ".join(f"{AG[d]['coders_agreed']} of {AG[d]['records']} {PLURAL[d]}" for d in DIM4) + ").", "",
+     *([f"**How the labels were reviewed.** Every one of the {sum(len(POP[d]) for d in DIM4):,} labels was then read by two independent reviewers who saw the record's title, description, affected field "
+        "and corpus labels but not how the label had been set. Each judged the label correct or proposed another value from the same list. When the two disagreed, an adjudicator decided; "
+        "a final pass made each record's two labels agree on whether any adversary is described. Table 4.0 gives the agreement; `coded/review.json` holds every decision and "
+        "`coded/review_verdicts.json` every reviewer's verdict and note. Step 6 compares these labels with the first values (keyword rule or corpus attack-vector label)."] if REVIEW else []), "",
+     f"**Values that mark a misplaced or unplaceable record.** They stay visible in Tables 4.1, 4.2, 4.4 and 4.5. Only the first two mark a misplaced record, and step 5 leaves those out "
+     f"({DROP5['ON-AI']} ON-AI and {DROP5['WITH-AI']} WITH-AI records):", "",
+     f"- *{NO_ATT}*: no adversary is described (a product failure, policy, court, lawsuit, deployment or benchmark story).",
+     f"- *{NONE_W}*: a conventional-exploit or malicious-package record placed in WITH-AI ({', '.join(f'{n} {x}' for x, n in NW_CH.most_common())}); no AI medium is involved. In Table 4.5 these records carry the objective 'intrusion / cyber operation' "
+     f"({NW_INTR} of that row's {sum(M[r['id']]['objective'] == 'intrusion / cyber operation' for r in WI)}).",
      f"- *{T_STUB}*: a pointer to an external tracker that names no attacked system.",
-     "- *other*: an adversary is described but no value fits, for instance an AI-assisted scam in ON-AI whose victim is not an AI system.", "",
-     "Files, all written by `s04_methodology.py` (`make s04`), never by hand. `out/dataset_pre.csv` holds every ON-AI and WITH-AI record with the values after steps 1–2 ('unstated' kept), "
-     "as `<dim>` and `<dim>_source` (text rule / corpus label / unstated). `out/dataset_post.csv` holds `<dim>_pre`, `<dim>_post`, `<dim>_how` (the step that fixed the final value) "
-     "and `<dim>_review` (confirmed / corrected / kept with dissent), plus `coded_note` ('dimension: reason' from the coders or reviewers); `out/dataset_post_2026.csv` is its 2026 rows. "
-     "The dimensions are `entry_point`, `target`, `ai_role` (= AI medium) and `objective`, empty when not asked of the record's population; `dependency` holds Table 4.3's value for every record.", "",
+     "- *other*: an adversary is described but no value fits, for instance an AI-assisted scam whose victim is not an AI system.", "",
+     "**Files.** `out/dataset_post.csv` holds every ON-AI and WITH-AI record with its reviewed labels (`<dim>_post`) and the coder's or reviewer's note (`coded_note`); "
+     "its audit columns (`<dim>_pre`, `<dim>_how`, `<dim>_review`) are explained in the README. `out/dataset_post_2026.csv` holds its 2026 rows; `out/dataset_pre.csv` holds the first values step 6 compares with. "
+     "The dimensions are `entry_point`, `target`, `ai_role` (= AI medium) and `objective`, empty when not asked of the record's population; `dependency` holds Table 4.3's value. "
+     "All files are written by `s04_methodology.py` (`make s04`), never by hand.", "",
      f"Records entered the populations by step 2's rules (Table 2.4). By channel ON-AI has {chan_n(ON)} records and WITH-AI {chan_n(WI)} "
-     f"(channel columns are % of that channel, so each {100/ch(WI)['research/other']:.1f} in WITH-AI's research/other column is one record).", "", READ, "",
-     f"**Table 4.0. How each value was assigned** (ON-AI n = {len(ON):,}; WITH-AI n = {len(WI):,})", "",
-     "Counts of records per dimension by the step that fixed the final value (the step columns sum to the records); the last column counts records holding one of the four residue values defined above, whichever step set them. In the notes of Tables 4.1–4.5, 'rule' = label-group rule, 'coded' = coded from text, 'review' = corrected by review, and * marks a value that did not exist before this step.", "",
-     "| dimension (table) | records | text rule | corpus label | label-group rule | coded from text (coders agreed / adjudicated) |" + (" corrected by review |" if REVIEW else "") + " value 'other', 'no attacker' or 'none' |", "|---|---|---|---|---|---|" + ("---|" if REVIEW else "") + "---|"]
-T0 = {}
-for d in DIM4:
-    P = POP[d]; hc = collections.Counter(M[r["id"]][d + "_how"] for r in P); cs = [CODED["labels"][d][r["id"]] for r in P if M[r["id"]][d + "_how"] == HOW[3]]
-    adj = sum(c["adjudicated"] for c in cs); oth = sum(bool(res_kind(M[r["id"]][d])) for r in P); cell = lambda a: f"{a:,} ({pct(a, len(P))}%)"
-    T0[d] = (len(P), hc[HOW[0]], hc[HOW[1]], hc[HOW[2]], len(cs), len(cs) - adj, adj, oth)
-    L.append(f"| {'ON-AI' if P is ON else 'WITH-AI'} {NAME[d]} ({NUM[d]}) | {len(P):,} | {cell(hc[HOW[0]])} | {cell(hc[HOW[1]])} | {cell(hc[HOW[2]])} | {cell(len(cs))} ({len(cs) - adj} / {adj}) |" + (f" {cell(hc[HOW[5]])} |" if REVIEW else "") + f" {cell(oth)} |")
+     f"(channel columns are % of that channel, so each {100/ch(WI)['research/other']:.1f} in WITH-AI's research/other column is one record).", "", READ]
+FULL = False
 if REVIEW:
-    st = REVIEW["strata"]; tot = {k: sum(x[k] for x in st) for k in ("reviewed", "correct", "corrected", "disputed")}; n_labels = sum(len(POP[d]) for d in DIM4)
-    FULL = all(STRATUM_N[(x["dim"], x["value"], x["how"])] <= x["reviewed"] for x in st) and tot["reviewed"] >= n_labels
-    by_step = collections.defaultdict(lambda: {"reviewed": 0, "kept": 0, "corrected": 0, "to": collections.Counter()})
-    for x in st:
-        b_ = by_step[(x["dim"], x["how"])]; b_["reviewed"] += x["reviewed"]; b_["kept"] += x["correct"] + x["disputed"]; b_["corrected"] += x["corrected"]; b_["to"].update(x["corrected_to"])
-    L += ["", f"**Table 4.0b. Review by assignment step: {pct(tot['correct'] + tot['disputed'], tot['reviewed'])}% of {tot['reviewed']:,} reviewed labels were kept, {tot['corrected']:,} corrected** "
-              f"(n = {tot['reviewed']:,} of {n_labels:,} labels)", "",
-          "Per dimension and the step that had assigned the label: how many labels that step set, how many the review read, how many it kept (both reviewers accepted, or the adjudicator kept it over one dissent) "
-          "and how many it corrected, with the two most common replacements. "
-          + ("Every label was read, so 'kept' is the precision of that step." if FULL else f"A stratified sample of at most {REVIEW['meta']['per_value']} labels per value was read, so 'kept' estimates the precision of that step.")
-          + " Per-value detail: Table 4.0d.", "",
-          "| dimension | assigned by | labels | reviewed | kept | corrected | main replacements |", "|---|---|---|---|---|---|---|"]
+    ag = REVIEW["agreement"]; tl = sum(x["labels"] for x in ag.values())
+    agree = lambda x: x.get("both_accepted", 0) + x.get("both_rejected_same", 0); adjd = lambda x: x.get("split_corrected", 0) + x.get("split_kept", 0)
+    FULL = tl >= sum(len(POP[d]) for d in DIM4)
+    L += ["", f"**Table 4.0. Review: the two reviewers reached the same label on {pct(sum(agree(x) for x in ag.values()), tl)}% of {tl:,} labels without the adjudicator** (n = labels)", "",
+          "*Same label* = both reviewers ended on the same value; *adjudicated* = they differed and the adjudicator chose; *set by the final pass* = labels the last adjudicator decided "
+          "so that the record's two labels agree on whether an adversary is described. The adjudicated share is the only measure here of how far reviewers could disagree. "
+          + (lambda m, n1: f"Reviewers: two Claude Fable 5.1 reviewers read {n1 + m['pass2_reviewer_pairs'].get('claude-fable-5-1 + claude-fable-5-1', 0):,} labels "
+             f"({n1} of them first, as a stratified sample); one Fable 5.1 and one Claude Opus 5.5 read {m['pass2_reviewer_pairs'].get('claude-fable-5-1 + claude-opus-5-5', 0):,}, "
+             f"and two Opus 5.5 read {m['pass2_reviewer_pairs'].get('claude-opus-5-5 + claude-opus-5-5', 0):,} after a usage limit. The adjudicator was Fable 5.1 for the first {n1} labels "
+             "and Opus 5.5 for the rest and the final pass.")(REVIEW["meta"]["models"], REVIEW["meta"]["labels_reviewed"] - sum(REVIEW["meta"]["models"]["pass2_reviewer_pairs"].values())), "",
+          "| dimension | labels | reviewers reached the same label | adjudicated | set by the final pass |", "|---|---|---|---|---|"]
     for d in DIM4:
-        for h in HOW[:4]:
-            b_ = by_step.get((d, h))
-            if not b_: continue
-            top = ", ".join(f"{v} {n}" for v, n in b_["to"].most_common(2)) or "—"
-            L.append(f"| {NAME[d]} | {h} | {STRATUM_N_HOW[(d, h)]:,} | {b_['reviewed']:,} | {b_['kept']:,} ({pct(b_['kept'], b_['reviewed'])}%) | {b_['corrected']:,} | {top} |")
-    for h in HOW[:4]:   # pooled over the four dimensions, per step
-        bs = [by_step[(d, h)] for d in DIM4 if (d, h) in by_step]; rv = sum(b_["reviewed"] for b_ in bs); kp = sum(b_["kept"] for b_ in bs)
-        L.append(f"| **all four** | {h} | {sum(STRATUM_N_HOW[(d, h)] for d in DIM4):,} | {rv:,} | {kp:,} ({pct(kp, rv)}%) | {sum(b_['corrected'] for b_ in bs):,} | |")
-    if FULL:   # every label read: the remaining error is reviewer error, bounded by how often the two reviewers disagreed
-        ag = REVIEW["agreement"]; tl = sum(a["labels"] for a in ag.values()); sp = sum(a.get("split_corrected", 0) + a.get("split_kept", 0) for a in ag.values()); cons = sum(a.get("consistency_changed", 0) for a in ag.values())
-        L += ["", f"**Table 4.0c. Reviewer agreement: the two reviewers settled {pct(tl - sp - cons, tl)}% of labels between them; the adjudicator decided {sp:,}; {cons} more were changed to make a record's two labels agree** (n = {tl:,} labels)", "",
-              f"{REVIEW['meta']['design']} Columns: labels both reviewers accepted, labels both rejected with the same replacement, splits (one accepted, or two different replacements) by how the adjudicator settled them, "
-              "and labels changed afterwards because the record's other dimension said 'no attacker' and this one did not (or the reverse). "
-              "The remaining error in Tables 4.1–4.5 is reviewer error, for which the split rate is the only measure here; every reviewer verdict and note is in `coded/review_verdicts.json`.", "",
-              "| dimension | labels | both accepted | both rejected, same replacement | split, adjudicator corrected | split, adjudicator kept | changed for consistency |", "|---|---|---|---|---|---|---|"]
-        for d in DIM4:
-            a = ag[d]; cell = lambda k: f"{a.get(k, 0):,} ({pct(a.get(k, 0), a['labels'])}%)"
-            L.append(f"| {NAME[d]} | {a['labels']:,} | {cell('both_accepted')} | {cell('both_rejected_same')} | {cell('split_corrected')} | {cell('split_kept')} | {cell('consistency_changed')} |")
-    else:
-      # population-weighted view: each stratum's observed error rate (corrected / reviewed) applied to the records of that stratum the sample did not reach
-      L += ["", f"**Table 4.0c. What the review implies for the labels it did not read** (rule-assigned labels per dimension)", "",
-          f"{REVIEW['meta']['design']} The sample took at most 20 records per value, so small values were read in full and large ones were not. 'estimated wrong before review' applies each value's observed error rate to all of its records; "
-          "'still wrong after correction' is the same estimate for the records the sample did not reach, i.e. the error that remains in Tables 4.1–4.5 and `out/dataset_post.csv`. Values read in full contribute no remaining error.", "",
-          "| dimension | rule-assigned labels | read in full (values) | reviewed | corrected | estimated wrong before review | still wrong after correction |", "|---|---|---|---|---|---|---|"]
-      for d in DIM4:
-        rows = [x for x in st if x["dim"] == d]; n_all = sum(n for (dd, v, h), n in STRATUM_N.items() if dd == d and h in HOW[:3])
-        full = sum(STRATUM_N[(d, x["value"], x["how"])] <= x["reviewed"] for x in rows)
-        est = sum(STRATUM_N[(d, x["value"], x["how"])] * x["corrected"] / x["reviewed"] for x in rows)
-        rem = sum(max(STRATUM_N[(d, x["value"], x["how"])] - x["reviewed"], 0) * x["corrected"] / x["reviewed"] for x in rows)
-        L.append(f"| {NAME[d]} | {n_all:,} | {full} of {len(rows)} | {sum(x['reviewed'] for x in rows)} | {sum(x['corrected'] for x in rows)} | {est:,.0f} ({pct(est, n_all)}%) | {rem:,.0f} ({pct(rem, n_all)}%) |")
-    # each value through the chain: rule value (pre), value before review, kept by review, moved out (where to), moved in, final
-    L += ["", "**Table 4.0d. Each value from rule to final** (per dimension, largest final value first)", "",
-          "*Pre* = the value a text rule or corpus label set, as in `out/dataset_pre.csv` ('unstated' otherwise); *before review* = the value after the label-group rule and the coders; "
-          "*kept* = labels the review left in place; *moved out* = labels the review took away, with where most went; *moved in* = labels the review gave this value; "
-          "*final* = kept + moved in, the value in Tables 4.1–4.5 and `out/dataset_post.csv`.", "",
-          "| dimension | value | pre | before review | kept | moved out (main destinations) | moved in | final n (%) |", "|---|---|---|---|---|---|---|---|"]
-    for d in DIM4:
-        P = POP[d]; before = lambda r: ASG.get((r["id"], d), M[r["id"]][d])
-        c0 = collections.Counter(M[r["id"]][d + "_pre"] for r in P); cb = collections.Counter(before(r) for r in P); c1 = collections.Counter(M[r["id"]][d] for r in P)
-        kept = collections.Counter(M[r["id"]][d] for r in P if before(r) == M[r["id"]][d]); out_to = collections.defaultdict(collections.Counter)
-        for r in P:
-            if before(r) != M[r["id"]][d]: out_to[before(r)][M[r["id"]][d]] += 1
-        for v in sorted(set(c0) | set(cb) | set(c1), key=lambda v: (-c1[v], v)):
-            mo = sum(out_to[v].values()); dest = ", ".join(f"{w} {n}" for w, n in out_to[v].most_common(2))
-            L.append(f"| {NAME[d]} | {v} | {c0[v]:,} | {cb[v]:,} | {kept[v]:,} | {mo:,}{' (' + dest + ')' if mo else ''} | {c1[v] - kept[v]:,} | {c1[v]:,} ({pct(c1[v], len(P))}%) |")
-SHORT = {HOW[2]: "rule", HOW[3]: "coded", HOW[5]: "review"}
+        x = ag[d]
+        L.append(f"| {'ON-AI' if POP[d] is ON else 'WITH-AI'} {NAME[d]} | {x['labels']:,} | {agree(x):,} ({pct(agree(x), x['labels'])}%) | {adjd(x):,} ({pct(adjd(x), x['labels'])}%) | {x.get('consistency_changed', 0):,} |")
+    L.append(f"| **all four** | {tl:,} | {sum(agree(x) for x in ag.values()):,} ({pct(sum(agree(x) for x in ag.values()), tl)}%) | {sum(adjd(x) for x in ag.values()):,} ({pct(sum(adjd(x) for x in ag.values()), tl)}%) | {sum(x.get('consistency_changed', 0) for x in ag.values()):,} |")
 def post_table(d, question):
     P = POP[d]; c = collections.Counter(M[r["id"]][d] for r in P); top, tn = c.most_common(1)[0]; oth = sum(bool(res_kind(v)) for v in c.elements())
-    un = [r for r in P if M[r["id"]][d + "_pre"] == "unstated"]; cu = collections.Counter(M[r["id"]][d] for r in un)
-    hows = {v: collections.Counter(M[r["id"]][d + "_how"] for r in un if M[r["id"]][d] == v) for v in cu}
-    how_s = lambda v: ", ".join(f"{SHORT[h]} {n}" for h, n in hows[v].most_common()) if len(hows[v]) > 1 else SHORT[hows[v].most_common(1)[0][0]]
-    known = {n for n, _ in DIMS[d]} | set(FALLBACK[d].values())
-    desc = (f"Before reclassification {len(un):,} records ({pct(len(un), len(P))}%) were unstated; they now hold, largest first: "
-            + "; ".join(f"{v}{'' if v in known else '*'} {n} ({how_s(v)})" for v, n in cu.most_common())
-            + ".")
-    if REVIEW:   # values whose rule-assigned labels the audit found mostly wrong: the unreviewed remainder of such a value carries that error
-        prec = collections.defaultdict(lambda: [0, 0])
-        for x in REVIEW["strata"]:
-            if x["dim"] == d: prec[x["value"]][0] += x["correct"] + x["disputed"]; prec[x["value"]][1] += x["reviewed"]
-        low = sorted(((v, a, b) for v, (a, b) in prec.items() if a < b / 2), key=lambda t: t[1] / t[2])
-        if low and FULL: desc += (" Review (Table 4.0d): the review kept fewer than half of the labels first given "
-                                  + ", ".join(f"{v} ({a} of {b})" for v, a, b in low) + "; every label was read and the wrong ones corrected.")
-        elif low: desc += (" Audit (Table 4.0b): fewer than half of the sampled rule-assigned labels were correct for "
-                           + ", ".join(f"{v} ({a} of {b})" for v, a, b in low) + "; the unreviewed records under these values carry that error rate.")
+    desc = "Reviewed values, largest first; the 'no attacker', 'none' and 'other' values are defined above."
     return table(f"{'ON-AI' if P is ON else 'WITH-AI'}: {question} {top} {pct(tn, len(P))}%; {pct(oth, len(P))}% {res_phrase(c)}",
                  P, val(d), ci=True, channels=True, num=NUM[d], top=len(c), rest=False, desc=desc)
 L += post_table("entry_point", "how did the adversary first reach the AI system?")
@@ -262,7 +193,7 @@ L += post_table("target", "which part of the AI stack was attacked?")
 CVE, MV = "CVE/CWE present (software vulnerability)", "model-level attack vector, no CVE/CWE"; dc = collections.Counter(dep(r) for r in ON)
 both_dep = sum(bool(r.get("cve_ids") or r.get("cwe_ids")) and r["attack_vector"] in MODEL_VEC for r in ON)
 L += table(f"ON-AI: does the record carry a CVE/CWE ({100*dc[CVE]/len(ON):.0f}%), a model-level attack vector ({100*dc[MV]/len(ON):.0f}%) or neither ({100*dc['unstated']/len(ON):.0f}%)?", ON, dep, ci=True, num="4.3",
-           desc=f"Read off corpus fields, unchanged by the reclassification: a CVE or CWE id, else one of the {len(MODEL_VEC)} model-level attack-vector labels ({', '.join(MODEL_VEC)}), else unstated. "
+           desc=f"Read off corpus fields; not part of the review: a CVE or CWE id, else one of the {len(MODEL_VEC)} model-level attack-vector labels ({', '.join(MODEL_VEC)}), else unstated. "
                 f"No channel columns because every CVE/CWE record is cve/ghsa; {both_dep} records with both a CVE/CWE and a model-level vector are counted as CVE/CWE, so the vector share is a floor.")
 L += post_table("ai_role", "what did the AI generate: image, voice, text, video or code?")
 L += post_table("objective", "what was the attacker after?")

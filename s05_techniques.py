@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """s05_techniques.py — Step 5. One question: which OWASP LLM Top 10 categories stand out in each population against the OWASP
-community vote. Two sources: the corpus's OWASP codes (keyword labels) and rank-validation's report of the community vote. One
-person's hand labels (rank-validation's adjudicator) disagree with the corpus and are treated as a limitation, in one table. Runs
-last, so it also hosts the study's Use cases and Limitations of the data. Step 4 answers HOW attacks happened; this file does not repeat it.
+community vote. Two sources: the corpus's OWASP codes (keyword labels) and rank-validation's report of the community vote. The
+populations are the cleaned ones from step 4's review (records with no adversary, and WITH-AI CVE records with no AI medium, are left
+out). One annotator's hand labels (from incident-rank-validation) show attacks the OWASP list cannot name: a limitation, one table per
+population. It also hosts the study's Use cases and Limitations of the data. Step 4 answers HOW attacks happened; this file does not repeat it.
 
 Everything here is a corpus keyword label or a read of another project's artifacts; nothing is coded from reports yet.
 llm() is where hand codes replace the corpus labels in the next phase.
@@ -14,13 +15,19 @@ from common import load_full, load_rv, join_rv, load_prelabels, owasp_names, sou
 S = json.load(open(OUT / "split.json")); C = load_full(); R = list(C.values())
 rv = load_rv(); JR = join_rv(C, rv); J = JR["rows"]; PRE = load_prelabels()
 NM = owasp_names(rv); RV2C, C2RV, RVN = NM["rv2corpus"], NM["corpus2rv"], NM["rv"]
-POPS = ("ON-AI", "WITH-AI"); P = {p: [C[i] for i, s in S.items() if s["population"] == p] for p in POPS}
-METH = json.load(open(OUT / "methodology.json"))      # step 4's rule outputs; the WITH-AI 'No entry fits' kinds are its attacker-objective rule
+POPS = ("ON-AI", "WITH-AI")
+METH = json.load(open(OUT / "methodology.json"))      # step 4's reviewed labels: they clean the populations, and the WITH-AI 'No entry fits' kinds are its objective
+NO_ATT, NONE_W = "no attacker: operator harm or model failure (misplaced record)", "none: conventional exploit record misplaced in WITH-AI"
+def kept(i, p):
+    """Step 4's review cleans the populations: a record with no adversary, or a WITH-AI CVE record with no AI medium, is left out of every table here."""
+    m = METH.get(i, {}); return m.get("entry_point") != NO_ATT if p == "ON-AI" else m.get("ai_role") not in (NO_ATT, NONE_W)
+RAW = {p: [i for i, s in S.items() if s["population"] == p] for p in POPS}
+P = {p: [C[i] for i in RAW[p] if kept(i, p)] for p in POPS}; OUTN = {p: len(RAW[p]) - len(P[p]) for p in POPS}
 DEMO = ("research", "research-demonstrated", "red-team")
 MIN_RECORDS = 30     # below this many corpus records a category is marked § and left out of the titles and 'What stands out' bullets
 SMALL = "§"
 MARKER_SHARE = 0.9   # a code is a channel marker (‡) when it sits on this share of one channel's records, or of its own assignments
-MIN_HAND = 2         # a category or proposed addition gets its own row in Table 5.3 from this many hand labels; smaller ones are pooled
+MIN_HAND = 2         # a category or proposed addition gets its own row in Tables 5.4a–b from this many hand labels; smaller ones are pooled
 MIN_HEAD = 10        # a proposed addition is named in the limitation paragraph from this many hand labels
 MIN_KIND = 4         # a 'No entry fits' kind gets its own sub-row from this many records; two or more smaller kinds are pooled
 TITLE = 28
@@ -61,7 +68,7 @@ def words(s): return len(re.sub(r"[*_`]", "", s).split())
 VCI = vote_ci(); VR = {e: rv["ranks"][e]["vote_rank"] for e in rv["ranks"]}
 
 # hand-labelled rows per population: (id, record, label list in rank-validation ids; [] = no entry fits)
-GOLD = {p: [(i, C[i], J[i]["gold_labels"]) for i, s in S.items() if s["population"] == p and i in J and J[i]["gold_labels"] is not None] for p in POPS}
+GOLD = {p: [(i, C[i], J[i]["gold_labels"]) for i, s in S.items() if s["population"] == p and kept(i, p) and i in J and J[i]["gold_labels"] is not None] for p in POPS}
 HUM = {p: collections.Counter(e for _, _, gl in GOLD[p] for e in gl) for p in POPS}
 HRANK = {p: ranks(HUM[p]) for p in POPS}                 # hand-label rank within the population's hand-labelled sample
 NONE = {p: [(i, r) for i, r, gl in GOLD[p] if gl == []] for p in POPS}
@@ -98,15 +105,21 @@ SUBSTANTIVE = "No concrete LLM vulnerability mechanism in incident text."
 READING = {"ON-AI": "classifier evaluations and misused decision tools", "WITH-AI": "deepfake fraud and abuse imagery"}
 CNT = {p: collections.Counter(c for r in P[p] for c in set(llm(r))) for p in POPS}; CRANK = {p: ranks(CNT[p]) for p in POPS}
 PLACES = {p: {e: VR[e] - CRANK[p][RV2C[e]] for e in TEN if RV2C[e] in CRANK[p]} for p in POPS}
+def mark(p, c):
+    """‡ only where the code's marker channel still has records in this population (after step 4's cleaning WITH-AI has no cve/ghsa records)."""
+    return "‡" if c in MARKER and any(source_class(r) == MARKER[c][2] for r in P[p]) else ""
 def demo_share(p, c): rows = [r for r in P[p] if c in llm(r)]; return sum(r["category"] in DEMO for r in rows), len(rows)
 diff_codes = sum(C2RV[c] != c for c in NM["corpus"])
 
 # ---------------------------------------------------------------- opener
 L = ["# Step 5 — Which attack categories stand out against the community vote", "",
      f"Generated by `s05_techniques.py` (`make s05`); do not edit by hand; inputs pinned in `external/PINS.json`. {READ}", "",
-     f"Which OWASP LLM Top 10 categories does each population rank higher or lower than the community vote? Two sources: the corpus's OWASP categories (keyword labels) "
+     f"Which OWASP LLM Top 10 categories does each population rank higher or lower than the community vote? Two sources: the corpus's OWASP categories "
      f"and the community vote with its 90% interval as rank-validation reports ({len(ENTRIES)} candidates ranked by respondents; its data rank is Table 1.15). "
-     f"One person's hand labels disagree with the corpus: a limitation below (Table 5.3)."]
+     f"Hand labels from one annotator of incident-rank-validation (a separate project that tests the OWASP ranking) show attacks the list cannot name: a limitation below (Tables 5.4a–b).", "",
+     f"The populations are the cleaned ones from step 4's review: {len(P['ON-AI']):,} ON-AI and {len(P['WITH-AI']):,} WITH-AI records. Left out are {OUTN['ON-AI']} ON-AI and "
+     f"{OUTN['WITH-AI']} WITH-AI records that the review found describe no adversary, or are conventional-exploit records misplaced in WITH-AI. "
+     f"The OWASP categories themselves are the corpus's, set by keyword rules (Limitations of the data); step 4's reviewed labels answer how the attacks happened."]
 
 # ---------------------------------------------------------------- Tables 5.1 / 5.2
 def category_table(p, num):
@@ -127,17 +140,18 @@ def category_table(p, num):
     L.extend(head(num, f"{p}, categories with {MIN_RECORDS}+ records: {nm(his)} {signed(top)} places above its vote rank, {nm(los)} {signed(bot)}", f"n = {n:,} {p} records", desc, cols))
     for e in TEN:
         c = RV2C[e]; lo_, hi_ = VCI[e]; d, b = demo_share(p, c)
-        L.append(f"| {code(c)}{'‡' if c in MARKER else ''} | {VR[e]:g} ({lo_:g}–{hi_:g}) | {npc(cnt[c], n)}{SMALL if cnt[c] < MIN_RECORDS else ''} | {crank.get(c, '—')} | "
+        L.append(f"| {code(c)}{mark(p, c)} | {VR[e]:g} ({lo_:g}–{hi_:g}) | {npc(cnt[c], n)}{SMALL if cnt[c] < MIN_RECORDS else ''} | {crank.get(c, '—')} | "
                  f"{signed(places[e]) if e in places else '—'} |" + (f" {pc(d, b, 0)} |" if on else ""))
     def why(e):
         c = RV2C[e]; d, b = demo_share(p, c)
-        if c in MARKER: return " (channel marker ‡)"
+        if mark(p, c): return " (channel marker ‡)"
         av = collections.Counter(r.get("attack_vector") or "none" for r in rows if c in llm(r)).most_common(1)[0]
-        return (f" ({pc(d, b, 0)}% demonstrations" if on else " (") + f"; seeded from {', '.join(seed_vectors(c))}; top vector on its records: {av[0]}, {av[1]} of {b})"
-    marks = [c for c in sorted(MARKER) if cnt[c] >= MIN_RECORDS]
+        return " (" + "; ".join(([f"{pc(d, b, 0)}% demonstrations"] if on else []) + [f"seeded from {', '.join(seed_vectors(c))}", f"top vector on its records: {av[0]}, {av[1]} of {b}"]) + ")"
+    marks = [c for c in sorted(MARKER) if cnt[c] >= MIN_RECORDS and mark(p, c)]
     ch = {x: [r for r in rows if source_class(r) == x] for x in CHANNELS}
     def mark_line(c):
         sh = {x: (sum(c in llm(r) for r in ch[x]), len(ch[x])) for x in CHANNELS if ch[x]}; mx = MARKER[c][2]
+        if mx not in sh: return f"{ename(c)} (rank {crank[c]}): no {mx} records remain in this population, so its rank here comes from the other channels"
         ox = max((x for x in sh if x != mx), key=lambda x: sh[x][0] / sh[x][1])
         return f"{ename(c)} (rank {crank[c]}): {pc(*sh[mx])}% of {mx} vs {pc(*sh[ox])}% of {ox}"
     L.extend(["", "What stands out:", "",
@@ -148,8 +162,17 @@ category_table("ON-AI", "5.1"); category_table("WITH-AI", "5.2")
 L += ["", f"*Corpus rank* orders keyword labels, not incidents, and the vote is {len(ENTRIES)} candidates ranked by respondents; neither table is a corrected Top 10."]
 
 # ---------------------------------------------------------------- 2026 records only: is the recent record closer to the vote?
+def avg_ranks(vals, reverse=False):
+    """Ranks 1..n of a list (1 = smallest, or largest with reverse), ties sharing the mean of their positions."""
+    order = sorted(range(len(vals)), key=lambda i: vals[i], reverse=reverse); r = [0.0] * len(vals); k = 0
+    while k < len(order):
+        j = k
+        while j + 1 < len(order) and vals[order[j + 1]] == vals[order[k]]: j += 1
+        for t in range(k, j + 1): r[order[t]] = (k + j) / 2 + 1
+        k = j + 1
+    return r
 def spearman(xs, ys):
-    """Spearman rank correlation of two equal-length lists of ranks (ties already shared); None below 3 pairs."""
+    """Spearman's ρ: the Pearson correlation of the two lists' ranks within the compared set; None below 3 pairs."""
     n = len(xs)
     if n < 3: return None
     mx, my = sum(xs) / n, sum(ys) / n
@@ -158,45 +181,51 @@ def spearman(xs, ys):
 YEAR = 2026
 P26 = {p: [r for r in P[p] if r["year"] == YEAR] for p in POPS}
 CNT26 = {p: collections.Counter(c for r in P26[p] for c in set(llm(r))) for p in POPS}; CRANK26 = {p: ranks(CNT26[p]) for p in POPS}
-def rho(p, cnt, crank):
-    es = [e for e in TEN if RV2C[e] in crank and cnt[RV2C[e]] >= MIN_RECORDS]
-    return spearman([VR[e] for e in es], [crank[RV2C[e]] for e in es]), len(es)
-RHO = {p: (rho(p, CNT[p], CRANK[p]), rho(p, CNT26[p], CRANK26[p])) for p in POPS}
+COMMON = {p: [e for e in TEN if CNT[p][RV2C[e]] >= MIN_RECORDS and CNT26[p][RV2C[e]] >= MIN_RECORDS] for p in POPS}   # the same categories in both cuts
+def rho(p, cnt):
+    es = COMMON[p]; return spearman(avg_ranks([VR[e] for e in es]), avg_ranks([cnt[RV2C[e]] for e in es], reverse=True))
+RHO = {p: (rho(p, CNT[p]), rho(p, CNT26[p])) for p in POPS}
 fr = lambda v: "—" if v is None else f"{v:+.2f}".replace("-", "−")
-L += head("5.4", f"{YEAR} records only: corpus rank against the vote ({', '.join(f'{p} ρ {fr(RHO[p][1][0])} vs {fr(RHO[p][0][0])} all years' for p in POPS)})",
-          "; ".join(f"{p} n = {len(P26[p]):,} of {len(P[p]):,}" for p in POPS),
-          f"Records dated {YEAR} only (record year reflects when a tracker was ingested, Table 1.5, and CVE dates are month-only). ρ is Spearman's rank correlation between "
-          f"the vote rank and the corpus rank over the categories with {MIN_RECORDS}+ records in that cut (+1 = same order, −1 = reversed; no CI, ten categories at most), "
-          f"shown beside the all-years value; a rise would mean the recent record sits closer to the vote. Columns per population: corpus records in {YEAR}, corpus rank in "
-          f"{YEAR}, places above the vote in {YEAR}, and the all-years rank for comparison.",
-          ["category [corpus code]", "vote rank"] + [f"{p}: {x}" for p in POPS for x in (f"{YEAR} records n (%)", f"{YEAR} rank", f"{YEAR} places above the vote", "all-years rank")])
-for e in TEN:
-    c = RV2C[e]; cells = []
-    for p in POPS:
-        n26, cnt, crank = len(P26[p]), CNT26[p], CRANK26[p]
-        pl = (VR[e] - crank[c]) if c in crank else None
-        cells += [f"{npc(cnt[c], n26)}{SMALL if cnt[c] < MIN_RECORDS else ''}", str(crank.get(c, "—")), signed(pl) if pl is not None else "—", str(CRANK[p].get(c, "—"))]
-    L.append(f"| {code(c)}{'‡' if c in MARKER else ''} | {VR[e]:g} | " + " | ".join(cells) + " |")
-moved = {p: [(e, CRANK26[p][RV2C[e]] - CRANK[p][RV2C[e]]) for e in TEN if RV2C[e] in CRANK26[p] and RV2C[e] in CRANK[p] and CRANK26[p][RV2C[e]] != CRANK[p][RV2C[e]]] for p in POPS}
-L += ["", "What changes in the " + f"{YEAR} cut: " + "; ".join(
-    f"{p}: ρ {fr(RHO[p][0][0])} → {fr(RHO[p][1][0])} over {RHO[p][1][1]} categories" + (", ranks that move: " + ", ".join(f"{ename(RV2C[e])} {signed(-d)}" for e, d in moved[p]) if moved[p] else ", no category changes rank") for p in POPS) + ". "
-    f"The {YEAR} rows are {pc(len(P26['ON-AI']), len(P['ON-AI']), 0)}% of ON-AI and {pc(len(P26['WITH-AI']), len(P['WITH-AI']), 0)}% of WITH-AI, "
-    f"and the vote was collected before most of them were disclosed, so a closer match would say the vote anticipated the feed, not that the feed confirms the vote. "
-    f"`out/dataset_post_2026.csv` holds these rows."]
+sh = lambda p, c, cut: round(100 * (CNT26 if cut else CNT)[p][c] / len(P26[p] if cut else P[p]), 1)    # share of records carrying c, as printed
+chg = lambda x: "0.0" if round(x, 1) == 0 else f"{x:+.1f}".replace("-", "−")
+N26_ALL = sum(C[i]["year"] == YEAR for p in POPS for i in RAW[p])
+for p, sub in (("ON-AI", "a"), ("WITH-AI", "b")):
+    a_, b_ = RHO[p]
+    plain = [RV2C[e] for e in TEN if CNT[p][RV2C[e]] >= MIN_RECORDS and CNT26[p][RV2C[e]] >= MIN_RECORDS and not mark(p, RV2C[e])]
+    heads_ = sorted(plain, key=lambda c: -abs(sh(p, c, 1) - sh(p, c, 0)))[:2]
+    L += head(f"5.3{sub}", f"{p}: share of records per category, all years vs {YEAR}; " + "; ".join(f"{ename(c)} {sh(p, c, 0):.1f}% vs {sh(p, c, 1):.1f}%" for c in heads_),
+              f"n = {len(P[p]):,} records, {len(P26[p]):,} of them dated {YEAR}",
+              (f"Share of records carrying each category, all years and {YEAR} only ({YEAR} records are part of all years); rows in vote order. A record can carry several categories, "
+               f"so a column adds past 100%. *Change* = {YEAR} − all years, from the shares as printed. § = under {MIN_RECORDS} records in that cut. "
+               f"‡ = channel marker (defined under Table 5.1): the share moves with that channel's size." if sub == "a" else "Columns as in Table 5.3a."), 
+              ["category", "vote rank", "all years, % of records", f"{YEAR}, % of records", "change (points)"])
+    for e in TEN:
+        c = RV2C[e]
+        L.append(f"| {ename(c)}{mark(p, c)} | {VR[e]:g} | {sh(p, c, 0):.1f}{SMALL if CNT[p][c] < MIN_RECORDS else ''} | "
+                 f"{sh(p, c, 1):.1f}{SMALL if CNT26[p][c] < MIN_RECORDS else ''} | {chg(sh(p, c, 1) - sh(p, c, 0))} |")
+    n_c = len(COMMON[p])
+    L += ["", (f"Closer to the vote in {YEAR}? On the {n_c} categories with {MIN_RECORDS}+ records in both cuts, Spearman's ρ between the vote's order and the order of the shares "
+               f"is {fr(a_)} all years and {fr(b_)} in {YEAR} (+1 = the vote's order, 0 = unrelated, −1 = reversed): "
+               + ("no closer" if b_ <= a_ else "slightly closer" if b_ - a_ < 0.3 else "closer") + f". With {n_c} categories, ρ moves a long way when one category changes place."
+               if a_ is not None and b_ is not None else
+               f"Closer to the vote in {YEAR}? Only {n_c} categories have {MIN_RECORDS}+ records in both cuts, too few to compare the order with the vote.")]
+cvesh = lambda rows: 100 * sum(source_class(r) == "cve/ghsa" for r in rows) / len(rows)
+L += ["", f"The {YEAR} column is not a test of the vote: the vote ranks expected risk, not disclosed records; {YEAR} ON-AI records are {cvesh(P26['ON-AI']):.0f}% cve/ghsa against "
+          f"{cvesh(P['ON-AI']):.0f}% for all years, so the ‡ rows move with the channel mix; "
+          f"and the record year is often the ingestion year (Table 1.5). `out/dataset_post_{YEAR}.csv` lists all {N26_ALL:,} records dated {YEAR}; "
+          f"these tables use the {sum(len(P26[p]) for p in POPS):,} that step 5 keeps ({len(P26['ON-AI']):,} ON-AI, {len(P26['WITH-AI']):,} WITH-AI)."]
 
-# ---------------------------------------------------------------- Limitation: the hand labels (Table 5.3)
+# ---------------------------------------------------------------- Limitation: the hand labels (Tables 5.4a–b)
 TIERS = (("disagree", "disagreement rows"), ("split", "where two pre-labellers agreed"), ("agree", "where three did"))
 GW = GOLD["WITH-AI"]
 none_t = {t: (sum(gl == [] for i, _, gl in GW if tier_of(i) == t), sum(tier_of(i) == t for i, _, _ in GW)) for t, _ in TIERS}
 top_hand = max(TEN, key=lambda e: (HUM["ON-AI"][e], -VR[e]))
 heads = {p: sorted((e for e in ADDS if HUM[p][e] >= MIN_HEAD), key=lambda e: -HUM[p][e]) for p in POPS}
 def ord_(k): return f"{k}{'th' if 10 <= k % 100 <= 20 else {1: 'st', 2: 'nd', 3: 'rd'}.get(k % 10, 'th')}"
-LIM = (f"Rank-validation's adjudicator hand-labelled {NG['ON-AI']} ON-AI and {NG['WITH-AI']} WITH-AI records, drawn by quota (every pre-labeller disagreement, then "
-       f"{q3} unanimous + {q2} majority rows per entry), so counts are not prevalence. {RVN[top_hand]}, the top ON-AI hand label ({HUM['ON-AI'][top_hand]}), is "
-       f"the corpus's {ord_(CRANK['ON-AI'][RV2C[top_hand]])}; {andlist(f'{RVN[e]} ({HUM[p][e]})' for p in POPS for e in heads[p])} have no corpus code; no entry fits "
-       f"{NN['ON-AI']} ON-AI ({pc(NN['ON-AI'], NG['ON-AI'])}%) and {NN['WITH-AI']} WITH-AI ({pc(NN['WITH-AI'], NG['WITH-AI'])}%) rows, {none_t['disagree'][0]} of them "
-       f"disagreement rows (no-entry share {pc(*none_t['disagree'], 0)}% there, {pc(*none_t['split'], 0)}% {TIERS[1][1]}, {pc(*none_t['agree'], 0)}% {TIERS[2][1]}).")
-L += ["", "## Limitation: one person's hand labels disagree with the corpus's categories", "", LIM]
+LIM = (f"One annotator of incident-rank-validation hand-labelled {NG['ON-AI']} ON-AI and {NG['WITH-AI']} WITH-AI records of the cleaned populations. The records were drawn by quota "
+       f"(every record the project's three LLM pre-labellers disagreed on, then {q3} unanimous and {q2} majority records per category), so the counts describe the sample, not prevalence. "
+       f"Tables 5.4a–b show, for each category the annotator used, how often the corpus files the same record under it.")
+L += ["", "## Limitation: hand labels show attacks the OWASP categories cannot name", "", LIM]
 
 def kinds_of(p):
     """'No entry fits' rows split into kinds: WITH-AI by step 4's attacker-objective rule, ON-AI by the corpus attack vector; two or more kinds under MIN_KIND records pooled."""
@@ -217,37 +246,40 @@ def carries(p, e, c=None):
 C2RV = {c: e for e, c in RV2C.items()}
 top2 = [c for c, _ in sorted(CRANK["ON-AI"].items(), key=lambda x: x[1])[:2]]; h_top2 = sum(HUM["ON-AI"][C2RV[c]] for c in top2)
 nocode = [(p, e) for p in POPS for e in ADDS if HUM[p][e] >= MIN_HEAD]; h_nocode = sum(HUM[p][e] for p, e in nocode)
-def cell(p, e):
-    c = RV2C.get(e); h = HUM[p][e]
-    cr = str(CRANK[p][c]) if c and c in CRANK[p] else "—"
-    hr = f"{HRANK[p][e]} ({h})" if h else "— (0)"
-    car = (lambda a, b: f"{a} of {b}")(*carries(p, e, c)) if c and h else (carries(p, e) if h else "—")
-    return f"{cr} | {hr} | {car}"
-L += head("5.3", f"Where the corpus and the hand labels disagree: the corpus's top two ON-AI categories hold {h_top2} of {NG['ON-AI']} hand labels, {len(nocode)} labels with no corpus code hold {h_nocode}",
-          f"n = {NG['ON-AI']} ON-AI and {NG['WITH-AI']} WITH-AI hand-labelled records",
-          f"One row per category, the ten in vote order then the proposed additions with {MIN_HEAD}+ hand labels in either population. *Corpus rank* orders the ten by records carrying the code; "
-          f"*hand-label rank (n)* orders every label the person used by count within the sample (a quota sample, so a rank, not a prevalence); *corpus also carries it* = of the records the person "
-          f"filed under the entry, how many the corpus also codes with it, or, for an entry with no corpus code, the codes the corpus put on them. ‡ = channel marker (Table 5.1).",
-          ["category", "ON-AI corpus rank", "ON-AI hand-label rank (n)", "ON-AI corpus also carries it", "WITH-AI corpus rank", "WITH-AI hand-label rank (n)", "WITH-AI corpus also carries it"])
-for e in sorted(TEN, key=lambda e: VR[e]):
-    c = RV2C[e]; L.append(f"| {ename(c)}{'‡' if c in MARKER else ''} | {cell('ON-AI', e)} | {cell('WITH-AI', e)} |")
-for e in sorted((e for e in ADDS if max(HUM[p][e] for p in POPS) >= MIN_HEAD), key=lambda e: -max(HUM[p][e] for p in POPS)):
-    L.append(f"| {RVN[e]} [proposed, no corpus code] | {cell('ON-AI', e)} | {cell('WITH-AI', e)} |")
-L.append(f"| *No entry fits* | — | — ({NN['ON-AI']}, {pc(NN['ON-AI'], NG['ON-AI'], 0)}% of hand-labelled) | — | — | — ({NN['WITH-AI']}, {pc(NN['WITH-AI'], NG['WITH-AI'], 0)}% of hand-labelled) | — |")
-rows_53 = len(TEN) + sum(1 for e in ADDS if max(HUM[p][e] for p in POPS) >= MIN_HEAD) + 1
-boiler = {p: sum(note(i) != SUBSTANTIVE for i, _ in NONE[p]) for p in POPS}
-def main_kinds(p, k=2): return andlist(f"{kd} {len(rs)}" for kd, rs in list(kinds_of(p).items())[:k])
-kept = [(RVN[e], *carries("ON-AI", e, RV2C[e])) for e in TEN if HUM["ON-AI"][e] >= MIN_HEAD]
-hi_k = max(kept, key=lambda x: x[1] / x[2]); lo_k = min(kept, key=lambda x: x[1] / x[2])
+def agree_cell(p, e):
+    c = RV2C.get(e)
+    if c: a_, b_ = carries(p, e, c); return f"{a_} of {b_}"
+    filed = [r for _, r, gl in GOLD[p] if e in gl]
+    return f"no corpus code; most common corpus codes on these {len(filed)}: " + carries(p, e).removeprefix("carry ") + " (a record can carry several)"
+nfmt = lambda p, n: f"{n} ({pc(n, NG[p], 0)}%)"
+for p, sub in (("ON-AI", "a"), ("WITH-AI", "b")):
+    shown = sorted((e for e in ENTRIES if HUM[p][e] and (e in TEN or HUM[p][e] >= MIN_HEAD)), key=lambda e: (-HUM[p][e], VR.get(e, 99)))
+    rest = [e for e in ADDS if HUM[p][e] and e not in shown]
+    lab = lambda e: f"{RVN[e]}{'' if RV2C.get(e) else ' (proposed)'}"
+    n_prop = sum(HUM[p][e] for e in ADDS)
+    L += head(f"5.4{sub}", f"{p} hand labels: {pc(n_prop, NG[p], 0)}% of the sampled records fall in proposed categories the corpus has no code for; {pc(NN[p], NG[p], 0)}% fit no category",
+              f"n = {NG[p]} hand-labelled {p} records",
+              (f"Rows: the categories the annotator used, most-used first; proposed categories under {MIN_HEAD} records are pooled. Each record has one category or none, so the rows add to n. "
+               "*Corpus files them there too* = of those records, how many the corpus also gives that category. *(proposed)* = a category the annotator's project added to the OWASP list; "
+               "the corpus has no code for it, so the last column gives the corpus codes those records carry most often." if sub == "a" else "Columns as in Table 5.4a."),
+              ["category", "hand-labelled records n (%)", "corpus files them there too"])
+    for e in shown:
+        L.append(f"| {lab(e)} | {nfmt(p, HUM[p][e])} | {agree_cell(p, e)} |")
+    if rest: L.append(f"| {len(rest)} other proposed categor{'y' if len(rest) == 1 else 'ies'} | {nfmt(p, sum(HUM[p][e] for e in rest))} | no corpus code |")
+    L.append(f"| *No category fits* | {nfmt(p, NN[p])} | — |")
+def kind_list(p, k):
+    return andlist(f"{kd} ({len(rs)} of {NN[p]})" for kd, rs in list(kinds_of(p).items())[:k])
+kept_ = [(RVN[e], *carries("ON-AI", e, RV2C[e])) for e in TEN if HUM["ON-AI"][e] >= MIN_HEAD]
+hi_k = max(kept_, key=lambda x: x[1] / x[2]); lo_k = min(kept_, key=lambda x: x[1] / x[2])
+small_k = sorted(((RVN[e], *carries("ON-AI", e, RV2C[e])) for e in TEN if 0 < HUM["ON-AI"][e] < MIN_HEAD), key=lambda x: x[1] / x[2])[:2]
 L += ["", "Why this is a limitation:", "",
-      f"- *The ranks do not match.* {RVN[top_hand]}, the person's most-used ON-AI label ({HUM['ON-AI'][top_hand]}), is the corpus's {ord_(CRANK['ON-AI'][RV2C[top_hand]])}; "
-      f"the corpus's first two, {andlist(ename(c) for c in top2)}, hold {h_top2} of the {NG['ON-AI']} hand labels between them.",
-      f"- *The list lacks codes for what the person saw most.* {andlist(f'{RVN[e]} ({HUM[p][e]} {p} hand labels; the corpus filed them as {carries(p, e).removeprefix(chr(99)+chr(97)+chr(114)+chr(114)+chr(121)+chr(32))})' for p, e in nocode)} have no corpus code.",
-      f"- *A large share fits nothing.* No entry fits {NN['ON-AI']} ON-AI ({pc(NN['ON-AI'], NG['ON-AI'], 0)}%) and {NN['WITH-AI']} WITH-AI ({pc(NN['WITH-AI'], NG['WITH-AI'], 0)}%) rows: "
-      f"ON-AI mostly {main_kinds('ON-AI', 1)} (classifier evaluations), WITH-AI mostly {main_kinds('WITH-AI')} (deepfake fraud and abuse imagery; {sum(stub(r) for _, r in NONE['WITH-AI'])} of {NN['WITH-AI']} are tracker stubs). "
-      f"The rubric wants an LLM mechanism: input that \"{RUB['pi']}\", output \"{RUB['mis']}\", or \"{RUB['wla']}\"; the person's notes are boilerplate on {boiler['ON-AI'] + boiler['WITH-AI']} of {NN['ON-AI'] + NN['WITH-AI']} rows. "
-      f"{none_t['disagree'][0]} of the {NN['WITH-AI']} WITH-AI rows are ones the three LLM pre-labellers disagreed on, a tier the quota took in full.",
-      f"- *Where the person did use a corpus category, the corpus usually has it too* ({hi_k[0]} {hi_k[1]} of {hi_k[2]}; lowest {lo_k[0]} {lo_k[1]} of {lo_k[2]}), so the disagreement is in what the corpus adds in bulk and what it cannot name, not in the person rejecting its codes."]
+      f"- *Missing categories.* {andlist(f'{RVN[e]} ({HUM[p][e]} {p} records)' for p, e in nocode)} have no corpus code, so the corpus files those records under other categories (Tables 5.4a–b).",
+      f"- *Nothing fits.* {pc(NN['ON-AI'], NG['ON-AI'], 0)}% of ON-AI and {pc(NN['WITH-AI'], NG['WITH-AI'], 0)}% of WITH-AI hand-labelled records fit no category. "
+      f"In ON-AI the largest group by corpus attack vector is {kind_list('ON-AI', 1)}; in WITH-AI, by step 4's objective, {kind_list('WITH-AI', 2)}; "
+      f"{sum(stub(r) for _, r in NONE['WITH-AI'])} of the {NN['WITH-AI']} WITH-AI records are tracker stubs. The list asks for an LLM mechanism, such as input that \"{RUB['pi']}\", "
+      f"which deepfake abuse imagery, political deepfakes and classifier evaluations lack.",
+      f"- *Where both use an OWASP category with {MIN_HEAD}+ hand labels, they mostly agree* ({hi_k[0]} {hi_k[1]} of {hi_k[2]}; lowest {lo_k[0]} {lo_k[1]} of {lo_k[2]}); "
+      f"on smaller rows less so ({', '.join(f'{a} {b} of {c}' for a, b, c in small_k)}). The larger gap is the attacks the list cannot name (the proposed rows) and the records that fit nothing."]
 
 # ---------------------------------------------------------------- Use cases
 ioh, mcp = "LLM10", next(e for e, n in RVN.items() if n.startswith("MCP"))
@@ -256,36 +288,40 @@ ioh_seed = sum(r.get("attack_vector") in seed_vectors(ioh) for r in P["ON-AI"] i
 mcp_sc = carries("ON-AI", mcp, "LLM04")
 USE = [f"- *Deployers.* {ename(ioh)}'s ON-AI {signed(PLACES['ON-AI'][C2RV[ioh]])} is rule output: {ioh_seed} of {d_ioh[1]} records carry a code-injection seed vector, "
        f"{pc(*d_ioh, 0)}% demonstrations (Table 5.1).",
-       f"- *Researchers.* {ename(pi)}, the vote's first, ranks {ord_(CRANK['ON-AI'][pi])} in ON-AI; {HUM['ON-AI'][mcp]} {RVN[mcp]} rows ({mcp_sc[0]} corpus-filed as "
-       f"{ename('LLM04')}) seed sampling (Table 5.3).",
-       f"- *Framework authors.* {NN['WITH-AI']} of {NG['WITH-AI']} WITH-AI hand labels fit no entry and {RVN[WLA]}, {HUM['WITH-AI'][WLA]} labels, has no corpus code: "
-       f"deepfake fraud has no LLM mechanism (Table 5.3)."]
+       f"- *Researchers.* {ename(pi)}, the vote's first, ranks {ord_(CRANK['ON-AI'][pi])} in ON-AI. The {HUM['ON-AI'][mcp]} records the annotator filed as {RVN[mcp]} "
+       f"(the corpus files {mcp_sc[0]} of them under {ename('LLM04')}) are a starting sample for that proposed category (Table 5.4a).",
+       f"- *Framework authors.* {NN['WITH-AI']} of {NG['WITH-AI']} hand-labelled WITH-AI records fit no category, and {RVN[WLA]} ({HUM['WITH-AI'][WLA]} records) has no corpus code: "
+       f"deepfake abuse imagery and political deepfakes have no LLM mechanism (Table 5.4b)."]
 L += ["", "## Use cases", "", *USE, "",
-      "**Not supported:** prevalence; a corrected Top 10; attack chains; trends; attribution or exploitation status; statements about how attackers operated."]
+      "**Not supported:** prevalence; a corrected Top 10; attack chains; trends (Tables 5.3a–b set one year beside all years, and the record year is often the ingestion year); "
+      "attribution or exploitation status; statements about how attackers operated."]
 
 # ---------------------------------------------------------------- Limitations of the data
 frame = {x: collections.Counter(S[i]["population"] for i in S if S[i]["source_class"] == x and S[i]["population"] in ("ON-AI", "WITH-AI", "BOTH")) for x in CHANNELS}
-ADV = re.compile(r"attacker|threat actor|hacker|adversar|campaign|exploited|abused|scam|fraud|extort|stole|breach|malicious|\bAPT\b|state-sponsored|cybercrim|ransomware|phish|impersonat|weaponi[sz]", re.I)
-wv = [C[i] for i in S if S[i]["rule"] == "with-vector"]; wv_silent = sum(not ADV.search(text(r)) for r in wv)
 _NA, _NW = "no attacker: operator harm or model failure (misplaced record)", "none: conventional exploit record misplaced in WITH-AI"
 _on = [i for i in S if S[i]["population"] == "ON-AI"]; _wi = [i for i in S if S[i]["population"] == "WITH-AI"]
 LEAK = {"on": len(_on), "wi": len(_wi), "on_na": sum(METH[i]["entry_point"] == _NA for i in _on), "wi_na": sum(METH[i]["ai_role"] == _NA for i in _wi),
         "on_other": sum(METH[i]["entry_point"] == "other" for i in _on), "wi_cve": sum(METH[i]["ai_role"] == _NW for i in _wi)}   # step 4's reviewed values
-LIMS = [f"- Labels are rule outputs: {pc(*seed_share(R))}% of OWASP codes come from the attack_vector seed, the rest from ingest records (Tables 5.1, 5.2).",
+_src = ast.parse((EXT / "corpus_merge_and_dedupe.py").read_text())
+N_AV_RULES = next(len(n.value.elts) for n in _src.body if isinstance(n, ast.AnnAssign) and getattr(n.target, "id", "") == "_ATTACK_VECTOR_RULES")   # read, never run
+LIMS = [f"- The corpus's labels are keyword rules: when a source gives no attack vector, `classify_attack_vector` in the corpus build script takes the first of {N_AV_RULES} regular expressions "
+        f"that matches the title and description (for example 'impersonat' → deepfake); records that arrive without OWASP codes get them from the attack vector by a fixed table "
+        f"({pc(*seed_share(R))}% of OWASP codes equal that seed), and ATLAS codes follow from the OWASP codes by lookup (Tables 1.10, 5.1, 5.2).",
         f"- {ename('LLM04')} marks the CVE channel and {frame['cve/ghsa']['ON-AI']:,} of {sum(frame['cve/ghsa'].values()):,} cve/ghsa frame records are ON-AI, so pooled comparisons compare channels (Tables 1.10, 2.2).",
-        f"- One coder hand-labelled a quota sample: {NG['ON-AI']} ON-AI and {NG['WITH-AI']} WITH-AI rows (Tables 1.14, 5.3).",
-        f"- The split is rule-based: {wv_silent:,} of {len(wv):,} vector-only WITH-AI rows name no adversary (Table 2.5). Step 4's review of every record found "
+        f"- One annotator hand-labelled a quota sample: {NG['ON-AI']} ON-AI and {NG['WITH-AI']} WITH-AI records of the cleaned populations (Tables 1.14, 5.4a–b).",
+        f"- Step 2's split is rule-based; Table 2.5 lists its weak spots. Step 4's review of every record found "
         f"{LEAK['on_na']} ON-AI ({pc(LEAK['on_na'], LEAK['on'])}%) and {LEAK['wi_na']} WITH-AI ({pc(LEAK['wi_na'], LEAK['wi'])}%) records that describe no adversary, "
-        f"{LEAK['on_other']} ON-AI records whose entry point fits no value (such as an AI-assisted scam on people) and {LEAK['wi_cve']} CVE records in WITH-AI; they stay in the counts above (Tables 4.1, 4.4).",
+        f"{LEAK['on_other']} ON-AI records whose entry point fits no value (such as an AI-assisted scam on people) and {LEAK['wi_cve']} conventional-exploit records misplaced in WITH-AI; this step leaves out the "
+        f"no-adversary and misplaced records ({OUTN['ON-AI']} ON-AI, {OUTN['WITH-AI']} WITH-AI) and keeps the rest (Tables 4.1, 4.4).",
         f"- Join losses: {g_lost} of {len(gold_ids):,} hand-labelled rows have no current record of their own (Table 1.13).",
-        f"- Vote–data concordance is weak: weighted κ {KAPPA:.2f} ({sg(KCI[0])} to {sg(KCI[1])}) (Table 1.15).",
+        f"- Vote–data concordance is weak: weighted κ {KAPPA:.2f} ({sg(KCI[0])} to {sg(KCI[1])}) (s01 section 0, 'data rank'; Table 1.15).",
         f"- The two OWASP numberings differ on {diff_codes} of ten entries, so joins use names (Table 1.0).",
         f"- The public record is a small, self-selected sample: only {pc(sum(frame['cve/ghsa'].values()), sum(1 for i in S if S[i]['source_class'] == 'cve/ghsa'))}% of CVE/GHSA records "
         f"and {pc(sum(frame['harm-db'].values()), sum(1 for i in S if S[i]['source_class'] == 'harm-db'))}% of harm-database records involve an adversary at all, `exploited_in_wild` is set on "
-        f"{sum(r.get('exploited_in_wild') is True for r in R)} records, and attacks that are never disclosed, settled privately or seen only in vendor telemetry are absent (Tables 2.2, 4.0).",
+        f"{sum(r.get('exploited_in_wild') is True for r in R)} records, and attacks that are never disclosed, settled privately or seen only in vendor telemetry are absent (Tables 2.2, 2.5).",
         f"- The index pools trackers with different units: a CVE is one bug in one product, a harm-database row is one news event, a research row is one paper; counts across them, and the "
-        f"corpus's own merging of {sum(len(r['source_ids']) > 1 for r in R):,} multi-source records, mix units (Table 1.1).",
+        f"corpus's own merging of {sum(len(r['source_ids']) > 1 for r in R):,} multi-source records, mix units (s01 section B; Table 1.1).",
         "- Record year, date precision, stubs and empty fields: steps 1, 2 and 4."]
 L += ["", "## Limitations of the data", "", *LIMS]
 write("s05_techniques.md", L)
-print(f"Table 5.3 rows: {rows_53}; words: limitation {words(LIM)}, use cases {words(' '.join(USE))}, limitations {words(' '.join(LIMS))}")
+print(f"words: limitation {words(LIM)}, use cases {words(' '.join(USE))}, limitations {words(' '.join(LIMS))}")

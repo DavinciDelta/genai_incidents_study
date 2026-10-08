@@ -33,7 +33,7 @@ with-AI (Table 2.2), so pooled statistics about "AI incidents" measure reporting
 populations, on-AI is an agent-and-tooling story in which 45% of records carry a CVE or CWE and a quarter
 enter through a conventional software bug (Tables 4.1–4.3); with-AI is deepfake fraud whose medium the
 record usually does not state (Tables 4.4–4.5). The corpus's category ranking disagrees with the OWASP
-community vote by up to eleven places, and one person's hand labels disagree with both (Tables 5.1–5.3).
+community vote by up to eleven places, and one person's hand labels disagree with both (Tables 5.1–5.3b).
 We release the classified datasets, a limitations audit of AI-incident data, and the frame for a
 hand-coded study.
 
@@ -54,7 +54,7 @@ hand-coded study.
 - Reporting bias is acknowledged in words but not measured: AIID counts "conflate media reporting
   propensity, system deployment and harm frequency" (Mengesha et al. 2026); surveillance has no
   denominators (Abraham et al. 2026); the Agent Incident Registry's realized-harm share "reflects the
-  balance of disclosure pathways" (Kumar et al. 2026). Tables 2.2 and 5.1–5.3 put numbers on this.
+  balance of disclosure pathways" (Kumar et al. 2026). Tables 2.2 and 5.1–5.3b put numbers on this.
 - Why now: agentic incidents of 2025–26 (MCP servers, coding agents); vendor threat-intel reports now
   describe attributed campaigns; the OWASP LLM Top 10 (2026) and Agentic Top 10 are being adopted as
   priorities without an incident check.
@@ -125,11 +125,12 @@ databases, 78.2% are WITH-AI; from research, 92.9% are ON-AI (Figure 1B, which o
 **A pooled ON/WITH ratio is a ratio of channels, not of attacks**, and so is every downstream share.
 
 What each population is (Tables 2.6–2.9): ON-AI is 40.9% vulnerability disclosures with no observed
-attack, 29.1% real-world incidents and 22.9% demonstrations (research, research-demonstrated, red-team);
+attack, 29.1% real-world incidents and demonstrations (research 19.6%, research-demonstrated 2.5%,
+red-team 0.9%; Table 2.7);
 its top corpus vector is prompt injection (25.7%) ahead of a long tail of conventional exploits. WITH-AI
 is 80.8% deepfake and 94.2% real-world; its 80 vulnerability disclosures are misplaced CVEs (Table 2.5).
 
-Independent check (Table 2.13): the person's hand labels land on different entries per population,
+Independent check (Table 2.13): one annotator's hand labels land on different entries per population,
 ON-AI on Data and Model Poisoning (22), Supply Chain (21), MCP Tool Interface Exploitation (17) and
 Prompt Injection (15); WITH-AI on Misinformation (47) and Weaponized LLM Abuse (43) with 42.5% fitting no
 entry. The split is recoverable by an independent coder.
@@ -138,50 +139,47 @@ entry. The split is recoverable by an independent coder.
 
 ## 4. How the attacks happen, as far as the record says
 
-Source: `s04_methodology.py` → `out/s04_methodology.md`, `out/dataset_pre.csv`, `out/dataset_post.csv`.
+Source: `s04_methodology.py` → `out/s04_methodology.md`, `out/dataset_post.csv`; comparison with the
+first keyword values: `s06_compare.py` → `out/s06_compare.md`.
 
-Each ON-AI record gets an entry point and a target component, each WITH-AI record an AI medium and an
-attacker objective, assigned in a fixed order: a keyword rule over title + description + `affected`;
-else the corpus attack-vector label where it maps to exactly one value; else a label-group rule (a
-conventional-exploit label is an entry point of its own kind; a tracker stub names no target); else a
-label coded from the text by two independent coders with an adjudicator (854 labels, agreement 85–100%
-per dimension, `coded/relabels.json`). Every label was then reviewed: two independent reviewers read
-each of the 5,598 labels (both dimensions of all 2,799 records) from the record text without seeing how
-it had been assigned, an adjudicator settled the 215 splits, and a final pass made the two labels of 21
-records agree on whether any adversary is described (`coded/review.json`). 67.0% of the
-5,598 labels were kept and 1,847 corrected (Table 4.0b); the reviewers settled 95.8% of labels between them (Table
-4.0c). Kept as assigned: 69.1% of text-rule labels, 53.6% of corpus-label fallbacks, 39.4% of label-group
-rules and 91.3% of the earlier coded labels. Tables 4.1–4.5 and the post dataset carry the reviewed
-values; Table 4.0d follows each value from its rule count through the review to its final count, and the post dataset records
-every label's review status; `out/s06_compare.md` compares pre and post for all years and 2026 alone (the
-review replaced 34.0% of rule values, 33.9% in 2026, with worked examples). Table 4.0 gives the source counts; the pre- and post-reclassification
-datasets are released, with a 2026-only cut of the post dataset. "Other" and "no attacker" stay visible
-as values.
+Each ON-AI record has an entry point and a target component, each WITH-AI record an AI medium and an
+attacker objective. Keyword rules on the title, description and `affected` set a first value; where none
+matched, the corpus attack-vector label set it if it maps to one value, then a rule on groups of
+attack-vector labels; the rest were labelled from the text by two independent coders with an adjudicator
+(`coded/relabels.json`). Every label was then reviewed: two independent reviewers read each of the 5,598
+labels (both dimensions of all 2,799 records) from the record text without seeing how it had been set, an
+adjudicator decided where they differed, and a final pass set 21 labels so that each record's two
+labels agree on whether any adversary is described (Table 4.0, `coded/review.json`). The reviewers reached the same
+label on 95.8% of labels without the adjudicator (Table 4.0). Tables 4.1–4.2 and 4.4–4.5 and
+`out/dataset_post.csv` (with a 2026-only cut) carry the reviewed values; Table 4.3 is read off corpus fields
+and was not reviewed. The no-attacker and misplaced values stay visible, and step 5 leaves the
+no-adversary records and the conventional-exploit records misplaced in WITH-AI out.
 
 **ON-AI (n = 1,339).** Entry point (Table 4.1): exploit of a conventional software vulnerability 26.4%
 (51.7% of the CVE channel), direct prompt 15.1%, indirect carrier 12.1%, malicious package / model 9.8%,
 prompt injection with the carrier not stated 6.3%, adversarial input 3.7%, exposed service 3.6%, the
 agent's tools or sandbox 3.4%, poisoned data or model 2.5%, credential 1.1%; 9.6% describe no attacker and
-5.2% an attack on something that is not an AI system. The review moved labels mostly one way: keyword hits
-on "credentials", "token" or "exposed" in what the text describes as SSRF, path traversal or auth bypass
-went to conventional exploits (credential kept 9 of 63), and "direct prompt" kept 167 of its 328 rule
-labels, with 95 moving to prompt injection whose carrier is stated or unstated. Target (Table 4.2): agents, copilots and MCP 45.2% (75.8% of
-the CVE channel), a model attacked directly 11.4% (jailbreak and extraction research on named models that
-the product-name rule had filed as consumer chatbots), consumer chatbots 8.7%, tracker stubs naming no
-system 1.9%. In the harm-database channel 31.6% of ON-AI records describe no attacker and 14.6% an
-AI-assisted attack on people or companies, i.e. WITH-AI records filed as ON-AI. Software basis (Table 4.3):
+5.2% describe an adversary but fit no entry-point value ("other", for instance an AI-assisted scam on
+people). Target (Table 4.2): agents, copilots and MCP 45.2%
+(75.8% of the CVE channel), a model attacked directly 11.4%, consumer chatbots 8.7%, tracker stubs naming
+no system 1.9%. In the harm-database channel 31.6% of ON-AI records describe no attacker and 14.6%
+describe an adversary but fit no entry-point value (Table 4.1). Software basis (Table 4.3):
 45.1% carry a CVE or CWE, 31.5% a model-level vector with none, 23.4% neither.
 
 **WITH-AI (n = 1,460).** Medium (Table 4.4): "deepfake, medium not stated" 25.6%, video 16.5%, image
 15.5%, voice 14.6%, text 3.7%, generated code 0.5%; 11.8% describe no attacker and 5.5% are CVE records
-misplaced in WITH-AI (every WITH-AI record in the CVE channel). The review roughly doubled video: titles
-saying "video" had been labelled audio through an AIID entity tag or text through the word "phishing", and
-120 of the 605 corpus-label "deepfake" fallbacks name their medium in the title (88 more describe no
-attacker). Objective (Table 4.5):
-financial fraud or extortion 30.1%, political influence 19.0%, non-consensual or abuse imagery 13.3%,
-intrusion 10.9%, defamation or impersonation 6.5% (the rule had read "deepfake" or "impersonate" in CVE
-texts as defamation), public deception 4.7%; 11.8% describe no attacker at all (a product failure, policy
-or lawsuit story filed as an incident).
+misplaced in WITH-AI (every WITH-AI record in the CVE channel). Objective (Table 4.5): financial fraud or
+extortion 30.1%, political influence 19.0%, non-consensual or abuse imagery 13.3%, intrusion 10.9%,
+defamation or impersonation 6.5%, public deception 4.7%; 11.8% describe no attacker at all (a product
+failure, policy or lawsuit story filed as an incident).
+
+**What the review changed (step 6).** Against the first values (keyword rule or corpus label) the review replaced 38.4% in ON-AI
+and 30.3% in WITH-AI, and as much in 2026 alone (37.5% and 30.2%; Tables 6.1–6.2). The largest moves:
+direct prompt 24.5% → 15.1% and consumer chatbot 17.7% → 8.7% in ON-AI; "deepfake, medium not stated"
+41.4% → 25.6% and video 7.1% → 16.5% in WITH-AI. The worked examples show three things a keyword cannot
+tell: whether a word names the attack or only its impact ("credential" in an SSRF advisory), whether a
+product or entity name is the thing attacked or produced ("GPT-4" in jailbreak research; AIID's "Synthetic
+Audio" tag on a video deepfake), and whether a corpus label ("deepfake") fits a lawsuit story.
 
 <!-- TODO: 2 paragraphs interpreting. Points to make: ON-AI is an agent-and-tooling story and half of it
      is ordinary application security (Maugeri et al. 2025: two thirds of AI-relevant CVEs are conventional
@@ -198,31 +196,42 @@ or lawsuit story filed as an incident).
 Source: `s05_techniques.py` → `out/s05_techniques.md`.
 
 Per population, the corpus's OWASP category rank against the OWASP community vote (20 candidates ranked
-by respondents; Tables 5.1–5.2). ON-AI: Improper Output Handling sits +11 places above its vote rank
-(corpus 2nd, vote 13th; 5% of its records are demonstrations); Supply Chain +4 but it is a channel marker
-(98.2% of CVE records); Prompt Injection, the vote's first, is the corpus's third. WITH-AI: Misinformation
-+12 (83.8% of records, also a channel marker). Neither is a corrected Top 10: the corpus column ranks
+by respondents; Tables 5.1–5.2), on the populations cleaned by step 4's review (1,210 ON-AI and 1,206
+WITH-AI records; the 129 and 254 records with no adversary, or conventional-exploit records misplaced in
+WITH-AI, are left out).
+ON-AI: Improper Output Handling sits +11 places above its vote rank (corpus 2nd, vote 13th; 5% of its
+records are demonstrations); Supply Chain +4 but it is a channel marker (on 98.2% of cve/ghsa records
+corpus-wide; 77.1% of ON-AI's cve/ghsa records against 15.2% of research/other, Table 5.1); Prompt
+Injection, the vote's first, is the corpus's third. WITH-AI: Misinformation +12 (89.8% of records, also a
+channel marker). Neither is a corrected Top 10: the corpus column ranks
 keyword rules. OWASP's own 2026 process weighted the community vote (about 29 respondents, per Lambros &
 Wilson) at 75% and incident data at 25%, and kept Prompt Injection first although incidents placed it near
 twelfth (CSA research note, Aug 2026): the list is a judgement about defence, not a count. Improper Output
 Handling shows how three signals pull apart: the corpus's keyword rule ranks it 2nd in ON-AI, rank-
-validation's model-based data rank puts it 10th (interval 3–16, Table 1.15), and the person's hand labels
-put it 5th (Table 5.3).
+validation's model-based data rank puts it 10th (interval 3–16, Table 1.15), and it holds 13 of the
+annotator's 135 hand-labelled ON-AI records, behind Supply Chain, Data and Model Poisoning and MCP Tool
+Interface Exploitation (Table 5.4a).
 
-**Does the recent record sit closer to the vote? No (Table 5.4).** On the 2026-dated rows alone (730 ON-AI,
-686 WITH-AI), Spearman's ρ between the vote rank and the corpus rank over the categories with 30+ records
-falls from +0.29 to +0.06 in ON-AI and from −0.57 to −0.94 in WITH-AI; Improper Output Handling stays +11
-and Misinformation +12. The 2026 cut is ingestion-driven (Table 1.5) and postdates the vote, so even a closer
-match would have said the vote anticipated the feed, not that the feed confirms it. `out/dataset_post_2026.csv`
-holds these rows.
+**Does the recent record sit closer to the vote? No (Tables 5.3a–b).** On the 2026-dated records alone
+(666 ON-AI, 550 WITH-AI), Spearman's ρ between the vote's order and the order of the category shares, over
+the five ON-AI categories with 30+ records in both cuts, is +0.05 for all years and +0.05 for 2026: no
+closer, and with five categories the statistic moves a long way when one changes place. In WITH-AI only two
+categories reach 30 records in both cuts, too few to compare. The shares that grow in 2026 are ones already
+far above the vote: Improper Output Handling 39.8% vs 46.2% of ON-AI records and 24.0% vs 32.0% of WITH-AI
+records, and Supply Chain 45.4% vs 54.8% of ON-AI records, a channel marker that follows the larger
+cve/ghsa share of 2026 ON-AI records (66% against 50%). The 2026 cut is ingestion-driven (Table 1.5), so
+it is not a test of the vote. `out/dataset_post_2026.csv` lists all 1,416 records dated 2026; the tables use
+the 1,216 that step 5 keeps.
 
-**The hand labels disagree with both (Table 5.3).** The person's most-used ON-AI label, Data and Model
-Poisoning (22), is the corpus's 7th; three labels with no corpus code hold 70 hand labels (MCP Tool
-Interface Exploitation 17 and Cross-Modal Safety Bypass 10 in ON-AI, Weaponized LLM Abuse 43 in
-WITH-AI); no entry fits 14% of hand-labelled ON-AI and 43% of WITH-AI rows, because every rubric entry
-requires an LLM mechanism that deepfake fraud and classifier evaluations lack. Where the person did use a
-corpus category the corpus usually carries it too (Prompt Injection 14 of 15), so the disagreement is in
-what the corpus adds in bulk and what it cannot name.
+**Hand labels show attacks the list cannot name (Tables 5.4a–b).** One annotator of incident-rank-validation
+labelled 135 ON-AI and 141 WITH-AI records of the cleaned populations by quota. 28% of the ON-AI and 29%
+of the WITH-AI sampled records fall in categories the annotator's project proposed, which have no corpus
+code (the largest: MCP Tool Interface Exploitation 17 and Cross-Modal Safety Bypass 10 ON-AI records,
+Weaponized LLM Abuse 40 WITH-AI records); no category fits 11% of ON-AI and 40% of WITH-AI records,
+because every rubric entry requires an LLM mechanism that deepfake abuse imagery, political deepfakes and
+classifier evaluations lack. Where both use an OWASP category with 10+ hand labels they mostly agree
+(Supply Chain 17 of 18), so the larger gap is the attacks the list cannot name and the records that fit
+nothing.
 
 <!-- TODO: one paragraph on what this licenses (expectation-setting; seed rows; the categories a
      hand-coded study must be able to express) and what it does not (prevalence; a corrected list). -->
@@ -239,19 +248,20 @@ Two coders on 20%, κ per field, rulebook frozen after a 30-incident pilot.
 ## 7. Statistical methods
 
 - Deterministic rule classification for frame and strata; the rule that fired is recorded per record and
-  checked against the 339 hand-labelled rows in the frame (Table 2.13).
+  checked against the hand-labelled rows in the frame (ON-AI 161, WITH-AI 174, BOTH 4; Table 2.13).
 - Percentile bootstrap (2,000 resamples) 95% CIs on every proportion; none on hand-labelled shares.
-- Reclassification of unstated values: rules first, then two LLM coders and an adjudicator; agreement
-  reported per dimension; a human review of the coded subset before any value is cited, following the
+- Reclassification of unstated values: rules first, then two LLM coders and an adjudicator; coder agreement
+  reported per dimension (`out/s04_methodology.md`, "How the labels were made"); a human review of the coded subset before any value is cited, following the
   validation standard for LLM annotation (Pangakis & Wolken ICWSM 2025; Törnberg 2024) and the alternative
   annotator test (Calderon, Reichart & Dror ACL 2025); the negative result for security codes (Camporese,
   Massacci & Gong 2026) is the reason the review is not optional.
 - Review of every label: two independent LLM reviewers per label, blind to how it was assigned, with an
   adjudicator for splits and a consistency pass on records whose two labels disagree about whether an
-  adversary exists; precision of each assignment step per value (Table 4.0b) and reviewer agreement (Table
-  4.0c). Rules were not re-tuned on the reviewed labels, so Table 4.0b still measures them. Both reviewers
-  were Claude Fable 5.1 for 87% of second-pass labels; a usage limit put Opus 5.5 on the rest and on the
-  second-pass adjudication; the split rate is reported per model pair in `coded/review.json`.
+  adversary exists; reviewer agreement per dimension (Table 4.0); the first values against the
+  reviewed ones in step 6 (Tables 6.1–6.2). Rules were not re-tuned on the reviewed labels, so step 6
+  still measures them. Two Claude Fable 5.1 reviewers read 4,951 labels, one Fable 5.1 and one Opus 5.5
+  read 187, and two Opus 5.5 read 460 after a usage limit (Table 4.0); the split rate per model pair is in
+  `coded/review.json`.
 - Cohen's κ per hand-coded field (quadratic-weighted for ordered fields), pre-adjudication value reported.
 - χ² / Fisher exact for ON-vs-WITH comparisons within channel, Cramér's V, Benjamini–Hochberg at 5% FDR.
 - Temporal claims on primary-source disclosure date only (corpus dates are month-only for CVE records).
@@ -263,14 +273,19 @@ Full list with numbers: `out/s05_techniques.md`, section "Limitations of the dat
 
 - Channel confounding: 604 of 686 CVE-channel frame records are ON-AI, 1,370 of 1,753 harm-database ones
   WITH-AI; every pooled comparison compares channels (Table 2.2).
-- Labels are rule outputs; Supply Chain marks the CVE channel (Tables 1.10, 5.1).
+- The corpus's labels are keyword rules: its attack vector is the first of 41 regular expressions that
+  matches the title and description, OWASP codes are seeded from it, and Supply Chain marks the CVE
+  channel (Tables 1.10, 5.1; Limitations of the data in `out/s05_techniques.md`).
 - The split is rule-based with unmeasured error: 707 of 1,262 vector-only WITH-AI rows contain no
-  attacker word; 80 WITH-AI rows are CVEs (Table 2.5).
-- One coder, a quota sample: 161 ON-AI and 174 WITH-AI hand-labelled rows; 77 of 1,200 rows have no
-  current record of their own (Tables 1.13–1.14).
-- Demonstration inflation (22.9% of ON-AI) and deepfake dominance (80.8% of WITH-AI).
-- Ingestion-driven years, month-only CVE dates, tracker stubs (67 of the 74 WITH-AI no-entry rows), empty
-  exploitation and attribution fields (Tables 1.5–1.7, 4.0). CVE descriptions are no better upstream: 85%
+  attacker word; 80 WITH-AI rows are CVEs (Tables 2.4–2.5).
+- One annotator, a quota sample: 135 ON-AI and 141 WITH-AI hand-labelled records in the cleaned populations
+  (Tables 5.4a–b; 161 and 174 before cleaning, Table 2.13); 77 of 1,200 rows have no current record of
+  their own (Tables 1.13–1.14).
+- Demonstration inflation (research 19.6%, research-demonstrated 2.5% and red-team 0.9% of ON-AI, Table 2.7)
+  and deepfake dominance (80.8% of WITH-AI, Table 2.8).
+- Ingestion-driven years and month-only CVE dates (Tables 1.5–1.7); tracker stubs (51 of the 56 hand-labelled
+  WITH-AI records that fit no category, `out/s05_techniques.md`); an exploitation flag set on 14 records
+  corpus-wide (Table 2.5). CVE descriptions are no better upstream: 85%
   lack a root cause and 56% a vulnerability type (Guo, Xing & Li TOSEM 2022).
 - The public record is a small, self-selected sample of attacks: only 8.5% of CVE/GHSA records and 24.6% of
   harm-database records involve an adversary at all; `exploited_in_wild` is set on 14 of 15,666 records;
@@ -280,15 +295,17 @@ Full list with numbers: `out/s05_techniques.md`, section "Limitations of the dat
 - The index pools trackers with different units: a CVE is one bug in one product, a harm-database row is one
   news event, a research row is one paper; counts across them, and the corpus's own merging of 1,340
   multi-source records, mix units (Table 1.1). This is why nothing here is reported pooled across channels.
-- Keyword rules are not enough on this corpus: the full review kept 69.1% of text-rule labels and 39.4% of
-  label-group rules (Table 4.0b), changing a third of all labels. The recurring errors: a keyword hit on an
+- Keyword rules are not enough on this corpus: the full review replaced 38.4% of the first values in
+  ON-AI and 30.3% in WITH-AI (Tables 6.1–6.2). The recurring errors: a keyword hit on an
   incidental word ("credentials", "exposed", "deepfake" inside a CVE text), a record with no adversary filed
   under an attack label by its corpus hint, a product name standing for an attacked model, and a use
-  (phishing) read as a medium. The reviewed labels are LLM judgements with 95.8% reviewer agreement and
-  still await a human check on a sample.
+  (phishing) read as a medium. The reviewed labels are LLM judgements; the two reviewers reached the same
+  label on 95.8% (Table 4.0), and a human check on a sample is still owed.
 - The population split leaks: 9.6% of ON-AI and 11.8% of WITH-AI records describe no adversary; 5.2% of
-  ON-AI records are AI-assisted attacks on people (WITH-AI material) and 5.5% of WITH-AI records are CVEs
-  (ON-AI material). They stay in their populations as visible values (Tables 4.1, 4.4).
+  ON-AI records describe an adversary but fit no entry-point value (such as an AI-assisted scam on people),
+  and 5.5% of WITH-AI records are conventional-exploit records misplaced in WITH-AI. Step 4 keeps them as
+  visible values (Tables 4.1, 4.4); step 5 leaves the no-adversary and misplaced records out (129 ON-AI,
+  254 WITH-AI).
 <!-- TODO: one sentence of mitigation per item. -->
 
 ## References

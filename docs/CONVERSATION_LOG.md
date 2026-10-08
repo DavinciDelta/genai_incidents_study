@@ -184,6 +184,35 @@ reviewers (one told to refute the change), and all 12 held. Result: the review r
 values (2026: 33.9%); 51.1% of labels changed with the filled ones (2026: 53.1%); within channel the 2026
 rate is within 5.4 points of all years, so the recent intake is not cleaner.
 
+## 2026-10-08
+
+**Ask: confirm whether the corpus labels by word matching; simplify Table 5.4 with % and split ON-AI /
+WITH-AI; make the hand-label limitation table readable and split it; s04 and s05 report only the
+reviewed data; only s06 compares pre, current and 2026, with fewer tables.** Done. Corpus: yes —
+`classify_attack_vector` in the build script takes the first of 41 regexes over title + description when
+a source gives no vector (e.g. 'impersonat' → deepfake, which is why CVE texts carried harm labels), OWASP
+codes are seeded from the vector for records without any, ATLAS from OWASP by lookup; now a limitation
+bullet in s05. Decision: s05 runs on the populations cleaned by the review — records whose reviewed labels
+say no adversary (129 ON-AI, 173 WITH-AI) and WITH-AI CVE records with no AI medium (81) are left out
+(1,210 ON-AI, 1,206 WITH-AI remain); step 4 still shows them as values. Effects: ON-AI rank agreement
+with the vote +0.21 (2026: +0.14, still further); WITH-AI 2026 has too few categories with 30+ records to
+compare; hand-labelled sample becomes 135 ON-AI / 141 WITH-AI, and Supply Chain (18) overtakes Data and
+Model Poisoning (17) as the person's most-used ON-AI label. s04: intro rewritten around the reviewed
+labels; tables of assignment steps, per-step precision and rule-to-final flows removed; one review table
+(agreement). s05: Tables 5.3a–b (hand labels, per population, sorted by use) and 5.4a–b (shares all years
+vs 2026, per population). s06: two tables (pre / current / change / 2026 current, per population, with
+change rates per dimension), eight worked examples grouped by population with flow counts, four summary
+bullets; the by-channel, largest-flow and shared-shift tables removed.
+Two rounds of four independent checks (pre talk in s04/s05, readability, draft-to-out tracing,
+cross-file consistency) then fixed: **the 2026 'Spearman' was a Pearson correlation on unadjusted ranks
+over different category sets per cut** — now true Spearman (average ranks within the set) on the categories
+with 30+ records in both cuts: ON-AI +0.05 all years and +0.05 in 2026, i.e. no closer to the vote (the
+earlier 'further from the vote', +0.29 → +0.06, was an artefact); WITH-AI has two such categories, too few.
+Tables renumbered in file order (2026: 5.3a–b; hand labels: 5.4a–b); ‡ shown only where the marker's channel
+has records in the population; hand-label titles lead with proposed-category and no-fit shares; change
+columns computed from printed shares; dataset_post column glossary moved to the README; a dozen draft
+figures re-cited or rephrased so each traces to `out/`.
+
 ## Standing decisions
 
 1. The corpus is a sampling frame and pointer to primary sources; **no corpus label enters a coded field.**
