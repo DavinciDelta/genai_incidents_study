@@ -230,6 +230,12 @@ fits' record; the draft's coding plan no longer excludes 'no entry fits' rows. D
 toward ON-AI (hand-labelled pooled ON share 48.1% → 58.0%). With every record, 2026 is still no closer to
 the vote (ρ +0.17 both cuts ON-AI, −0.95 both WITH-AI).
 
+**Ask: explain the datasets and conclusions so far for anyone.** Done 2026-10-08: `docs/PROGRESS.md`
+(plain-language summary: data step by step, six findings, limits, next steps), fact-checked against `out/`
+and `explore/out/` and read by a newcomer reviewer (both agents; ~40 fixes, among them: no pooled 34.0%,
+the 7.6–57.5% range excludes channel weighting, AVID and vendor reports as the two tracker exceptions,
+'largest group' not 'mostly'). Published as a private page: https://claude.ai/artifact/E8zMLWE6G9NWNEJ8V37PE5.
+
 ## Standing decisions
 
 1. The corpus is a sampling frame and pointer to primary sources; **no corpus label enters a coded field.**
